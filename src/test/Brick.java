@@ -66,22 +66,22 @@ abstract public class Brick  {
         protected void makeCrack(Point2D point, int direction){
             Rectangle bounds = Brick.this.brickFace.getBounds();
 
-            Point impact = new Point((int)point.getX(),(int)point.getY());
+            Point impact = new Point((int)point.getX(),(int)point.getY()); //(x,y) of the part of the ball which hit the brick
             Point start = new Point();
             Point end = new Point();
 
 
             switch(direction){
-                case LEFT:
+                case LEFT: //look to right of brick
                     start.setLocation(bounds.x + bounds.width, bounds.y);
                     end.setLocation(bounds.x + bounds.width, bounds.y + bounds.height);
                     Point tmp = makeRandomPoint(start,end,VERTICAL);
-                    makeCrack(impact,tmp);
+                    makeCrack(impact,tmp); //set crack start from point of impact to random point
 
                     break;
-                case RIGHT:
-                    start.setLocation(bounds.getLocation());
-                    end.setLocation(bounds.x, bounds.y + bounds.height);
+                case RIGHT: //look to the left of the brick as that is starting point of crack
+                    start.setLocation(bounds.getLocation()); //top left
+                    end.setLocation(bounds.x, bounds.y + bounds.height); //top left + height
                     tmp = makeRandomPoint(start,end,VERTICAL);
                     makeCrack(impact,tmp);
 
@@ -108,9 +108,9 @@ abstract public class Brick  {
             GeneralPath path = new GeneralPath();
 
 
-            path.moveTo(start.x,start.y);
+            path.moveTo(start.x,start.y); //start of crack
 
-            double w = (end.x - start.x) / (double)steps;
+            double w = (end.x - start.x) / (double)steps; //width and height of each step
             double h = (end.y - start.y) / (double)steps;
 
             int bound = crackDepth;
@@ -120,21 +120,21 @@ abstract public class Brick  {
 
             for(int i = 1; i < steps;i++){
 
-                x = (i * w) + start.x;
-                y = (i * h) + start.y + randomInBounds(bound);
+                x = (i * w) + start.x; //setting the x
+                y = (i * h) + start.y + randomInBounds(bound); //setting the y - randomise the height of steps
 
-                if(inMiddle(i,CRACK_SECTIONS,steps))
+                if(inMiddle(i,CRACK_SECTIONS,steps)) //USELESS
                     y += jumps(jump,JUMP_PROBABILITY);
 
-                path.lineTo(x,y);
+                path.lineTo(x,y); //draws the line
 
             }
 
-            path.lineTo(end.x,end.y);
-            crack.append(path,true);
+            path.lineTo(end.x,end.y); //connect to last point
+            crack.append(path,true); //crack holds the crack now
         }
 
-        private int randomInBounds(int bound){
+        private int randomInBounds(int bound){ //randomise height of steps
             int n = (bound * 2) + 1;
             return rnd.nextInt(n) - bound;
         }
@@ -161,7 +161,7 @@ abstract public class Brick  {
 
             switch(direction){
                 case HORIZONTAL:
-                    pos = rnd.nextInt(to.x - from.x) + from.x;
+                    pos = rnd.nextInt(to.x - from.x) + from.x; //get a random point
                     out.setLocation(pos,to.y);
                     break;
                 case VERTICAL:
@@ -204,7 +204,7 @@ abstract public class Brick  {
     public  boolean setImpact(Point2D point , int dir){
         if(broken)
             return false;
-        impact();
+        impact(); //reduces strength
         return  broken;
     }
 
@@ -225,7 +225,7 @@ abstract public class Brick  {
         if(broken)
             return 0;
         int out  = 0;
-        if(brickFace.contains(b.right))
+        if(brickFace.contains(b.right)) //if brick in contact with the right of the ball
             out = LEFT_IMPACT;
         else if(brickFace.contains(b.left))
             out = RIGHT_IMPACT;

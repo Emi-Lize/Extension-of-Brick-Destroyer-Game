@@ -34,11 +34,11 @@ public class CementBrick extends Brick {
             return false;
         super.impact();
         if(!super.isBroken()){
-            crack.makeCrack(point,dir);
-            updateBrick();
-            return false;
+            crack.makeCrack(point,dir); //create crack
+            updateBrick(); //apply crack
+            return false; //brick did not break
         }
-        return true;
+        return true; //brick broke
     }
 
 

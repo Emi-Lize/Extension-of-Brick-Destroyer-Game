@@ -30,7 +30,7 @@ public class RubberBall extends Ball {
 
 
     public RubberBall(Point2D center){
-        super(center,DEF_RADIUS,DEF_RADIUS,DEF_INNER_COLOR,DEF_BORDER_COLOR);
+        super(center,DEF_RADIUS,DEF_RADIUS,DEF_INNER_COLOR,DEF_BORDER_COLOR); //center value is in GameBoard.java - wall
     }
 
 
@@ -40,6 +40,6 @@ public class RubberBall extends Ball {
         double x = center.getX() - (radiusA / 2);
         double y = center.getY() - (radiusB / 2);
 
-        return new Ellipse2D.Double(x,y,radiusA,radiusB);
+        return new Ellipse2D.Double(x,y,radiusA,radiusB); //creating ball shape
     }
 }

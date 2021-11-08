@@ -39,9 +39,9 @@ public class DebugPanel extends JPanel {
 
     public DebugPanel(Wall wall){
 
-        this.wall = wall;
+        this.wall = wall; //gameboard.java
 
-        initialize();
+        initialize(); //set layout of panel
 
         skipLevel = makeButton("Skip Level",e -> wall.nextLevel());
         resetBalls = makeButton("Reset Balls",e -> wall.resetBallCount());
@@ -49,7 +49,7 @@ public class DebugPanel extends JPanel {
         ballXSpeed = makeSlider(-4,4,e -> wall.setBallXSpeed(ballXSpeed.getValue()));
         ballYSpeed = makeSlider(-4,4,e -> wall.setBallYSpeed(ballYSpeed.getValue()));
 
-        this.add(skipLevel);
+        this.add(skipLevel); //placing position of button and slider in layout
         this.add(resetBalls);
 
         this.add(ballXSpeed);
@@ -64,20 +64,20 @@ public class DebugPanel extends JPanel {
 
     private JButton makeButton(String title, ActionListener e){
         JButton out = new JButton(title);
-        out.addActionListener(e);
+        out.addActionListener(e); //watch for button click
         return  out;
     }
 
     private JSlider makeSlider(int min, int max, ChangeListener e){
         JSlider out = new JSlider(min,max);
-        out.setMajorTickSpacing(1);
-        out.setSnapToTicks(true);
-        out.setPaintTicks(true);
-        out.addChangeListener(e);
+        out.setMajorTickSpacing(1); //spacing of options in slider
+        out.setSnapToTicks(true); //moves slider to nearest option
+        out.setPaintTicks(true); //when slider move, trail of line spacing follows
+        out.addChangeListener(e); //watch for any change in slider
         return out;
     }
 
-    public void setValues(int x,int y){
+    public void setValues(int x,int y){ //set position of slider based on current speed of ball
         ballXSpeed.setValue(x);
         ballYSpeed.setValue(y);
     }

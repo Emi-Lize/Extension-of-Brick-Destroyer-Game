@@ -27,7 +27,7 @@ import java.awt.event.WindowListener;
 
 public class GameFrame extends JFrame implements WindowFocusListener {
 
-    private static final String DEF_TITLE = "Brick Destroy";
+    private static final String DEF_TITLE = "Brick Destroy"; //title of gameframe heading
 
     private GameBoard gameBoard;
     private HomeMenu homeMenu;
@@ -39,41 +39,41 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
         gaming = false;
 
-        this.setLayout(new BorderLayout());
+        this.setLayout(new BorderLayout()); //create a layout without gaps
 
-        gameBoard = new GameBoard(this);
+        gameBoard = new GameBoard(this); //create a gameboard
 
-        homeMenu = new HomeMenu(this,new Dimension(450,300));
+        homeMenu = new HomeMenu(this,new Dimension(450,300)); //create home menu
 
-        this.add(homeMenu,BorderLayout.CENTER);
+        this.add(homeMenu,BorderLayout.CENTER); //add home menu to center of frame
 
-        this.setUndecorated(true);
+        this.setUndecorated(true); //no user Windows game frame with the heading and three top right buttons
 
 
     }
 
     public void initialize(){
-        this.setTitle(DEF_TITLE);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.pack();
-        this.autoLocate();
-        this.setVisible(true);
+        this.setTitle(DEF_TITLE); //set game frame heading title
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE); //close game when closes
+        this.pack(); //allow window to be resized - components get automatically adjusted
+        this.autoLocate(); //center the game
+        this.setVisible(true); //show window
     }
 
     public void enableGameBoard(){
-        this.dispose();
-        this.remove(homeMenu);
-        this.add(gameBoard,BorderLayout.CENTER);
-        this.setUndecorated(false);
+        this.dispose(); //remove the window
+        this.remove(homeMenu); //remove the home menu components
+        this.add(gameBoard,BorderLayout.CENTER); //create the gameboard window in the center
+        this.setUndecorated(false); //have windows frame
         initialize();
         /*to avoid problems with graphics focus controller is added here*/
-        this.addWindowFocusListener(this);
+        this.addWindowFocusListener(this); //watch if window is being focused on
 
     }
 
     private void autoLocate(){
-        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (size.width - this.getWidth()) / 2;
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize(); //get size of screen
+        int x = (size.width - this.getWidth()) / 2; //center the window
         int y = (size.height - this.getHeight()) / 2;
         this.setLocation(x,y);
     }
@@ -89,11 +89,11 @@ public class GameFrame extends JFrame implements WindowFocusListener {
             is useful only if the GameBoard as been displayed
             at least once
          */
-        gaming = true;
+        gaming = true; //if in focus then user is playing
     }
 
     @Override
-    public void windowLostFocus(WindowEvent windowEvent) {
+    public void windowLostFocus(WindowEvent windowEvent) { //if window not in focus
         if(gaming)
             gameBoard.onLostFocus();
 

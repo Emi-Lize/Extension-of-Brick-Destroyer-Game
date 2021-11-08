@@ -31,17 +31,17 @@ public class Player {
     private static final int DEF_MOVE_AMOUNT = 5;
 
     private Rectangle playerFace;
-    private Point ballPoint;
+    private Point ballPoint; //coordinate of ball
     private int moveAmount;
     private int min;
     private int max;
 
 
     public Player(Point ballPoint,int width,int height,Rectangle container) {
-        this.ballPoint = ballPoint;
+        this.ballPoint = ballPoint; //ball coordinate
         moveAmount = 0;
         playerFace = makeRectangle(width, height);
-        min = container.x + (width / 2);
+        min = container.x + (width / 2); //game boundary
         max = min + container.width - width;
 
     }
@@ -53,14 +53,14 @@ public class Player {
 
     public boolean impact(Ball b){
         return playerFace.contains(b.getPosition()) && playerFace.contains(b.down) ;
-    }
+    } //check if ball bottom hits the player
 
     public void move(){
-        double x = ballPoint.getX() + moveAmount;
-        if(x < min || x > max)
+        double x = ballPoint.getX() + moveAmount; //add to x the amount moved
+        if(x < min || x > max) //if player hits game boundary
             return;
-        ballPoint.setLocation(x,ballPoint.getY());
-        playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y);
+        ballPoint.setLocation(x,ballPoint.getY()); //save position of top center of player
+        playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y); //change coordinate of top left corner of player
     }
 
     public void moveLeft(){
@@ -79,8 +79,8 @@ public class Player {
         return  playerFace;
     }
 
-    public void moveTo(Point p){
+    public void moveTo(Point p){ //resetting position
         ballPoint.setLocation(p);
-        playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y);
+        playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y); //player reset so that ball is centered on it
     }
 }

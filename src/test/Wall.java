@@ -82,31 +82,31 @@ public class Wall {
          */
         brickCnt -= brickCnt % lineCnt;
 
-        int brickOnLine = brickCnt / lineCnt;
+        int brickOnLine = brickCnt / lineCnt; //10 bricks each line
 
-        double brickLen = drawArea.getWidth() / brickOnLine;
-        double brickHgt = brickLen / brickSizeRatio;
+        double brickLen = drawArea.getWidth() / brickOnLine; //get length of brick
+        double brickHgt = brickLen / brickSizeRatio; //length divide by 3 is height
 
         brickCnt += lineCnt / 2;
 
-        Brick[] tmp  = new Brick[brickCnt];
+        Brick[] tmp  = new Brick[brickCnt]; //list of brick objects
 
         Dimension brickSize = new Dimension((int) brickLen,(int) brickHgt);
         Point p = new Point();
 
         int i;
         for(i = 0; i < tmp.length; i++){
-            int line = i / brickOnLine;
-            if(line == lineCnt)
+            int line = i / brickOnLine; //line is INT - line is the row no.
+            if(line == lineCnt) //when all bricks are made
                 break;
-            double x = (i % brickOnLine) * brickLen;
-            x =(line % 2 == 0) ? x : (x - (brickLen / 2));
-            double y = (line) * brickHgt;
-            p.setLocation(x,y);
-            tmp[i] = makeBrick(p,brickSize,type);
+            double x = (i % brickOnLine) * brickLen; //set x of bricks per line
+            x =(line % 2 == 0) ? x : (x - (brickLen / 2)); //for second line, x starts with (-half brick length) so half omitted from screen
+            double y = (line) * brickHgt; //set top y of bricks per line
+            p.setLocation(x,y); //top left of brick
+            tmp[i] = makeBrick(p,brickSize,type); //make brick
         }
 
-        for(double y = brickHgt;i < tmp.length;i++, y += 2*brickHgt){
+        for(double y = brickHgt;i < tmp.length;i++, y += 2*brickHgt){ //creating second row last brick
             double x = (brickOnLine * brickLen) - (brickLen / 2);
             p.setLocation(x,y);
             tmp[i] = new ClayBrick(p,brickSize);
@@ -124,8 +124,8 @@ public class Wall {
 
         int brickOnLine = brickCnt / lineCnt;
 
-        int centerLeft = brickOnLine / 2 - 1;
-        int centerRight = brickOnLine / 2 + 1;
+        int centerLeft = brickOnLine / 2 - 1; // 4
+        int centerRight = brickOnLine / 2 + 1; // 6
 
         double brickLen = drawArea.getWidth() / brickOnLine;
         double brickHgt = brickLen / brickSizeRatio;
@@ -142,17 +142,17 @@ public class Wall {
             int line = i / brickOnLine;
             if(line == lineCnt)
                 break;
-            int posX = i % brickOnLine;
-            double x = posX * brickLen;
-            x =(line % 2 == 0) ? x : (x - (brickLen / 2));
-            double y = (line) * brickHgt;
+            int posX = i % brickOnLine; //index of brick per row
+            double x = posX * brickLen; //x of brick
+            x =(line % 2 == 0) ? x : (x - (brickLen / 2)); //for second line, x starts with (-half brick length) so half omitted from screen
+            double y = (line) * brickHgt; //set top y of bricks per line
             p.setLocation(x,y);
 
-            boolean b = ((line % 2 == 0 && i % 2 == 0) || (line % 2 != 0 && posX > centerLeft && posX <= centerRight));
-            tmp[i] = b ?  makeBrick(p,brickSize,typeA) : makeBrick(p,brickSize,typeB);
+            boolean b = ((line % 2 == 0 && i % 2 == 0) || (line % 2 != 0 && posX > centerLeft && posX <= centerRight)); //if 1/3 row and odd brick then type A
+            tmp[i] = b ?  makeBrick(p,brickSize,typeA) : makeBrick(p,brickSize,typeB); // if 2 row and center bricks then type B
         }
 
-        for(double y = brickHgt;i < tmp.length;i++, y += 2*brickHgt){
+        for(double y = brickHgt;i < tmp.length;i++, y += 2*brickHgt){ //making second row last brick
             double x = (brickOnLine * brickLen) - (brickLen / 2);
             p.setLocation(x,y);
             tmp[i] = makeBrick(p,brickSize,typeA);
@@ -165,7 +165,7 @@ public class Wall {
     }
 
     private Brick[][] makeLevels(Rectangle drawArea,int brickCount,int lineCount,double brickDimensionRatio){
-        Brick[][] tmp = new Brick[LEVELS_COUNT][];
+        Brick[][] tmp = new Brick[LEVELS_COUNT][]; //tmp[level][bricks]
         tmp[0] = makeSingleTypeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,CLAY);
         tmp[1] = makeChessboardLevel(drawArea,brickCount,lineCount,brickDimensionRatio,CLAY,CEMENT);
         tmp[2] = makeChessboardLevel(drawArea,brickCount,lineCount,brickDimensionRatio,CLAY,STEEL);
@@ -179,22 +179,22 @@ public class Wall {
     }
 
     public void findImpacts(){
-        if(player.impact(ball)){
+        if(player.impact(ball)){ //if ball hits player
             ball.reverseY();
         }
-        else if(impactWall()){
+        else if(impactWall()){ //check if brick broke
             /*for efficiency reverse is done into method impactWall
             * because for every brick program checks for horizontal and vertical impacts
             */
             brickCount--;
         }
-        else if(impactBorder()) {
+        else if(impactBorder()) { //if hit left and right of game boundary
             ball.reverseX();
         }
-        else if(ball.getPosition().getY() < area.getY()){
+        else if(ball.getPosition().getY() < area.getY()){ //if hit top of game boundary
             ball.reverseY();
         }
-        else if(ball.getPosition().getY() > area.getY() + area.getHeight()){
+        else if(ball.getPosition().getY() > area.getY() + area.getHeight()){ //if hit bottom of game boundary
             ballCount--;
             ballLost = true;
         }
@@ -202,7 +202,7 @@ public class Wall {
 
     private boolean impactWall(){
         for(Brick b : bricks){
-            switch(b.findImpact(ball)) {
+            switch(b.findImpact(ball)) { //check where brick got hit - change trajectory of ball - if neither means no brick
                 //Vertical Impact
                 case Brick.UP_IMPACT:
                     ball.reverseY();
@@ -220,10 +220,10 @@ public class Wall {
                     return b.setImpact(ball.left,Brick.Crack.LEFT);
             }
         }
-        return false;
+        return false; //no impact on brick
     }
 
-    private boolean impactBorder(){
+    private boolean impactBorder(){ //if ball hit left and right of game boundary
         Point2D p = ball.getPosition();
         return ((p.getX() < area.getX()) ||(p.getX() > (area.getX() + area.getWidth())));
     }
@@ -256,7 +256,7 @@ public class Wall {
     }
 
     public void wallReset(){
-        for(Brick b : bricks)
+        for(Brick b : bricks) //bring back all the bricks
             b.repair();
         brickCount = bricks.length;
         ballCount = 3;

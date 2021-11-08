@@ -36,28 +36,28 @@ public class DebugConsole extends JDialog implements WindowListener{
     public DebugConsole(JFrame owner,Wall wall,GameBoard gameBoard){
 
         this.wall = wall;
-        this.owner = owner;
+        this.owner = owner; //gameframe based on user computer windows
         this.gameBoard = gameBoard;
         initialize();
 
-        debugPanel = new DebugPanel(wall);
-        this.add(debugPanel,BorderLayout.CENTER);
+        debugPanel = new DebugPanel(wall); //create a debug panel
+        this.add(debugPanel,BorderLayout.CENTER); //adds the debug panel to the center of the console
 
 
-        this.pack();
+        this.pack(); //can resize debug console and components automatically resized
     }
 
     private void initialize(){
-        this.setModal(true);
-        this.setTitle(TITLE);
-        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        this.setLayout(new BorderLayout());
-        this.addWindowListener(this);
-        this.setFocusable(true);
+        this.setModal(true); //can't touch game until debug console closed
+        this.setTitle(TITLE); //set title of debug console
+        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); //close console but application still running in background
+        this.setLayout(new BorderLayout()); //no gap between components
+        this.addWindowListener(this); //WindowListener in debug console will watch for any event
+        this.setFocusable(true); //allow debug console to be focused on
     }
 
 
-    private void setLocation(){
+    private void setLocation(){ //set location of debug console to center
         int x = ((owner.getWidth() - this.getWidth()) / 2) + owner.getX();
         int y = ((owner.getHeight() - this.getHeight()) / 2) + owner.getY();
         this.setLocation(x,y);
@@ -70,9 +70,9 @@ public class DebugConsole extends JDialog implements WindowListener{
     }
 
     @Override
-    public void windowClosing(WindowEvent windowEvent) {
+    public void windowClosing(WindowEvent windowEvent) { //close the game
         gameBoard.repaint();
-    }
+    } //reset the game when game is closed to default - remove changes done by debug console
 
     @Override
     public void windowClosed(WindowEvent windowEvent) {
@@ -90,10 +90,10 @@ public class DebugConsole extends JDialog implements WindowListener{
     }
 
     @Override
-    public void windowActivated(WindowEvent windowEvent) {
-        setLocation();
+    public void windowActivated(WindowEvent windowEvent) { //open debug console
+        setLocation(); //set location of debug console
         Ball b = wall.ball;
-        debugPanel.setValues(b.getSpeedX(),b.getSpeedY());
+        debugPanel.setValues(b.getSpeedX(),b.getSpeedY()); //setting position of slider based on current speed of ball
     }
 
     @Override

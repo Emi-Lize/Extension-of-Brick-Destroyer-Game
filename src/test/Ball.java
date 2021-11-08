@@ -28,38 +28,38 @@ abstract public class Ball {
     public Ball(Point2D center,int radiusA,int radiusB,Color inner,Color border){
         this.center = center;
 
-        up = new Point2D.Double();
+        up = new Point2D.Double(); //creating coordinates
         down = new Point2D.Double();
         left = new Point2D.Double();
         right = new Point2D.Double();
 
-        up.setLocation(center.getX(),center.getY()-(radiusB / 2));
+        up.setLocation(center.getX(),center.getY()-(radiusB / 2)); //setting coordinates
         down.setLocation(center.getX(),center.getY()+(radiusB / 2));
 
         left.setLocation(center.getX()-(radiusA /2),center.getY());
         right.setLocation(center.getX()+(radiusA /2),center.getY());
 
 
-        ballFace = makeBall(center,radiusA,radiusB);
+        ballFace = makeBall(center,radiusA,radiusB); //creating ball
         this.border = border;
         this.inner  = inner;
         speedX = 0;
         speedY = 0;
     }
 
-    protected abstract Shape makeBall(Point2D center,int radiusA,int radiusB);
+    protected abstract Shape makeBall(Point2D center,int radiusA,int radiusB); //implemented in rubberball.java
 
     public void move(){
-        RectangularShape tmp = (RectangularShape) ballFace;
-        center.setLocation((center.getX() + speedX),(center.getY() + speedY));
+        RectangularShape tmp = (RectangularShape) ballFace; //create a temporary square frame
+        center.setLocation((center.getX() + speedX),(center.getY() + speedY)); //change the center of the ball
         double w = tmp.getWidth();
         double h = tmp.getHeight();
 
-        tmp.setFrame((center.getX() -(w / 2)),(center.getY() - (h / 2)),w,h);
-        setPoints(w,h);
+        tmp.setFrame((center.getX() -(w / 2)),(center.getY() - (h / 2)),w,h); //create the square frame of the ball (x,y,width,height)
+        setPoints(w,h); //change the 4 coordinates of the ball
 
 
-        ballFace = tmp;
+        ballFace = tmp; //replace with the original ball
     }
 
     public void setSpeed(int x,int y){
@@ -99,10 +99,10 @@ abstract public class Ball {
         return ballFace;
     }
 
-    public void moveTo(Point p){
+    public void moveTo(Point p){ //used in wall.java - ballreset
         center.setLocation(p);
 
-        RectangularShape tmp = (RectangularShape) ballFace;
+        RectangularShape tmp = (RectangularShape) ballFace; //same concept as move
         double w = tmp.getWidth();
         double h = tmp.getHeight();
 
@@ -110,7 +110,7 @@ abstract public class Ball {
         ballFace = tmp;
     }
 
-    private void setPoints(double width,double height){
+    private void setPoints(double width,double height){ //setting 4 coordinates of ball
         up.setLocation(center.getX(),center.getY()-(height / 2));
         down.setLocation(center.getX(),center.getY()+(height / 2));
 

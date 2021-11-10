@@ -21,6 +21,9 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 
+/**
+ * This represents the rubber ball which inherits from ball
+ */
 public class RubberBall extends Ball {
 
 
@@ -28,12 +31,21 @@ public class RubberBall extends Ball {
     private static final Color DEF_INNER_COLOR = new Color(255, 219, 88);
     private static final Color DEF_BORDER_COLOR = DEF_INNER_COLOR.darker().darker();
 
-
+    /**
+     * This represents the rubber ball and initialises it
+     * @param center The coordinates of the center of the ball
+     */
     public RubberBall(Point2D center){
         super(center,DEF_RADIUS,DEF_RADIUS,DEF_INNER_COLOR,DEF_BORDER_COLOR); //center value is in GameBoard.java - wall
     }
 
-
+    /**
+     * Creates the shape of the ball
+     * @param center The coordinates of the center of the ball
+     * @param radiusA The vertical radius of the ball
+     * @param radiusB The horizontal radius of the ball
+     * @return The shape of the ball
+     */
     @Override
     protected Shape makeBall(Point2D center, int radiusA, int radiusB) {
 

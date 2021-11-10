@@ -6,9 +6,13 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
+/*
+  Created by filippo on 04/09/16.
+
+ */
+
 /**
- * Created by filippo on 04/09/16.
- *
+ * This represents the brick
  */
 abstract public class Brick  {
 
@@ -23,7 +27,9 @@ abstract public class Brick  {
     public static final int RIGHT_IMPACT = 400;
 
 
-
+    /**
+     * This represents the cracks in the brick
+     */
     public class Crack{
 
         private static final int CRACK_SECTIONS = 3;
@@ -43,7 +49,10 @@ abstract public class Brick  {
         private int crackDepth;
         private int steps;
 
-
+        /**
+         * This represents the crack in the brick and initialises it
+         * @param steps The number of steps in the crack
+         */
         public Crack(int crackDepth, int steps){
 
             crack = new GeneralPath();
@@ -53,16 +62,27 @@ abstract public class Brick  {
         }
 
 
-
+        /**
+         * Draws the crack in the brick
+         * @return The path of the crack
+         */
         public GeneralPath draw(){
 
             return crack;
         }
 
+        /**
+         * Removes all the crack paths in the game
+         */
         public void reset(){
             crack.reset();
         }
 
+        /**
+         * Finds the start and end point of the crack
+         * @param point The coordinates of the point of the ball which hits the brick
+         * @param direction The side of the brick which was hit by the ball
+         */
         protected void makeCrack(Point2D point, int direction){
             Rectangle bounds = Brick.this.brickFace.getBounds();
 
@@ -103,6 +123,11 @@ abstract public class Brick  {
             }
         }
 
+        /**
+         * Creates the crack on the brick
+         * @param start The coordinates of the start of the crack
+         * @param end The coordinates of the end of the crack
+         */
         protected void makeCrack(Point start, Point end){
 
             GeneralPath path = new GeneralPath();
@@ -134,6 +159,10 @@ abstract public class Brick  {
             crack.append(path,true); //crack holds the crack now
         }
 
+        /**
+         * Randomises the height of each step
+         * @return A random integer
+         */
         private int randomInBounds(int bound){ //randomise height of steps
             int n = (bound * 2) + 1;
             return rnd.nextInt(n) - bound;
@@ -154,6 +183,13 @@ abstract public class Brick  {
 
         }
 
+        /**
+         * Creates a random point between a range as the end of the crack
+         * @param from The coordinates of the beginning of the range
+         * @param to The coordinates of the end of the range
+         * @param direction The side of the brick the end of the crack appears
+         * @return The coordinates of the end of the crack
+         */
         private Point makeRandomPoint(Point from,Point to, int direction){
 
             Point out = new Point();
@@ -187,7 +223,15 @@ abstract public class Brick  {
 
     private boolean broken;
 
-
+    /**
+     * This represents the brick and initialises it
+     * @param name The type of brick
+     * @param pos The coordinates of the top left corner of the brick
+     * @param size The width and height of the brick
+     * @param border The colour of the border of the brick
+     * @param inner The colour of the inner part of the brick
+     * @param strength The number of times the brick has to be hit to be broken
+     */
     public Brick(String name, Point pos,Dimension size,Color border,Color inner,int strength){
         rnd = new Random();
         broken = false;
@@ -199,8 +243,20 @@ abstract public class Brick  {
 
     }
 
+    /**
+     * Creates the shape of the brick
+     * @param pos The coordinates of the top left corner of the brick
+     * @param size The width and height of the brick
+     * @return The shape of the brick
+     */
     protected abstract Shape makeBrickFace(Point pos,Dimension size);
 
+    /**
+     * Checks if the ball has hit a brick which has not been broken
+     * @param point The coordinates of the point of the ball which hits a brick
+     * @param dir The side of the brick which was hit
+     * @return A boolean representing if a brick has been broken
+     */
     public  boolean setImpact(Point2D point , int dir){
         if(broken)
             return false;
@@ -208,19 +264,34 @@ abstract public class Brick  {
         return  broken;
     }
 
+    /**
+     * Gets the shape of the brick
+     * @return The shape of the brick
+     */
     public abstract Shape getBrick();
 
 
-
+    /**
+     * Gets the colour of the border of the brick
+     * @return The colour of the border of the brick
+     */
     public Color getBorderColor(){
         return  border;
     }
 
+    /**
+     * Gets the colour of the inner part of the brick
+     * @return The colour of the inner part of the brick
+     */
     public Color getInnerColor(){
         return inner;
     }
 
-
+    /**
+     * Finds which part of the brick was hit by the ball
+     * @param b The ball object
+     * @return The side of the brick which was hit by the ball
+     */
     public final int findImpact(Ball b){
         if(broken)
             return 0;
@@ -236,15 +307,25 @@ abstract public class Brick  {
         return out;
     }
 
+    /**
+     * Checks if the brick is broken
+     * @return A boolean representing if the brick is broken
+     */
     public final boolean isBroken(){
         return broken;
     }
 
+    /**
+     * Resets the brick to its initial property
+     */
     public void repair() {
         broken = false;
         strength = fullStrength;
     }
 
+    /**
+     * Reduces the strength of the brick and decides if it's broken when hit
+     */
     public void impact(){
         strength--;
         broken = (strength == 0);

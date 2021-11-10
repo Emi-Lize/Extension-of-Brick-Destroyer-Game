@@ -21,7 +21,9 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
-
+/**
+ * This represents the steel brick which inherits from brick
+ */
 public class SteelBrick extends Brick {
 
     private static final String NAME = "Steel Brick";
@@ -33,23 +35,43 @@ public class SteelBrick extends Brick {
     private Random rnd;
     private Shape brickFace;
 
+    /**
+     * This represents the steel brick and initialises it
+     * @param point The coordinates of the top left corner of the brick
+     * @param size The width and height of the brick
+     */
     public SteelBrick(Point point, Dimension size){
         super(NAME,point,size,DEF_BORDER,DEF_INNER,STEEL_STRENGTH);
         rnd = new Random();
         brickFace = super.brickFace;
     }
 
-
+    /**
+     * Creates the shape of the brick
+     * @param pos The coordinates of the top left corner of the brick
+     * @param size The width and height of the brick
+     * @return The shape of the brick
+     */
     @Override
     protected Shape makeBrickFace(Point pos, Dimension size) {
         return new Rectangle(pos,size);
     }
 
+    /**
+     * Gets the shape of the brick
+     * @return The shape of the brick
+     */
     @Override
     public Shape getBrick() {
         return brickFace;
     }
 
+    /**
+     * Checks if the ball has hit a brick which has not been broken
+     * @param point The coordinates of the top left corner of the brick
+     * @param dir The side of the brick which was hit
+     * @return A boolean representing if the brick has broke
+     */
     public  boolean setImpact(Point2D point , int dir){
         if(super.isBroken())
             return false;
@@ -57,6 +79,10 @@ public class SteelBrick extends Brick {
         return  super.isBroken();
     }
 
+    /**
+     * Checks if the brick has broken
+     * If the random number generated is less than 0.4, the brick will break
+     */
     public void impact(){
         if(rnd.nextDouble() < STEEL_PROBABILITY){
             super.impact();

@@ -21,7 +21,9 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Random;
 
-
+/**
+ * This represents the set of bricks
+ */
 public class Wall {
 
     private static final int LEVELS_COUNT = 4;
@@ -45,6 +47,14 @@ public class Wall {
     private int ballCount;
     private boolean ballLost;
 
+    /**
+     * This represents the set of bricks
+     * @param drawArea The rectangle shape of the game board
+     * @param brickCount The number of bricks per level
+     * @param lineCount The number of lines of bricks per level
+     * @param brickDimensionRatio The height to width ratio of the brick
+     * @param ballPos The coordinates of the center of the ball
+     */
     public Wall(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, Point ballPos){
 
         this.startPoint = new Point(ballPos);
@@ -75,6 +85,15 @@ public class Wall {
 
     }
 
+    /**
+     * Make level 1 of the game
+     * @param drawArea The rectangle shape of the game board
+     * @param brickCnt The number of bricks in the level
+     * @param lineCnt The number of lines of bricks in the level
+     * @param brickSizeRatio The height to width ratio of the brick
+     * @param type The type of brick
+     * @return An array containing brick objects
+     */
     private Brick[] makeSingleTypeLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int type){
         /*
           if brickCount is not divisible by line count,brickCount is adjusted to the biggest
@@ -115,6 +134,16 @@ public class Wall {
 
     }
 
+    /**
+     * Make level 2, 3 and 4 of the game
+     * @param drawArea The rectangle shape of the game board
+     * @param brickCnt The number of bricks in the level
+     * @param lineCnt The number of lines of bricks in the level
+     * @param brickSizeRatio The height to width ratio of the brick
+     * @param typeA The first type of brick
+     * @param typeB The second type of brick
+     * @return An array containing brick objects
+     */
     private Brick[] makeChessboardLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, int typeA, int typeB){
         /*
           if brickCount is not divisible by line count,brickCount is adjusted to the biggest
@@ -160,10 +189,22 @@ public class Wall {
         return tmp;
     }
 
+    /**
+     * Creates a ball
+     * @param ballPos The coordinates of the center of the ball
+     */
     private void makeBall(Point2D ballPos){
         ball = new RubberBall(ballPos);
     }
 
+    /**
+     * Creates each level in the game
+     * @param drawArea The rectangle shape of the game board
+     * @param brickCount The number of bricks in the level
+     * @param lineCount The number of lines of bricks in the level
+     * @param brickDimensionRatio The height to width ratio of the brick
+     * @return An array of the levels and brick objects
+     */
     private Brick[][] makeLevels(Rectangle drawArea,int brickCount,int lineCount,double brickDimensionRatio){
         Brick[][] tmp = new Brick[LEVELS_COUNT][]; //tmp[level][bricks]
         tmp[0] = makeSingleTypeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,CLAY);
@@ -173,11 +214,17 @@ public class Wall {
         return tmp;
     }
 
+    /**
+     * Moves the player and the ball
+     */
     public void move(){
         player.move();
         ball.move();
     }
 
+    /**
+     * Checks if ball has hit either the player, brick and the boundary of the game frame
+     */
     public void findImpacts(){
         if(player.impact(ball)){ //if ball hits player
             ball.reverseY();
@@ -200,6 +247,10 @@ public class Wall {
         }
     }
 
+    /**
+     * Checks whether the ball hit a brick and if so, which part of the brick was hit by the ball
+     * @return A boolean which represents if the ball had hit a brick
+     */
     private boolean impactWall(){
         for(Brick b : bricks){
             switch(b.findImpact(ball)) { //check where brick got hit - change trajectory of ball - if neither means no brick
@@ -223,23 +274,42 @@ public class Wall {
         return false; //no impact on brick
     }
 
+    /**
+     * Checks if the ball hit the left or right of the game board
+     * @return A boolean which represents if the ball hit the left or right of the game board
+     */
     private boolean impactBorder(){ //if ball hit left and right of game boundary
         Point2D p = ball.getPosition();
         return ((p.getX() < area.getX()) ||(p.getX() > (area.getX() + area.getWidth())));
     }
 
+    /**
+     * Gets the number of bricks per level
+     * @return The number of bricks per level
+     */
     public int getBrickCount(){
         return brickCount;
     }
 
+    /**
+     * Gets the number of balls left
+     * @return The number of balls left
+     */
     public int getBallCount(){
         return ballCount;
     }
 
+    /**
+     * Checks if the ball was lost
+     * @return A boolean which represents if the ball was lost
+     */
     public boolean isBallLost(){
         return ballLost;
     }
 
+    /**
+     * Resets the position of the ball and player and the speed of the ball
+     */
     public void ballReset(){
         player.moveTo(startPoint);
         ball.moveTo(startPoint);
@@ -255,6 +325,9 @@ public class Wall {
         ballLost = false;
     }
 
+    /**
+     * Resets the bricks in a level to its initial position and property
+     */
     public void wallReset(){
         for(Brick b : bricks) //bring back all the bricks
             b.repair();
@@ -262,35 +335,68 @@ public class Wall {
         ballCount = 3;
     }
 
+    /**
+     * Checks if there is no more balls left
+     * @return A boolean which represents that there are no balls left
+     */
     public boolean ballEnd(){
         return ballCount == 0;
     }
 
+    /**
+     * Checks if the level is cleared
+     * @return A boolean which represents that there are no bricks left in the level
+     */
     public boolean isDone(){
         return brickCount == 0;
     }
 
+    /**
+     * Moves to the next level
+     */
     public void nextLevel(){
         bricks = levels[level++];
         this.brickCount = bricks.length;
     }
 
+    /**
+     * Checks if there are still more levels
+     * @return A boolean which represents if there are still more levels
+     */
     public boolean hasLevel(){
         return level < levels.length;
     }
 
+    /**
+     * Sets the speed of the ball along the x-axis
+     * @param s The speed of the ball along the x-axis
+     */
     public void setBallXSpeed(int s){
         ball.setXSpeed(s);
     }
 
+    /**
+     * Sets the speed of the ball along the y-axis
+     * @param s The speed of the ball along the y-axis
+     */
     public void setBallYSpeed(int s){
         ball.setYSpeed(s);
     }
 
+    /**
+     * Resets the number of balls
+     */
     public void resetBallCount(){
         ballCount = 3;
     }
 
+    /**
+     * Creates a brick
+     * @param point The coordinates of the top left corner of the brick
+     * @param size The width and height of the brick
+     * @param type The type of brick
+     * @return A brick object
+     */
     private Brick makeBrick(Point point, Dimension size, int type){
         Brick out;
         switch(type){

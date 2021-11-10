@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 
-
+/**
+ * This represents the cement brick which inherits brick
+ */
 public class CementBrick extends Brick {
 
 
@@ -16,18 +18,34 @@ public class CementBrick extends Brick {
     private Crack crack;
     private Shape brickFace;
 
-
+    /**
+     * This represents cement brick and initialises it
+     * @param point The coordinates of the top left corner of the brick
+     * @param size The width and height of the brick
+     */
     public CementBrick(Point point, Dimension size){
         super(NAME,point,size,DEF_BORDER,DEF_INNER,CEMENT_STRENGTH);
         crack = new Crack(DEF_CRACK_DEPTH,DEF_STEPS);
         brickFace = super.brickFace;
     }
 
+    /**
+     * Creates the shape of the brick
+     * @param pos The coordinates of the top left corner of the brick
+     * @param size The width and height of the brick
+     * @return The shape of the brick
+     */
     @Override
     protected Shape makeBrickFace(Point pos, Dimension size) {
         return new Rectangle(pos,size);
     }
 
+    /**
+     * Checks if the ball has hit a brick which has not been broken
+     * @param point The coordinates of the point of the ball which hits the brick
+     * @param dir The side of the brick which was hit
+     * @return A boolean representing if the brick has broken
+     */
     @Override
     public boolean setImpact(Point2D point, int dir) {
         if(super.isBroken())
@@ -41,12 +59,18 @@ public class CementBrick extends Brick {
         return true; //brick broke
     }
 
-
+    /**
+     * Gets the shape of the brick
+     * @return The shape of the brick
+     */
     @Override
     public Shape getBrick() {
         return brickFace;
     }
 
+    /**
+     * Draws a crack on the brick if it has been hit only once
+     */
     private void updateBrick(){
         if(!super.isBroken()){
             GeneralPath gp = crack.draw();
@@ -55,6 +79,9 @@ public class CementBrick extends Brick {
         }
     }
 
+    /**
+     * Resets the brick to its initial property and removes the crack
+     */
     public void repair(){
         super.repair();
         crack.reset();

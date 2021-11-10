@@ -25,7 +25,9 @@ import java.awt.event.MouseMotionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
-
+/**
+ * This represents the home menu of the game
+ */
 public class HomeMenu extends JComponent implements MouseListener, MouseMotionListener {
 
     private static final String GREETINGS = "Welcome to:";
@@ -61,7 +63,11 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     private boolean startClicked;
     private boolean menuClicked;
 
-
+    /**
+     * This represents the home menu of the game and initialises it
+     * @param owner The window the game frame is in
+     * @param area The area of the home menu
+     */
     public HomeMenu(GameFrame owner,Dimension area){
 
         this.setFocusable(true); //focus on home menu
@@ -93,12 +99,18 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     }
 
-
+    /**
+     * Draws the home menu
+     * @param g An object which draws the components
+     */
     public void paint(Graphics g){
         drawMenu((Graphics2D)g);
     }
 
-
+    /**
+     * Draws the components in the home menu
+     * @param g2d An object which draws the 2D components
+     */
     public void drawMenu(Graphics2D g2d){
 
         drawContainer(g2d);
@@ -126,6 +138,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         g2d.setColor(prevColor);
     }
 
+    /**
+     * Draws the border of the home menu frame and sets the background colour
+     * @param g2d An object which draws the 2D components
+     */
     private void drawContainer(Graphics2D g2d){
         Color prev = g2d.getColor();
 
@@ -147,6 +163,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         g2d.setColor(prev);
     }
 
+    /**
+     * Draws the text on the home menu at its correct position
+     * @param g2d An object which draws the 2D components
+     */
     private void drawText(Graphics2D g2d){
 
         g2d.setColor(TEXT_COLOR);
@@ -180,6 +200,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     }
 
+    /**
+     * Draws the Start and Exit button on the home menu
+     * @param g2d An object which draws the 2D components
+     */
     private void drawButton(Graphics2D g2d){
 
         FontRenderContext frc = g2d.getFontRenderContext();
@@ -248,6 +272,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     }
 
+    /**
+     * Checks if the button was clicked and invokes a method if so
+     * @param mouseEvent An object which checks if there's any action from the mouse
+     */
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
@@ -261,6 +289,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         }
     }
 
+    /**
+     * Checks when the mouse is pressed and changes the colour of the button
+     * @param mouseEvent An object which checks if there's any action from the mouse
+     */
     @Override
     public void mousePressed(MouseEvent mouseEvent) { //change colour when button clicked
         Point p = mouseEvent.getPoint();
@@ -275,6 +307,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         }
     }
 
+    /**
+     * Checks when the mouse is released and changes the colour of the button back to its initial colour
+     * @param mouseEvent An object which checks if there's any action from the mouse
+     */
     @Override
     public void mouseReleased(MouseEvent mouseEvent) { //change colour back when button unclicked
         if(startClicked ){
@@ -303,6 +339,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     }
 
+    /**
+     * Checks if the mouse has moved and where it is
+     * @param mouseEvent An object which checks if there's any action from the mouse
+     */
     @Override
     public void mouseMoved(MouseEvent mouseEvent) { //change cursor shape
         Point p = mouseEvent.getPoint();

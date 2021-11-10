@@ -21,7 +21,9 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-
+/**
+ * This represents the rectangle the player controls
+ */
 public class Player {
 
 
@@ -36,7 +38,13 @@ public class Player {
     private int min;
     private int max;
 
-
+    /**
+     * This represents the rectangle the player controls and initialises it
+     * @param ballPoint The coordinates of the center of the ball
+     * @param width The width of the rectangle
+     * @param height The height of the rectangle
+     * @param container The rectangle shape of the game board
+     */
     public Player(Point ballPoint,int width,int height,Rectangle container) {
         this.ballPoint = ballPoint; //ball coordinate
         moveAmount = 0;
@@ -46,15 +54,30 @@ public class Player {
 
     }
 
+    /**
+     * Creates the shape of the player's rectangle
+     * @param width The width of the player's rectangle
+     * @param height The height of the player's rectangle
+     * @return The shape of the player's rectangle
+     */
     private Rectangle makeRectangle(int width,int height){
         Point p = new Point((int)(ballPoint.getX() - (width / 2)),(int)ballPoint.getY());
         return  new Rectangle(p,new Dimension(width,height));
     }
 
+    /**
+     * Checks if the player's rectangle has hit the ball
+     * It does this by checking if the bottom of the ball has come in contact with the player's rectangle
+     * @param b The ball object
+     * @return A boolean which represents if the player's rectangle has hit the ball
+     */
     public boolean impact(Ball b){
         return playerFace.contains(b.getPosition()) && playerFace.contains(b.down) ;
     } //check if ball bottom hits the player
 
+    /**
+     * Moves the position of the player's rectangle
+     */
     public void move(){
         double x = ballPoint.getX() + moveAmount; //add to x the amount moved
         if(x < min || x > max) //if player hits game boundary
@@ -63,22 +86,39 @@ public class Player {
         playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y); //change coordinate of top left corner of player
     }
 
+    /**
+     * Moves the player's rectangle to the left
+     */
     public void moveLeft(){
         moveAmount = -DEF_MOVE_AMOUNT;
     }
 
+    /**
+     * Moves the player's rectangle to the right
+     */
     public void movRight(){
         moveAmount = DEF_MOVE_AMOUNT;
     }
 
+    /**
+     * Stops the player's rectangle from moving
+     */
     public void stop(){
         moveAmount = 0;
     }
 
+    /**
+     * Gets the shape of the player's rectangle
+     * @return Returns the shape of the player's rectangle
+     */
     public Shape getPlayerFace(){
         return  playerFace;
     }
 
+    /**
+     * Resets the position of the player's rectangle to the initial position
+     * @param p The center of the ball at its initial position
+     */
     public void moveTo(Point p){ //resetting position
         ballPoint.setLocation(p);
         playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y); //player reset so that ball is centered on it

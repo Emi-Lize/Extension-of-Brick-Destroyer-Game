@@ -23,7 +23,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 
-
+/**
+ * This represents the debug panel
+ */
 public class DebugPanel extends JPanel {
 
     private static final Color DEF_BKG = Color.WHITE;
@@ -37,6 +39,10 @@ public class DebugPanel extends JPanel {
 
     private Wall wall;
 
+    /**
+     * This represents the debug panel and initialises it
+     * @param wall The wall object
+     */
     public DebugPanel(Wall wall){
 
         this.wall = wall; //gameboard.java
@@ -57,17 +63,33 @@ public class DebugPanel extends JPanel {
 
     }
 
+    /**
+     * Sets the background of the panel and its grid layout
+     */
     private void initialize(){
         this.setBackground(DEF_BKG);
         this.setLayout(new GridLayout(2,2));
     }
 
+    /**
+     * Makes the buttons in the panel
+     * @param title The text displayed on the button
+     * @param e The object which listens for an event and performs an action when an event occurs
+     * @return The button object
+     */
     private JButton makeButton(String title, ActionListener e){
         JButton out = new JButton(title);
         out.addActionListener(e); //watch for button click
         return  out;
     }
 
+    /**
+     * Makes a slider in the panel
+     * @param min The minimum value
+     * @param max The maximum value
+     * @param e The object which listens for a change in the slider and performs an action when a change occurs
+     * @return The slider object
+     */
     private JSlider makeSlider(int min, int max, ChangeListener e){
         JSlider out = new JSlider(min,max);
         out.setMajorTickSpacing(1); //spacing of options in slider
@@ -77,6 +99,11 @@ public class DebugPanel extends JPanel {
         return out;
     }
 
+    /**
+     * Sets the initial position of the slider based on the current speed of the ball
+     * @param x The speed of the ball along the x-axis
+     * @param y The speed of the ball along the y-axis
+     */
     public void setValues(int x,int y){ //set position of slider based on current speed of ball
         ballXSpeed.setValue(x);
         ballYSpeed.setValue(y);

@@ -22,6 +22,9 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+/**
+ * This represents the window which displays the debug panel
+ */
 public class DebugConsole extends JDialog implements WindowListener{
 
     private static final String TITLE = "Debug Console";
@@ -32,7 +35,12 @@ public class DebugConsole extends JDialog implements WindowListener{
     private GameBoard gameBoard;
     private Wall wall;
 
-
+    /**
+     * This represents the debug console
+     * @param owner The window the game board is in
+     * @param wall The wall object
+     * @param gameBoard The game board object
+     */
     public DebugConsole(JFrame owner,Wall wall,GameBoard gameBoard){
 
         this.wall = wall;
@@ -47,6 +55,9 @@ public class DebugConsole extends JDialog implements WindowListener{
         this.pack(); //can resize debug console and components automatically resized
     }
 
+    /**
+     * Setting up the properties of the debug console
+     */
     private void initialize(){
         this.setModal(true); //can't touch game until debug console closed
         this.setTitle(TITLE); //set title of debug console
@@ -56,7 +67,9 @@ public class DebugConsole extends JDialog implements WindowListener{
         this.setFocusable(true); //allow debug console to be focused on
     }
 
-
+    /**
+     * Setting the debug console to be in the center of the game window
+     */
     private void setLocation(){ //set location of debug console to center
         int x = ((owner.getWidth() - this.getWidth()) / 2) + owner.getX();
         int y = ((owner.getHeight() - this.getHeight()) / 2) + owner.getY();
@@ -69,6 +82,10 @@ public class DebugConsole extends JDialog implements WindowListener{
 
     }
 
+    /**
+     * Reapplying all the graphics to the game board when the game closes
+     * @param windowEvent An object which checks if there's any change to the window status
+     */
     @Override
     public void windowClosing(WindowEvent windowEvent) { //close the game
         gameBoard.repaint();
@@ -89,6 +106,10 @@ public class DebugConsole extends JDialog implements WindowListener{
 
     }
 
+    /**
+     * Sets the location of the debug console and position of slider when the debug console is activated
+     * @param windowEvent An object which checks if there's any change to the window status
+     */
     @Override
     public void windowActivated(WindowEvent windowEvent) { //open debug console
         setLocation(); //set location of debug console

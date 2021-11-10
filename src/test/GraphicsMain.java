@@ -19,7 +19,9 @@ package test;
 
 import java.awt.*;
 
-
+/**
+ * The main class which initialises the game frame and queues the corresponding methods
+ */
 public class GraphicsMain {
 
     public static void main(String[] args){

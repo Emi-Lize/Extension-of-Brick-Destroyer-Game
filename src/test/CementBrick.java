@@ -20,12 +20,16 @@ public class CementBrick extends Brick {
 
     /**
      * This represents cement brick and initialises it
+     * Changes:
+     * <ul>
+     *     <li>Creating object crack of class Crack does not require any arguments</li>
+     * </ul>
      * @param point The coordinates of the top left corner of the brick
      * @param size The width and height of the brick
      */
     public CementBrick(Point point, Dimension size){
         super(NAME,point,size,DEF_BORDER,DEF_INNER,CEMENT_STRENGTH);
-        crack = new Crack(DEF_CRACK_DEPTH,DEF_STEPS);
+        crack = new Crack();
         brickFace = super.brickFace;
     }
 
@@ -41,7 +45,11 @@ public class CementBrick extends Brick {
     }
 
     /**
-     * Checks if the ball has hit a brick which has not been broken
+     * Checks if the ball has hit a brick which has not been broken and draws a crack if the brick is not broken
+     * Changes:
+     * <ul>
+     *     <li>Added super.brickFace as an argument to the method makeCrack</li>
+     * </ul>
      * @param point The coordinates of the point of the ball which hits the brick
      * @param dir The side of the brick which was hit
      * @return A boolean representing if the brick has broken
@@ -52,7 +60,7 @@ public class CementBrick extends Brick {
             return false;
         super.impact();
         if(!super.isBroken()){
-            crack.makeCrack(point,dir); //create crack
+            crack.makeCrack(super.brickFace, point,dir); //create crack
             updateBrick(); //apply crack
             return false; //brick did not break
         }
@@ -69,7 +77,7 @@ public class CementBrick extends Brick {
     }
 
     /**
-     * Draws a crack on the brick if it has been hit only once
+     * Draws a crack on the brick shape
      */
     private void updateBrick(){
         if(!super.isBroken()){

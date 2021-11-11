@@ -249,6 +249,10 @@ public class Wall {
 
     /**
      * Checks whether the ball hit a brick and if so, which part of the brick was hit by the ball
+     * Changes:
+     * <ul>
+     *     <li>Changed all second argument of setImpact to Crack. instead of Brick.Crack.</li>
+     * </ul>
      * @return A boolean which represents if the ball had hit a brick
      */
     private boolean impactWall(){
@@ -257,18 +261,18 @@ public class Wall {
                 //Vertical Impact
                 case Brick.UP_IMPACT:
                     ball.reverseY();
-                    return b.setImpact(ball.down, Brick.Crack.UP);
+                    return b.setImpact(ball.down, Crack.UP);
                 case Brick.DOWN_IMPACT:
                     ball.reverseY();
-                    return b.setImpact(ball.up,Brick.Crack.DOWN);
+                    return b.setImpact(ball.up,Crack.DOWN);
 
                 //Horizontal Impact
                 case Brick.LEFT_IMPACT:
                     ball.reverseX();
-                    return b.setImpact(ball.right,Brick.Crack.RIGHT);
+                    return b.setImpact(ball.right,Crack.RIGHT);
                 case Brick.RIGHT_IMPACT:
                     ball.reverseX();
-                    return b.setImpact(ball.left,Brick.Crack.LEFT);
+                    return b.setImpact(ball.left,Crack.LEFT);
             }
         }
         return false; //no impact on brick

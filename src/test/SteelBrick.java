@@ -76,7 +76,7 @@ public class SteelBrick extends Brick {
         if(super.isBroken())
             return false;
         impact(); //probability of brick breaking
-        return  super.isBroken();
+        return super.isBroken();
     }
 
     /**

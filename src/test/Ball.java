@@ -30,14 +30,18 @@ abstract public class Ball {
     private int speedY;
 
     /**
-     * This represents and initialises the ball
+     * This represents the ball. It initialises the location of the ball and creates the ball.
+     * Changes:
+     * <ul>
+     *     <li>Removed radiusA and radiusB and added radius</li>
+     *     <li>Replaced duplicate code to set ball's location with the existing method setPoints</li>
+     * </ul>
      * @param center The coordinates of the center of the ball
-     * @param radiusA The vertical radius of the ball
-     * @param radiusB The horizontal radius of the ball
+     * @param radius The radius of the ball
      * @param inner The colour of the inner part of the ball
      * @param border The colour of the border of the ball
      */
-    public Ball(Point2D center,int radiusA,int radiusB,Color inner,Color border){
+    public Ball(Point2D center,int radius, Color inner,Color border){
         this.center = center;
 
         up = new Point2D.Double(); //creating coordinates
@@ -45,14 +49,10 @@ abstract public class Ball {
         left = new Point2D.Double();
         right = new Point2D.Double();
 
-        up.setLocation(center.getX(),center.getY()-(radiusB / 2)); //setting coordinates
-        down.setLocation(center.getX(),center.getY()+(radiusB / 2));
-
-        left.setLocation(center.getX()-(radiusA /2),center.getY());
-        right.setLocation(center.getX()+(radiusA /2),center.getY());
+        setPoints(radius, radius);
 
 
-        ballFace = makeBall(center,radiusA,radiusB); //creating ball
+        ballFace = makeBall(center,radius); //creating ball
         this.border = border;
         this.inner  = inner;
         speedX = 0;
@@ -61,27 +61,26 @@ abstract public class Ball {
 
     /**
      * Creates the shape of the ball
+     * Changes:
+     * <ul>
+     *     <li>Removed radiusA and radiusB and added radius</li>
+     * </ul>
      * @param center The coordinates of the center of the ball
-     * @param radiusA The vertical radius of the ball
-     * @param radiusB The horizontal radius of the ball
+     * @param radius The radius of the ball
      * @return The shape of the ball
      */
-    protected abstract Shape makeBall(Point2D center,int radiusA,int radiusB); //implemented in rubberball.java
+    protected abstract Shape makeBall(Point2D center,int radius); //implemented in rubberball.java
 
     /**
      * Moves the position of the ball based on the speed
+     * Changes:
+     * <ul>
+     *     <li>Removed code to set the coordinates of the ball and instead called method moveBall</li>
+     * </ul>
      */
     public void move(){
-        RectangularShape tmp = (RectangularShape) ballFace; //create a temporary square frame
         center.setLocation((center.getX() + speedX),(center.getY() + speedY)); //change the center of the ball
-        double w = tmp.getWidth();
-        double h = tmp.getHeight();
-
-        tmp.setFrame((center.getX() -(w / 2)),(center.getY() - (h / 2)),w,h); //create the square frame of the ball (x,y,width,height)
-        setPoints(w,h); //change the 4 coordinates of the ball
-
-
-        ballFace = tmp; //replace with the original ball
+        moveBall();
     }
 
     /**
@@ -158,17 +157,15 @@ abstract public class Ball {
 
     /**
      * Resets the position of the ball to the initial position
+     * Changes:
+     * <ul>
+     *      <li>Removed code to set the coordinates of the ball and instead called method moveBall</li>
+     * </ul>
      * @param p The coordinates of the center of the ball at the initial position
      */
     public void moveTo(Point p){ //used in wall.java - ballreset
         center.setLocation(p);
-
-        RectangularShape tmp = (RectangularShape) ballFace; //same concept as move
-        double w = tmp.getWidth();
-        double h = tmp.getHeight();
-
-        tmp.setFrame((center.getX() -(w / 2)),(center.getY() - (h / 2)),w,h);
-        ballFace = tmp;
+        moveBall();
     }
 
     /**
@@ -200,5 +197,21 @@ abstract public class Ball {
         return speedY;
     }
 
+    /**
+     * New Method - Changes the coordinates of the ball to move its position
+     * Changes:
+     * <ul>
+     *     <li>Created this method to reduce duplication in code in method move and moveTo</li>
+     * </ul>
+     */
+    public void moveBall(){
+        RectangularShape tmp = (RectangularShape) ballFace; //same concept as move
+        double w = tmp.getWidth();
+        double h = tmp.getHeight();
+
+        tmp.setFrame((center.getX() -(w / 2)),(center.getY() - (h / 2)),w,h);
+        setPoints(w,h); //change the 4 coordinates of the ball
+        ballFace = tmp;
+    }
 
 }

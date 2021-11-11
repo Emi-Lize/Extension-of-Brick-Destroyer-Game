@@ -33,25 +33,32 @@ public class RubberBall extends Ball {
 
     /**
      * This represents the rubber ball and initialises it
+     * Changes:
+     * <ul>
+     *     <li>Only one DEF_RADIUS as an argument instead of two</li>
+     * </ul>
      * @param center The coordinates of the center of the ball
      */
     public RubberBall(Point2D center){
-        super(center,DEF_RADIUS,DEF_RADIUS,DEF_INNER_COLOR,DEF_BORDER_COLOR); //center value is in GameBoard.java - wall
+        super(center,DEF_RADIUS,DEF_INNER_COLOR,DEF_BORDER_COLOR); //center value is in GameBoard.java - wall
     }
 
     /**
      * Creates the shape of the ball
+     * Changes:
+     * <ul>
+     *     <li>Removed radiusA and radiusB and added radius</li>
+     * </ul>
      * @param center The coordinates of the center of the ball
-     * @param radiusA The vertical radius of the ball
-     * @param radiusB The horizontal radius of the ball
+     * @param radius The radius of the ball
      * @return The shape of the ball
      */
     @Override
-    protected Shape makeBall(Point2D center, int radiusA, int radiusB) {
+    protected Shape makeBall(Point2D center, int radius) {
 
-        double x = center.getX() - (radiusA / 2);
-        double y = center.getY() - (radiusB / 2);
+        double x = center.getX() - (radius / 2);
+        double y = center.getY() - (radius / 2);
 
-        return new Ellipse2D.Double(x,y,radiusA,radiusB); //creating ball shape
+        return new Ellipse2D.Double(x,y,radius,radius); //creating ball shape
     }
 }

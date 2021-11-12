@@ -38,22 +38,30 @@ public class DebugPanel extends JPanel {
     private JSlider ballYSpeed;
 
     private Wall wall;
+    private GameSystem gameSystem;
 
     /**
      * This represents the debug panel and initialises it
+     * Change:
+     * <ul>
+     *     <li>Added a GameSystem object parameter</li>
+     *     <li>Edited method calls for methods which have been moved from Wall to GameSystem</li>
+     * </ul>
      * @param wall The wall object
+     * @param gameSystem The gameSystem object
      */
-    public DebugPanel(Wall wall){
+    public DebugPanel(Wall wall, GameSystem gameSystem){
 
         this.wall = wall; //gameboard.java
+        this.gameSystem = gameSystem;
 
         initialize(); //set layout of panel
 
         skipLevel = makeButton("Skip Level",e -> wall.nextLevel());
-        resetBalls = makeButton("Reset Balls",e -> wall.resetBallCount());
+        resetBalls = makeButton("Reset Balls",e -> gameSystem.resetBallCount());
 
-        ballXSpeed = makeSlider(-4,4,e -> wall.setBallXSpeed(ballXSpeed.getValue()));
-        ballYSpeed = makeSlider(-4,4,e -> wall.setBallYSpeed(ballYSpeed.getValue()));
+        ballXSpeed = makeSlider(-4,4,e -> gameSystem.setBallXSpeed(ballXSpeed.getValue()));
+        ballYSpeed = makeSlider(-4,4,e -> gameSystem.setBallYSpeed(ballYSpeed.getValue()));
 
         this.add(skipLevel); //placing position of button and slider in layout
         this.add(resetBalls);

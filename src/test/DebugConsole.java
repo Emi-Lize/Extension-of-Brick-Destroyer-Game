@@ -34,21 +34,29 @@ public class DebugConsole extends JDialog implements WindowListener{
     private DebugPanel debugPanel;
     private GameBoard gameBoard;
     private Wall wall;
+    private GameSystem gameSystem;
 
     /**
      * This represents the debug console
+     * Change:
+     * <ul>
+     *     <li>Added a GameSystem object parameter</li>
+     *     <li>Added gameSystem as an argument to DebugPanel constructor</li>
+     * </ul>
      * @param owner The window the game board is in
      * @param wall The wall object
-     * @param gameBoard The game board object
+     * @param gameBoard The gameboard object
+     * @param gameSystem The gamesystem object
      */
-    public DebugConsole(JFrame owner,Wall wall,GameBoard gameBoard){
+    public DebugConsole(JFrame owner,Wall wall,GameBoard gameBoard, GameSystem gameSystem){
 
         this.wall = wall;
+        this.gameSystem = gameSystem;
         this.owner = owner; //gameframe based on user computer windows
         this.gameBoard = gameBoard;
         initialize();
 
-        debugPanel = new DebugPanel(wall); //create a debug panel
+        debugPanel = new DebugPanel(wall, gameSystem); //create a debug panel
         this.add(debugPanel,BorderLayout.CENTER); //adds the debug panel to the center of the console
 
 
@@ -108,12 +116,16 @@ public class DebugConsole extends JDialog implements WindowListener{
 
     /**
      * Sets the location of the debug console and position of slider when the debug console is activated
+     * Change:
+     * <ul>
+     *     <li>Changed wall.ball to gameSystem.ball</li>
+     * </ul>
      * @param windowEvent An object which checks if there's any change to the window status
      */
     @Override
     public void windowActivated(WindowEvent windowEvent) { //open debug console
         setLocation(); //set location of debug console
-        Ball b = wall.ball;
+        Ball b = gameSystem.ball;
         debugPanel.setValues(b.getSpeedX(),b.getSpeedY()); //setting position of slider based on current speed of ball
     }
 

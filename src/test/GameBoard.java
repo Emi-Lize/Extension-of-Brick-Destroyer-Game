@@ -58,8 +58,16 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     private DebugConsole debugConsole;
 
+    private GameSystem gameSystem;
+
     /**
      * This represents the design of the game and how the game operates
+     * Change:
+     * <ul>
+     *     <li>Created an object of class GameSystem</li>
+     *     <li>Edited method calls for methods which have been moved from Wall to GameSystem</li>
+     *     <li>Added gameSystem object as an argument for DebugConsole constructor</li>
+     * </ul>
      * @param owner The window the game board is in
      */
     public GameBoard(JFrame owner){
@@ -75,30 +83,33 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
         this.initialize();
         message = "";
-        wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,6/2,new Point(300,430)); //create levels
+        wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,6/2); //create levels
+        gameSystem = new GameSystem(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT), new Point(300,430), wall);
 
-        debugConsole = new DebugConsole(owner,wall,this); //create debug console
+        debugConsole = new DebugConsole(owner,wall,this, gameSystem); //create debug console
         //initialize the first level
         wall.nextLevel();
 
         gameTimer = new Timer(10,e ->{ //will keep running with 10ms interval
-            wall.move(); //moving player and ball
-            wall.findImpacts(); //check if ball hits anything
-            message = String.format("Bricks: %d Balls %d",wall.getBrickCount(),wall.getBallCount());
-            if(wall.isBallLost()){
-                if(wall.ballEnd()){ //if no balls left
+            gameSystem.move(); //moving player and ball
+            gameSystem.findImpacts(); //check if ball hits anything
+            message = String.format("Bricks: %d Balls %d",wall.getBrickCount(),gameSystem.getBallCount());
+            if(gameSystem.isBallLost()){
+                if(gameSystem.ballEnd()){ //if no balls left
                     wall.wallReset(); //reset bricks
+                    gameSystem.resetBallCount();
                     message = "Game over";
                 }
-                wall.ballReset(); //bring back ball and player to initial
+                gameSystem.ballReset(); //bring back ball and player to initial
                 gameTimer.stop(); //stop running
             }
-            else if(wall.isDone()){ //if no more bricks
-                if(wall.hasLevel()){ //if not last level
+            else if(gameSystem.isDone()){ //if no more bricks
+                if(gameSystem.hasLevel()){ //if not last level
                     message = "Go to Next Level";
                     gameTimer.stop(); //stop running
-                    wall.ballReset(); //reset ball and player
+                    gameSystem.ballReset(); //reset ball and player
                     wall.wallReset(); //reset bricks
+                    gameSystem.resetBallCount();
                     wall.nextLevel(); //setup bricks
                 }
                 else{ //last level done
@@ -127,6 +138,11 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     /**
      * Draws the background, text, ball, bricks, player and pause menu
+     * Change:
+     * <ul>
+     *     <li>Changed wall.ball to gameSystem.ball</li>
+     *     <li>Changed wall.player to gameSystem.player</li>
+     * </ul>
      * @param g An object which draws the components
      */
     public void paint(Graphics g){
@@ -138,13 +154,13 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         g2d.setColor(Color.BLUE);
         g2d.drawString(message,250,225); //print blue message
 
-        drawBall(wall.ball,g2d); //draw ball
+        drawBall(gameSystem.ball,g2d); //draw ball
 
         for(Brick b : wall.bricks) //create bricks
             if(!b.isBroken())
                 drawBrick(b,g2d);
 
-        drawPlayer(wall.player,g2d); //draw player
+        drawPlayer(gameSystem.player,g2d); //draw player
 
         if(showPauseMenu)
             drawMenu(g2d); //pause menu
@@ -310,16 +326,20 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     /**
      * Check if a specific key is pressed and perform an method if a specific key is pressed
+     * Change:
+     * <ul>
+     *     <li>Changed wall.player to gameSystem.player</li>
+     * </ul>
      * @param keyEvent An object which checks for which key was pressed
      */
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         switch(keyEvent.getKeyCode()){ //find key pressed
             case KeyEvent.VK_A: //A pressed
-                wall.player.moveLeft(); //left
+                gameSystem.player.moveLeft(); //left
                 break;
             case KeyEvent.VK_D: //D pressed
-                wall.player.movRight(); //right
+                gameSystem.player.movRight(); //right
                 break;
             case KeyEvent.VK_ESCAPE: //ESC pressed
                 showPauseMenu = !showPauseMenu; //pause menu
@@ -337,21 +357,30 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
                 if(keyEvent.isAltDown() && keyEvent.isShiftDown()) //call for debug console
                     debugConsole.setVisible(true); //show debug console
             default:
-                wall.player.stop(); //nothing happens
+                gameSystem.player.stop(); //nothing happens
         }
     }
 
     /**
      * Stops the player from moving when no key is pressed
+     * Change:
+     * <ul>
+     *      <li>Changed wall.player to gameSystem.player</li>
+     * </ul>
      * @param keyEvent An object which checks for which key was pressed
      */
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-        wall.player.stop();
+        gameSystem.player.stop();
     } //stop moving
 
     /**
      * Checks which button in the pause menu was clicked
+     * Change:
+     * <ul>
+     *      <li>Changed wall.ballReset to gameSystem.ballReset</li>
+     *      <li>Changed wall.resetBallCount to gameSystem.resetBallCount</li>
+     * </ul>
      * @param mouseEvent An object which checks if there was any action from the mouse
      */
     @Override
@@ -365,8 +394,9 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         }
         else if(restartButtonRect.contains(p)){ //if restart pressed
             message = "Restarting Game...";
-            wall.ballReset(); //reset ball and player
+            gameSystem.ballReset(); //reset ball and player
             wall.wallReset(); //reset bricks
+            gameSystem.resetBallCount();
             showPauseMenu = false;
             repaint();
         }

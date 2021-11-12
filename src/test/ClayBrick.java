@@ -14,12 +14,10 @@ import java.awt.geom.Point2D;
  * This represents the clay brick which inherits from brick
  */
 public class ClayBrick extends Brick {
-
     private static final String NAME = "Clay Brick";
     private static final Color DEF_INNER = new Color(178, 34, 34).darker();
     private static final Color DEF_BORDER = Color.GRAY;
     private static final int CLAY_STRENGTH = 1;
-
 
     /**
      * This represents clay brick and initialises it
@@ -49,6 +47,5 @@ public class ClayBrick extends Brick {
     public Shape getBrick() {
         return super.brickFace;
     }
-
 
 }

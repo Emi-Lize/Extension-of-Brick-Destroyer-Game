@@ -27,9 +27,7 @@ import java.awt.*;
  * </ul>
  */
 public class Wall {
-
     private static final int LEVELS_COUNT = 4;
-
     private static final int CLAY = 1;
     private static final int STEEL = 2;
     private static final int CEMENT = 3;
@@ -53,10 +51,8 @@ public class Wall {
      * @param brickDimensionRatio The height to width ratio of the brick
      */
     public Wall(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio){
-
         levels = setUpLevels(drawArea,brickCount,lineCount,brickDimensionRatio);
         level = 0;
-
     }
 
     /**
@@ -89,7 +85,6 @@ public class Wall {
         brickCnt += lineCnt / 2;
 
         Brick[] tmp  = new Brick[brickCnt]; //list of brick objects
-
         Dimension brickSize = new Dimension((int) brickLen,(int) brickHgt);
         Point p = new Point();
 

@@ -6,16 +6,13 @@ import java.awt.geom.RectangularShape;
 
 /*
   Created by filippo on 04/09/16.
-
  */
 
 /**
  * This represents the ball
  */
 abstract public class Ball {
-
     private Shape ballFace;
-
     private Point2D center;
 
     Point2D up;
@@ -50,8 +47,6 @@ abstract public class Ball {
         right = new Point2D.Double();
 
         setPoints(radius, radius);
-
-
         ballFace = makeBall(center,radius); //creating ball
         this.border = border;
         this.inner  = inner;
@@ -159,11 +154,12 @@ abstract public class Ball {
      * Resets the position of the ball to the initial position
      * Changes:
      * <ul>
-     *      <li>Removed code to set the coordinates of the ball and instead called method moveBall</li>
+     *     <li>Changed method name from moveTo to reset</li>
+     *     <li>Removed code to set the coordinates of the ball and instead called method moveBall</li>
      * </ul>
      * @param p The coordinates of the center of the ball at the initial position
      */
-    public void moveTo(Point p){ //used in wall.java - ballreset
+    public void reset(Point p){ //used in wall.java - ballreset
         center.setLocation(p);
         moveBall();
     }

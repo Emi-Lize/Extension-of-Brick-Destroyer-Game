@@ -8,8 +8,6 @@ import java.awt.geom.Point2D;
  * This represents the cement brick which inherits brick
  */
 public class CementBrick extends Brick {
-
-
     private static final String NAME = "Cement Brick";
     private static final Color DEF_INNER = new Color(147, 147, 147);
     private static final Color DEF_BORDER = new Color(217, 199, 175);
@@ -60,8 +58,8 @@ public class CementBrick extends Brick {
             return false;
         super.impact();
         if(!super.isBroken()){
-            crack.makeCrack(super.brickFace, point,dir); //create crack
-            updateBrick(); //apply crack
+            crack.setCrackPoints(super.brickFace, point,dir); //create crack
+            drawCrack(); //apply crack
             return false; //brick did not break
         }
         return true; //brick broke
@@ -78,8 +76,12 @@ public class CementBrick extends Brick {
 
     /**
      * Draws a crack on the brick shape
+     * Change:
+     * <ul>
+     *     <li>Change method name from updateBrick to drawCrack</li>
+     * </ul>
      */
-    private void updateBrick(){
+    private void drawCrack(){
         if(!super.isBroken()){
             GeneralPath gp = crack.draw();
             gp.append(super.brickFace,false);
@@ -95,4 +97,5 @@ public class CementBrick extends Brick {
         crack.reset();
         brickFace = super.brickFace;
     }
+
 }

@@ -68,7 +68,7 @@ public class GameSystem {
      * Checks if ball has hit either the player, brick and the boundary of the game frame
      */
     public void findImpacts(){
-        if(player.impact(ball)){ //if ball hits player
+        if(player.hitBall(ball)){ //if ball hits player
             ball.reverseY();
         }
         else if(impactWall()){ //check if brick broke
@@ -150,8 +150,8 @@ public class GameSystem {
      * Resets the position of the ball and player and the speed of the ball
      */
     public void ballReset(){
-        player.moveTo(startPoint);
-        ball.moveTo(startPoint);
+        player.reset(startPoint);
+        ball.reset(startPoint);
         int speedX,speedY;
         do{
             speedX = rnd.nextInt(5) - 2;
@@ -218,4 +218,5 @@ public class GameSystem {
     public void resetBallCount(){
         ballCount = 3;
     }
+
 }

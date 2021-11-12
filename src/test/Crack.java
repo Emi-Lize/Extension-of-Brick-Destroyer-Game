@@ -41,21 +41,17 @@ public class Crack{
      * </ul>
      */
     public Crack(){
-
         rnd = new Random();
         crackPath = new GeneralPath();
         this.crackDepth = DEF_CRACK_DEPTH;
         this.steps = DEF_STEPS;
-
     }
-
 
     /**
      * Draws the crack in the brick
      * @return The path of the crack
      */
     public GeneralPath draw(){
-
         return crackPath;
     }
 
@@ -70,6 +66,7 @@ public class Crack{
      * Finds the start and end point of the crack
      * Changes:
      * <ul>
+     *     <li>Changed method name from makeCrack to setCrackPoints as there is another method called makeCrack</li>
      *     <li>Added brickFace parameter</li>
      *     <li>Moved method call for makeRandomPoint and makeCrack to outside of the switch statement body</li>
      *     <li>Enhanced the switch statement</li>
@@ -78,14 +75,13 @@ public class Crack{
      * @param point The coordinates of the point of the ball which hits the brick
      * @param direction The side of the brick which was hit by the ball
      */
-    protected void makeCrack(Shape brickFace, Point2D point, int direction){
+    protected void setCrackPoints(Shape brickFace, Point2D point, int direction){
         int side=0;
         Rectangle bounds = brickFace.getBounds();
 
         Point impact = new Point((int)point.getX(),(int)point.getY()); //(x,y) of the part of the ball which hit the brick
         Point start = new Point();
         Point end = new Point();
-
 
         switch (direction) {
             case LEFT -> { //look to right of brick
@@ -124,26 +120,19 @@ public class Crack{
      * @param end The coordinates of the end of the crack
      */
     protected void makeCrack(Point start, Point end){
-
         GeneralPath path = new GeneralPath();
-
-
         path.moveTo(start.x,start.y); //start of crack
 
         double w = (end.x - start.x) / (double)steps; //width and height of each step
         double h = (end.y - start.y) / (double)steps;
 
         int bound = crackDepth;
-
         double x,y;
 
         for(int i = 1; i < steps;i++){
-
             x = (i * w) + start.x; //setting the x
             y = (i * h) + start.y + randomInBounds(bound); //setting the y - randomise the height of steps
-
             path.lineTo(x,y); //draws the line
-
         }
 
         path.lineTo(end.x,end.y); //connect to last point
@@ -171,7 +160,6 @@ public class Crack{
      * @return The coordinates of the end of the crack
      */
     private Point makeRandomPoint(Point from,Point to, int direction){
-
         Point out = new Point();
         int pos;
 

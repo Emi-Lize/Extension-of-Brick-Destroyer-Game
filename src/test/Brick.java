@@ -6,7 +6,6 @@ import java.awt.geom.Point2D;
 
 /*
   Created by filippo on 04/09/16.
-
  */
 
 /**
@@ -17,7 +16,6 @@ import java.awt.geom.Point2D;
  * </ul>
  */
 abstract public class Brick  {
-
     public static final int UP_IMPACT = 100;
     public static final int DOWN_IMPACT = 200;
     public static final int LEFT_IMPACT = 300;
@@ -31,7 +29,6 @@ abstract public class Brick  {
 
     private int fullStrength;
     private int strength;
-
     private boolean broken;
 
     /**
@@ -54,7 +51,6 @@ abstract public class Brick  {
         this.border = border;
         this.inner = inner;
         this.fullStrength = this.strength = strength;
-
     }
 
     /**
@@ -83,7 +79,6 @@ abstract public class Brick  {
      * @return The shape of the brick
      */
     public abstract Shape getBrick();
-
 
     /**
      * Gets the colour of the border of the brick
@@ -144,8 +139,6 @@ abstract public class Brick  {
         strength--;
         broken = (strength == 0);
     }
-
-
 
 }
 

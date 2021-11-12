@@ -25,7 +25,6 @@ import java.util.Random;
  * This represents the steel brick which inherits from brick
  */
 public class SteelBrick extends Brick {
-
     private static final String NAME = "Steel Brick";
     private static final Color DEF_INNER = new Color(203, 203, 201);
     private static final Color DEF_BORDER = Color.BLACK;

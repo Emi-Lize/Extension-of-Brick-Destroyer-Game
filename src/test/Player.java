@@ -25,8 +25,6 @@ import java.awt.geom.Rectangle2D;
  * This represents the rectangle the player controls
  */
 public class Player {
-
-
     public static final Color BORDER_COLOR = Color.GREEN.darker().darker();
     public static final Color INNER_COLOR = Color.GREEN;
 
@@ -51,7 +49,6 @@ public class Player {
         playerFace = makeRectangle(width, height);
         min = container.x + (width / 2); //game boundary
         max = min + container.width - width;
-
     }
 
     /**
@@ -68,10 +65,14 @@ public class Player {
     /**
      * Checks if the player's rectangle has hit the ball
      * It does this by checking if the bottom of the ball has come in contact with the player's rectangle
+     * Change:
+     * <ul>
+     *     <li>Changed method name from impact to hitBall</li>
+     * </ul>
      * @param b The ball object
      * @return A boolean which represents if the player's rectangle has hit the ball
      */
-    public boolean impact(Ball b){
+    public boolean hitBall(Ball b){
         return playerFace.contains(b.getPosition()) && playerFace.contains(b.down) ;
     } //check if ball bottom hits the player
 
@@ -117,10 +118,15 @@ public class Player {
 
     /**
      * Resets the position of the player's rectangle to the initial position
+     * Change:
+     * <ul>
+     *     <li>Changed method name from moveTo to reset</li>
+     * </ul>
      * @param p The center of the ball at its initial position
      */
-    public void moveTo(Point p){ //resetting position
+    public void reset(Point p){ //resetting position
         ballPoint.setLocation(p);
         playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y); //player reset so that ball is centered on it
     }
+
 }

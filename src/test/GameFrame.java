@@ -64,7 +64,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.setTitle(DEF_TITLE); //set game frame heading title
         this.setDefaultCloseOperation(EXIT_ON_CLOSE); //close game when closes
         this.pack(); //allow window to be resized - components get automatically adjusted
-        this.autoLocate(); //center the game
+        this.centerBoard(); //center the game
         this.setVisible(true); //show window
     }
 
@@ -84,8 +84,12 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     /**
      * Sets the home menu to the center of the screen
+     * Change:
+     * <ul>
+     *     <li>Changed method name from autoLocate to centerBoard</li>
+     * </ul>
      */
-    private void autoLocate(){
+    private void centerBoard(){
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize(); //get size of screen
         int x = (size.width - this.getWidth()) / 2; //center the window
         int y = (size.height - this.getHeight()) / 2;

@@ -22,6 +22,10 @@ public class GameSystem {
 
     /**
      * This represents the game system and initialises the ball and the player
+     * Change:
+     * <ul>
+     *     <li>Moved code to set initial speed of ball to method newBallSpeed</li>
+     * </ul>
      * @param drawArea The rectangle shape of the game board
      * @param ballPos The coordinates of the center of the ball
      * @param wall The wall object
@@ -33,15 +37,7 @@ public class GameSystem {
         ballLost = false;
         rnd = new Random();
         makeBall(ballPos);
-        int speedX,speedY;
-        do{
-            speedX = rnd.nextInt(5) - 2;
-        }while(speedX == 0);
-        do{
-            speedY = -rnd.nextInt(3);
-        }while(speedY == 0);
-
-        ball.setSpeed(speedX,speedY);
+        newBallSpeed();
 
         player = new Player((Point) ballPos.clone(),150,10, drawArea);
 
@@ -152,6 +148,14 @@ public class GameSystem {
     public void ballReset(){
         player.reset(startPoint);
         ball.reset(startPoint);
+        newBallSpeed();
+        ballLost = false;
+    }
+
+    /**
+     * New Method - Sets a new random speed for the ball
+     */
+    public void newBallSpeed(){
         int speedX,speedY;
         do{
             speedX = rnd.nextInt(5) - 2;
@@ -161,7 +165,6 @@ public class GameSystem {
         }while(speedY == 0);
 
         ball.setSpeed(speedX,speedY);
-        ballLost = false;
     }
 
     /**

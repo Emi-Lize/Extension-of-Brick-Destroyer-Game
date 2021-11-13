@@ -22,12 +22,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.font.FontRenderContext;
 
-
 /**
  * This represents the design of the game and the mechanics of the game
  */
 public class GameBoard extends JComponent implements KeyListener,MouseListener,MouseMotionListener {
-
     private static final String CONTINUE = "Continue";
     private static final String RESTART = "Restart";
     private static final String EXIT = "Exit";
@@ -35,29 +33,24 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     private static final int TEXT_SIZE = 30;
     private static final Color MENU_COLOR = new Color(0,255,0);
 
-
     private static final int DEF_WIDTH = 600;
     private static final int DEF_HEIGHT = 450;
 
     private static final Color BG_COLOR = Color.WHITE;
 
     private Timer gameTimer;
-
     private Wall wall;
-
     private String message;
 
     private boolean showPauseMenu;
 
     private Font menuFont;
-
     private Rectangle continueButtonRect;
     private Rectangle exitButtonRect;
     private Rectangle restartButtonRect;
     private int strLen;
 
     private DebugConsole debugConsole;
-
     private GameSystem gameSystem;
 
     /**
@@ -67,6 +60,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      *     <li>Created an object of class GameSystem</li>
      *     <li>Edited method calls for methods which have been moved from Wall to GameSystem</li>
      *     <li>Added gameSystem object as an argument for DebugConsole constructor</li>
+     *     <li>Moved gameTimer to runGame</li>
      * </ul>
      * @param owner The window the game board is in
      */
@@ -76,40 +70,46 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         strLen = 0;
         showPauseMenu = false;
 
-
-
         menuFont = new Font("Monospaced",Font.PLAIN,TEXT_SIZE);
-
 
         this.initialize();
         message = "";
         wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,6/2); //create levels
         gameSystem = new GameSystem(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT), new Point(300,430), wall);
-
         debugConsole = new DebugConsole(owner,wall,this, gameSystem); //create debug console
+
         //initialize the first level
         wall.nextLevel();
+        runGame();
+    }
 
+    /**
+     * New Method - Moved gameTimer from GameBoard constructor
+     * Change:
+     * <ul>
+     *     <li>Added an else statement to if(gameSystem.ballEnd())</li>
+     * </ul>
+     */
+    private void runGame(){
         gameTimer = new Timer(10,e ->{ //will keep running with 10ms interval
             gameSystem.move(); //moving player and ball
             gameSystem.findImpacts(); //check if ball hits anything
             message = String.format("Bricks: %d Balls %d",wall.getBrickCount(),gameSystem.getBallCount());
             if(gameSystem.isBallLost()){
                 if(gameSystem.ballEnd()){ //if no balls left
-                    wall.wallReset(); //reset bricks
-                    gameSystem.resetBallCount();
+                    reset();
                     message = "Game over";
                 }
-                gameSystem.ballReset(); //bring back ball and player to initial
+                else{
+                    gameSystem.ballReset(); //bring back ball and player to initial
+                }
                 gameTimer.stop(); //stop running
             }
             else if(gameSystem.isDone()){ //if no more bricks
                 if(gameSystem.hasLevel()){ //if not last level
                     message = "Go to Next Level";
                     gameTimer.stop(); //stop running
-                    gameSystem.ballReset(); //reset ball and player
-                    wall.wallReset(); //reset bricks
-                    gameSystem.resetBallCount();
+                    reset();
                     wall.nextLevel(); //setup bricks
                 }
                 else{ //last level done
@@ -120,9 +120,16 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
             repaint(); //removes any designs left on gameboard
         });
-
     }
 
+    /**
+     * New Method - resets the bricks, position of ball and player and the ball count
+     */
+    private void reset(){
+        gameSystem.ballReset(); //reset ball and player
+        wall.wallReset(); //reset bricks
+        gameSystem.resetBallCount();
+    }
 
     /**
      * Sets up the properties of the game board
@@ -146,8 +153,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      * @param g An object which draws the components
      */
     public void paint(Graphics g){
-
-        Graphics2D g2d = (Graphics2D) g; //allow to draw objects
+        Graphics2D g2d = (Graphics2D) g; //allow it to draw objects
 
         clear(g2d); //set background
 
@@ -192,7 +198,6 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
         g2d.setColor(brick.getBorderColor());
         g2d.draw(brick.getBrick()); //draw brick outline
-
 
         g2d.setColor(tmp); //get back default color
     }
@@ -248,7 +253,6 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      * @param g2d An object which draws 2D components
      */
     private void obscureGameBoard(Graphics2D g2d){
-
         Composite tmp = g2d.getComposite();
         Color tmpColor = g2d.getColor();
 
@@ -264,12 +268,15 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     /**
      * Draws the pause menu
+     * Change:
+     * <ul>
+     *     <li>Moved code to create the button to drawPauseMenuButton</li>
+     * </ul>
      * @param g2d An object which draws 2D components
      */
     private void drawPauseMenu(Graphics2D g2d){
         Font tmpFont = g2d.getFont();
         Color tmpColor = g2d.getColor();
-
 
         g2d.setFont(menuFont);
         g2d.setColor(MENU_COLOR); //set font colour
@@ -284,40 +291,39 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
         g2d.drawString(PAUSE,x,y); //put PAUSE MENU
 
-        x = this.getWidth() / 8; //margin for 3 options
         y = this.getHeight() / 4; //bottom of first quarter
 
-
-        if(continueButtonRect == null){
-            FontRenderContext frc = g2d.getFontRenderContext();
-            continueButtonRect = menuFont.getStringBounds(CONTINUE,frc).getBounds(); //get widh of word CONTINUE
-            continueButtonRect.setLocation(x,y-continueButtonRect.height); //put the continue button - button sits on line of quarter
-        }
-
-        g2d.drawString(CONTINUE,x,y); //put CONTINUE
+        continueButtonRect=drawPauseMenuButton(g2d, y, continueButtonRect, CONTINUE);
 
         y *= 2; //second quarter
 
-        if(restartButtonRect == null){
-            restartButtonRect = (Rectangle) continueButtonRect.clone(); //copy CONTINUE
-            restartButtonRect.setLocation(x,y-restartButtonRect.height);
-        }
-
-        g2d.drawString(RESTART,x,y); //put RESTART
+        restartButtonRect=drawPauseMenuButton(g2d, y, restartButtonRect, RESTART);
 
         y *= 3.0/2; //third quarter
 
-        if(exitButtonRect == null){
-            exitButtonRect = (Rectangle) continueButtonRect.clone();
-            exitButtonRect.setLocation(x,y-exitButtonRect.height);
-        }
-
-        g2d.drawString(EXIT,x,y);
-
-
+        exitButtonRect=drawPauseMenuButton(g2d, y, exitButtonRect, EXIT);
 
         g2d.setFont(tmpFont);
         g2d.setColor(tmpColor);
+    }
+
+    /**
+     * New Method - Moved code to create the buttons in pause menu from drawPauseMenu
+     * @param g2d An object which draws 2D components
+     * @param y The y-coordinate of the top left of the text
+     * @param rectangle The rectangle of the button
+     * @param text The string in the button
+     * @return The rectangle of the button
+     */
+    private Rectangle drawPauseMenuButton(Graphics2D g2d, int y, Rectangle rectangle, String text){
+        int x = this.getWidth() / 8; //margin for 3 options
+        if (rectangle==null){
+            FontRenderContext frc = g2d.getFontRenderContext();
+            rectangle = menuFont.getStringBounds(CONTINUE,frc).getBounds(); //get width of word CONTINUE
+            rectangle.setLocation(x,y-rectangle.height); //put the button - button sits on the line of quarter
+        }
+        g2d.drawString(text,x,y); //put text
+        return rectangle;
     }
 
     @Override
@@ -325,10 +331,11 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     }
 
     /**
-     * Check if a specific key is pressed and perform an method if a specific key is pressed
+     * Check if a specific key is pressed and perform a method if a specific key is pressed
      * Change:
      * <ul>
      *     <li>Changed wall.player to gameSystem.player</li>
+     *     <li>Edited typo in method name from movRight to moveRight</li>
      * </ul>
      * @param keyEvent An object which checks for which key was pressed
      */
@@ -339,7 +346,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
                 gameSystem.player.moveLeft(); //left
                 break;
             case KeyEvent.VK_D: //D pressed
-                gameSystem.player.movRight(); //right
+                gameSystem.player.moveRight(); //right
                 break;
             case KeyEvent.VK_ESCAPE: //ESC pressed
                 showPauseMenu = !showPauseMenu; //pause menu
@@ -394,16 +401,13 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         }
         else if(restartButtonRect.contains(p)){ //if restart pressed
             message = "Restarting Game...";
-            gameSystem.ballReset(); //reset ball and player
-            wall.wallReset(); //reset bricks
-            gameSystem.resetBallCount();
+            reset();
             showPauseMenu = false;
             repaint();
         }
         else if(exitButtonRect.contains(p)){ //if exit pressed
             System.exit(0);
         }
-
     }
 
     @Override

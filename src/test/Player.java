@@ -96,8 +96,12 @@ public class Player {
 
     /**
      * Moves the player's rectangle to the right
+     * Change:
+     * <ul>
+     *     <li>Edited typo in method name from movRight to moveRight</li>
+     * </ul>
      */
-    public void movRight(){
+    public void moveRight(){
         moveAmount = DEF_MOVE_AMOUNT;
     }
 

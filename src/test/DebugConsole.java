@@ -26,9 +26,7 @@ import java.awt.event.WindowListener;
  * This represents the window which displays the debug panel
  */
 public class DebugConsole extends JDialog implements WindowListener{
-
     private static final String TITLE = "Debug Console";
-
 
     private JFrame owner;
     private DebugPanel debugPanel;
@@ -49,7 +47,6 @@ public class DebugConsole extends JDialog implements WindowListener{
      * @param gameSystem The gamesystem object
      */
     public DebugConsole(JFrame owner,Wall wall,GameBoard gameBoard, GameSystem gameSystem){
-
         this.wall = wall;
         this.gameSystem = gameSystem;
         this.owner = owner; //gameframe based on user computer windows
@@ -58,8 +55,6 @@ public class DebugConsole extends JDialog implements WindowListener{
 
         debugPanel = new DebugPanel(wall, gameSystem); //create a debug panel
         this.add(debugPanel,BorderLayout.CENTER); //adds the debug panel to the center of the console
-
-
         this.pack(); //can resize debug console and components automatically resized
     }
 
@@ -83,7 +78,6 @@ public class DebugConsole extends JDialog implements WindowListener{
         int y = ((owner.getHeight() - this.getHeight()) / 2) + owner.getY();
         this.setLocation(x,y);
     }
-
 
     @Override
     public void windowOpened(WindowEvent windowEvent) {
@@ -133,4 +127,5 @@ public class DebugConsole extends JDialog implements WindowListener{
     public void windowDeactivated(WindowEvent windowEvent) {
 
     }
+
 }

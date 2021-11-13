@@ -47,14 +47,10 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.setLayout(new BorderLayout()); //create a layout without gaps
 
         gameBoard = new GameBoard(this); //create a gameboard
-
         homeMenu = new HomeMenu(this,new Dimension(450,300)); //create home menu
 
         this.add(homeMenu,BorderLayout.CENTER); //add home menu to center of frame
-
         this.setUndecorated(true); //no user Windows game frame with the heading and three top right buttons
-
-
     }
 
     /**
@@ -79,7 +75,6 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         initialize();
         /*to avoid problems with graphics focus controller is added here*/
         this.addWindowFocusListener(this); //watch if window is being focused on
-
     }
 
     /**

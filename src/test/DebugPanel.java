@@ -27,9 +27,7 @@ import java.awt.event.ActionListener;
  * This represents the debug panel
  */
 public class DebugPanel extends JPanel {
-
     private static final Color DEF_BKG = Color.WHITE;
-
 
     private JButton skipLevel;
     private JButton resetBalls;
@@ -51,7 +49,6 @@ public class DebugPanel extends JPanel {
      * @param gameSystem The gameSystem object
      */
     public DebugPanel(Wall wall, GameSystem gameSystem){
-
         this.wall = wall; //gameboard.java
         this.gameSystem = gameSystem;
 
@@ -68,7 +65,6 @@ public class DebugPanel extends JPanel {
 
         this.add(ballXSpeed);
         this.add(ballYSpeed);
-
     }
 
     /**

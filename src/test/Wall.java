@@ -61,6 +61,7 @@ public class Wall {
      * <ul>
      *     <li>Added an if statement to differentiate between Single Levels and Chessboard Levels</li>
      *     <li>Method takes in two parameters - typeA and typeB</li>
+     *     <li>Moved code to create chessboard level to createChessboardLevel</li>
      * </ul>
      * @param drawArea The rectangle shape of the game board
      * @param brickCnt The number of bricks in the level
@@ -97,15 +98,12 @@ public class Wall {
             x =(line % 2 == 0) ? x : (x - (brickLen / 2)); //for second line, x starts with (-half brick length) so half omitted from screen
             double y = (line) * brickHgt; //set top y of bricks per line
             p.setLocation(x,y); //top left of brick
-            if (typeA==typeB){
-                tmp[i] = makeBrick(p,brickSize,typeA); //make brick
+            if (typeA!=typeB){
+                boolean b = createChessboardLevel(line, brickOnLine, i);
+                tmp[i] = b ?  makeBrick(p,brickSize,typeA) : makeBrick(p,brickSize,typeB); // if 2 row and center bricks then type B
             }
             else{
-                int posX = i % brickOnLine;
-                int centerLeft = brickOnLine / 2 - 1; // 4
-                int centerRight = brickOnLine / 2 + 1; // 6
-                boolean b = ((line % 2 == 0 && i % 2 == 0) || (line % 2 != 0 && posX > centerLeft && posX <= centerRight)); //if 1/3 row and odd brick then type A
-                tmp[i] = b ?  makeBrick(p,brickSize,typeA) : makeBrick(p,brickSize,typeB); // if 2 row and center bricks then type B
+                tmp[i] = makeBrick(p, brickSize, typeA);
             }
         }
 
@@ -115,6 +113,20 @@ public class Wall {
             tmp[i] = makeBrick(p,brickSize,typeA);
         }
         return tmp;
+    }
+
+    /**
+     * New Method - Moved code to create chessboard level from createLevels
+     * @param line The line number from the top
+     * @param brickOnLine The number of bricks in one line
+     * @param i The index of the brick
+     * @return A boolean representing if it is in the first or third row and the brick index is even
+     */
+    private boolean createChessboardLevel(int line, int brickOnLine, int i){
+        int posX = i % brickOnLine;
+        int centerLeft = brickOnLine / 2 - 1; // 4
+        int centerRight = brickOnLine / 2 + 1; // 6
+        return ((line % 2 == 0 && i % 2 == 0) || (line % 2 != 0 && posX > centerLeft && posX <= centerRight)); //if 1/3 row and odd brick then type A
     }
 
     /**

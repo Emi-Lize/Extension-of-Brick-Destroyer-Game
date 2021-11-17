@@ -18,8 +18,6 @@
 package test;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 
 /**
  * This represents the rectangle the player controls

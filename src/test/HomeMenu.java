@@ -69,16 +69,17 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     /**
      * This represents the home menu of the game and initialises it
+     * Change:
+     * <ul>
+     *     <li>Moved code to set the properties of the window to method initialise</li>
+     *     <li>Moved code to set the border design to method setBorderDesign</li>
+     *     <li>Moved code to set the font of the string to method setFont</li>
+     * </ul>
      * @param owner The window the game frame is in
      * @param area The area of the home menu
      */
     public HomeMenu(GameFrame owner,Dimension area){
-        this.setFocusable(true); //focus on home menu
-        this.requestFocusInWindow(); //ensure it is focused on
-
-        this.addMouseListener(this); //WindowListener watches for mouse
-        this.addMouseMotionListener(this);
-
+        initialise();
         this.owner = owner;
 
         menuFace = new Rectangle(new Point(0,0),area); //create home menu
@@ -88,13 +89,36 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         startButton = new Rectangle(btnDim);
         exitButton = new Rectangle(btnDim);
 
-        borderStoke = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND,0,DASHES,0); //red part of menu border
-        borderStoke_noDashes = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND); //yellow part of menu border
+        setBorderDesign();
+        setFont();
+    }
 
+    /**
+     * New Method - Sets the property of the home menu window
+     */
+    private void initialise(){
+        this.setFocusable(true); //focus on home menu
+        this.requestFocusInWindow(); //ensure it is focused on
+        this.addMouseListener(this); //WindowListener watches for mouse
+        this.addMouseMotionListener(this);
+    }
+
+    /**
+     * New Method - Sets the font of each string
+     */
+    private void setFont(){
         greetingsFont = new Font("Noto Mono",Font.PLAIN,25);
         gameTitleFont = new Font("Noto Mono",Font.BOLD,40);
         creditsFont = new Font("Monospaced",Font.PLAIN,10);
         buttonFont = new Font("Monospaced",Font.PLAIN,startButton.height-2);
+    }
+
+    /**
+     * New Method - Sets the design of the border
+     */
+    private void setBorderDesign(){
+        borderStoke = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND,0,DASHES,0); //red part of menu border
+        borderStoke_noDashes = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND); //yellow part of menu border
     }
 
     /**

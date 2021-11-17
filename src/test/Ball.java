@@ -32,6 +32,7 @@ abstract public class Ball {
      * <ul>
      *     <li>Removed radiusA and radiusB and added radius</li>
      *     <li>Replaced duplicate code to set ball's location with the existing method setPoints</li>
+     *     <li>Moved code to declare the four coordinates of the ball to method createPoints</li>
      * </ul>
      * @param center The coordinates of the center of the ball
      * @param radius The radius of the ball
@@ -41,11 +42,7 @@ abstract public class Ball {
     public Ball(Point2D center,int radius, Color inner,Color border){
         this.center = center;
 
-        up = new Point2D.Double(); //creating coordinates
-        down = new Point2D.Double();
-        left = new Point2D.Double();
-        right = new Point2D.Double();
-
+        createPoints();
         setPoints(radius, radius);
         ballFace = makeBall(center,radius); //creating ball
         this.border = border;
@@ -162,6 +159,16 @@ abstract public class Ball {
     public void reset(Point p){ //used in wall.java - ballreset
         center.setLocation(p);
         moveBall();
+    }
+
+    /**
+     * New Method - Creating the four coordinates of the ball
+     */
+    private void createPoints(){
+        up = new Point2D.Double(); //creating coordinates
+        down = new Point2D.Double();
+        left = new Point2D.Double();
+        right = new Point2D.Double();
     }
 
     /**

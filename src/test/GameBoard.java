@@ -67,10 +67,10 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         showPauseMenu = false;
 
         message = "";
+        initialize();
         wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,6/2); //create levels
         gameSystem = new GameSystem(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT), new Point(300,430), wall);
         gameDesign = new GameDesign(this);
-        initialize();
         debugConsole = new DebugConsole(owner,wall,this, gameSystem); //create debug console
 
         //initialize the first level

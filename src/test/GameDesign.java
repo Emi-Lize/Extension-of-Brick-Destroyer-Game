@@ -164,15 +164,12 @@ public class GameDesign extends JComponent{
         g2d.drawString(PAUSE,x,y); //put PAUSE MENU
 
         y = gameBoard.getHeight() / 4; //bottom of first quarter
-
         continueButtonRect=drawPauseMenuButton(g2d, y, continueButtonRect, CONTINUE);
 
         y *= 2; //second quarter
-
         restartButtonRect=drawPauseMenuButton(g2d, y, restartButtonRect, RESTART);
 
         y *= 3.0/2; //third quarter
-
         exitButtonRect=drawPauseMenuButton(g2d, y, exitButtonRect, EXIT);
 
         g2d.setFont(tmpFont);

@@ -98,22 +98,25 @@ abstract public class Brick  {
 
     /**
      * Finds which part of the brick was hit by the ball
+     * Change:
+     * <ul>
+     *     <li>Removed variable out as it was unnecessary</li>
+     * </ul>
      * @param b The ball object
      * @return The side of the brick which was hit by the ball
      */
     public final int findImpact(Ball b){
         if(broken)
             return 0;
-        int out  = 0;
         if(brickFace.contains(b.right)) //if brick in contact with the right of the ball
-            out = LEFT_IMPACT;
+            return LEFT_IMPACT;
         else if(brickFace.contains(b.left))
-            out = RIGHT_IMPACT;
+            return RIGHT_IMPACT;
         else if(brickFace.contains(b.up))
-            out = DOWN_IMPACT;
+            return DOWN_IMPACT;
         else if(brickFace.contains(b.down))
-            out = UP_IMPACT;
-        return out;
+            return UP_IMPACT;
+        return 0;
     }
 
     /**

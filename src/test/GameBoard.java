@@ -70,7 +70,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         initialize();
         wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,6/2); //create levels
         gameSystem = new GameSystem(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT), new Point(300,430), wall);
-        gameDesign = new GameDesign(this);
+        gameDesign = new GameDesign(this, gameSystem, wall);
         debugConsole = new DebugConsole(owner,wall,this, gameSystem); //create debug console
 
         //initialize the first level
@@ -145,32 +145,19 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      * <ul>
      *     <li>Changed wall.ball to gameSystem.ball</li>
      *     <li>Changed wall.player to gameSystem.player</li>
-     *     <li>Call methods from GameDesign</li>
+     *     <li>Moved method calls to method draw in GameDesign</li>
+     *     <li>Call method draw instead of each individual method</li>
      *     <li>Used getters from GameDesign to get the pause menu buttons</li>
      * </ul>
      * @param g An object which draws the components
      */
     public void paint(Graphics g){
         Graphics2D g2d = (Graphics2D) g; //allow it to draw objects
+        gameDesign.draw(g2d, message, showPauseMenu);
 
-        gameDesign.clear(g2d); //set background
-
-        g2d.setColor(Color.BLUE);
-        g2d.drawString(message,250,225); //print blue message
-
-        gameDesign.drawBall(gameSystem.ball,g2d); //draw ball
-
-        for(Brick b : wall.bricks) //create bricks
-            if(!b.isBroken())
-                gameDesign.drawBrick(b,g2d);
-
-        gameDesign.drawPlayer(gameSystem.player,g2d); //draw player
-
-        if(showPauseMenu)
-            gameDesign.drawMenu(g2d); //pause menu
-            continueButtonRect=gameDesign.getContinueButtonRect();
-            exitButtonRect=gameDesign.getExitButtonRect();
-            restartButtonRect= gameDesign.getRestartButtonRect();
+        continueButtonRect=gameDesign.getContinueButtonRect();
+        exitButtonRect=gameDesign.getExitButtonRect();
+        restartButtonRect= gameDesign.getRestartButtonRect();
 
         Toolkit.getDefaultToolkit().sync();
     }

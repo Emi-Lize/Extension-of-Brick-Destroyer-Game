@@ -23,15 +23,21 @@ public class GameDesign extends JComponent{
     private Rectangle restartButtonRect;
 
     private GameBoard gameBoard;
+    private GameSystem gameSystem;
+    private Wall wall;
 
     /**
      * This represents the design of the game
      * @param gameBoard The gameboard object
+     * @param gameSystem The gamesystem object
+     * @param wall The wall object
      */
-    public GameDesign(GameBoard gameBoard) {
+    public GameDesign(GameBoard gameBoard, GameSystem gameSystem, Wall wall) {
         menuFont = new Font("Monospaced",Font.PLAIN,TEXT_SIZE);
 
         this.gameBoard=gameBoard;
+        this.gameSystem=gameSystem;
+        this.wall=wall;
         initialize();
     }
 
@@ -45,10 +51,33 @@ public class GameDesign extends JComponent{
     }
 
     /**
+     * New Method - Calls methods to draw the components of the gameboard
+     * @param g2d An object which draws 2D components
+     * @param message The string to be displayed
+     * @param showPauseMenu A boolean representing if the pause menu is to be shown
+     */
+    public void draw(Graphics2D g2d, String message, boolean showPauseMenu){
+        clear(g2d); //set background
+
+        g2d.setColor(Color.BLUE);
+        g2d.drawString(message,250,225); //print blue message
+
+        drawBall(gameSystem.ball,g2d); //draw ball
+
+        for(Brick b : wall.bricks) //create bricks
+            if(!b.isBroken())
+                drawBrick(b,g2d);
+
+        drawPlayer(gameSystem.player,g2d); //draw player
+
+        if(showPauseMenu)
+            drawMenu(g2d); //pause menu
+    }
+    /**
      * Sets the background of the game to white
      * @param g2d An object which draws 2D components
      */
-    public void clear(Graphics2D g2d){
+    private void clear(Graphics2D g2d){
         Color tmp = g2d.getColor();
         g2d.setColor(BG_COLOR); //set background to white
         g2d.fillRect(0,0,getWidth(),getHeight());
@@ -60,7 +89,7 @@ public class GameDesign extends JComponent{
      * @param brick The brick object
      * @param g2d An object which draws 2D components
      */
-    public void drawBrick(Brick brick,Graphics2D g2d){
+    private void drawBrick(Brick brick,Graphics2D g2d){
         Color tmp = g2d.getColor();
 
         g2d.setColor(brick.getInnerColor());
@@ -77,7 +106,7 @@ public class GameDesign extends JComponent{
      * @param ball The ball object
      * @param g2d An object which draws 2D components
      */
-    public void drawBall(Ball ball,Graphics2D g2d){
+    private void drawBall(Ball ball,Graphics2D g2d){
         Color tmp = g2d.getColor();
 
         Shape s = ball.getBallFace(); //shape of ball
@@ -96,7 +125,7 @@ public class GameDesign extends JComponent{
      * @param p The player object
      * @param g2d An object which draws 2D components
      */
-    public void drawPlayer(Player p,Graphics2D g2d){
+    private void drawPlayer(Player p,Graphics2D g2d){
         Color tmp = g2d.getColor();
 
         Shape s = p.getPlayerFace(); //shape of player
@@ -113,7 +142,7 @@ public class GameDesign extends JComponent{
      * Sets up a tint and draws the pause menu
      * @param g2d An object which draws 2D components
      */
-    public void drawMenu(Graphics2D g2d){
+    private void drawMenu(Graphics2D g2d){
         obscureGameBoard(g2d);
         drawPauseMenu(g2d);
     }

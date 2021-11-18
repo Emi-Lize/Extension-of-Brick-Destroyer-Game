@@ -141,6 +141,7 @@ public class Crack{
 
     /**
      * Randomises the height of each step in the crack
+     * @param bound An integer
      * @return A random integer from -1 to 1 inclusive
      */
     private int randomInBounds(int bound){ //randomise height of steps in crack

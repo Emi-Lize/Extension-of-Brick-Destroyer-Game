@@ -77,7 +77,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     /**
      * Sets the home menu to the center of the screen
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Changed method name from autoLocate to centerBoard</li>
      * </ul>

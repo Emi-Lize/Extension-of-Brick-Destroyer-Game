@@ -23,7 +23,7 @@ import java.awt.event.*;
 
 /**
  * This represents the design of the game and the mechanics of the game
- * Change:
+ * <br>Change:
  * <ul>
  *     <li>Moved design variables and methods to GameDesign</li>
  * </ul>
@@ -50,7 +50,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     /**
      * This represents the layout of the game and how the game operates
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Created an object of class GameSystem</li>
      *     <li>Edited method calls for methods which have been moved from Wall to GameSystem</li>
@@ -80,7 +80,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     /**
      * New Method - Moved gameTimer from GameBoard constructor
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Added an else statement to if(gameSystem.ballEnd())</li>
      * </ul>
@@ -128,7 +128,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     /**
      * Sets up the properties of the game board
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Moved design code to GameDesign</li>
      * </ul>
@@ -141,7 +141,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     /**
      * Draws the background, text, ball, bricks, player and pause menu
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Changed wall.ball to gameSystem.ball</li>
      *     <li>Changed wall.player to gameSystem.player</li>
@@ -184,7 +184,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     /**
      * Check if a specific key is pressed and perform a method if a specific key is pressed
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Changed wall.player to gameSystem.player</li>
      *     <li>Edited typo in method name from movRight to moveRight</li>
@@ -222,7 +222,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     /**
      * Stops the player from moving when no key is pressed
-     * Change:
+     * <br>Change:
      * <ul>
      *      <li>Changed wall.player to gameSystem.player</li>
      * </ul>
@@ -235,7 +235,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     /**
      * Checks which button in the pause menu was clicked
-     * Change:
+     * <br>Change:
      * <ul>
      *      <li>Changed wall.ballReset to gameSystem.ballReset</li>
      *      <li>Changed wall.resetBallCount to gameSystem.resetBallCount</li>

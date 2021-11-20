@@ -21,7 +21,7 @@ import java.awt.*;
 
 /**
  * This represents the set of bricks
- * Change:
+ * <br>Change:
  * <ul>
  *     <li>Removed methods on ball and player and placed it to a new class GameSystem</li>
  * </ul>
@@ -40,7 +40,7 @@ public class Wall {
 
     /**
      * This represents the set of bricks
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Moved code to initialise ball and player to GameSystem class</li>
      *     <li>Removed ballPos parameter</li>
@@ -57,7 +57,7 @@ public class Wall {
 
     /**
      * New Method - merged both makeSingleLevels and makeChessboardLevels to reduce code duplicate
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Added an if statement to differentiate between Single Levels and Chessboard Levels</li>
      *     <li>Method takes in two parameters - typeA and typeB</li>
@@ -131,7 +131,7 @@ public class Wall {
 
     /**
      * Creates each level in the game
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Changed method name from makeLevels to setUpLevels for better naming</li>
      * </ul>
@@ -185,7 +185,7 @@ public class Wall {
 
     /**
      * Creates a brick
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Enhanced the switch statement</li>
      *     <li>Removed variable out</li>

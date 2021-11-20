@@ -18,7 +18,7 @@ public class CementBrick extends Brick {
 
     /**
      * This represents cement brick and initialises it
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Creating object crack of class Crack does not require any arguments</li>
      * </ul>
@@ -44,7 +44,7 @@ public class CementBrick extends Brick {
 
     /**
      * Checks if the ball has hit a brick which has not been broken and draws a crack if the brick is not broken
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Added super.brickFace as an argument to the method makeCrack</li>
      * </ul>
@@ -76,7 +76,7 @@ public class CementBrick extends Brick {
 
     /**
      * Draws a crack on the brick shape
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Change method name from updateBrick to drawCrack</li>
      * </ul>

@@ -6,7 +6,7 @@ import java.util.Random;
 
 /**
  * New class - This class controls how the game operates
- * Added methods pertaining to ball and player from Wall class
+ * <br>Added methods pertaining to ball and player from Wall class
  */
 public class GameSystem {
     private Random rnd;
@@ -22,7 +22,7 @@ public class GameSystem {
 
     /**
      * This represents the game system and initialises the ball and the player
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Moved code to set initial speed of ball to method newBallSpeed</li>
      * </ul>
@@ -87,7 +87,7 @@ public class GameSystem {
 
     /**
      * Checks whether the ball hit a brick and if so, which part of the brick was hit by the ball
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Changed all second argument of setImpact to Crack. instead of Brick.Crack.</li>
      *     <li>Changed the array in the for loop to wall.bricks instead of bricks</li>
@@ -177,7 +177,7 @@ public class GameSystem {
 
     /**
      * Checks if the level is cleared
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Used method getBrickCount from wall to get the value of the variable</li>
      * </ul>
@@ -189,7 +189,7 @@ public class GameSystem {
 
     /**
      * Checks if there are still more levels
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Used method getLevel and getLevels to access the variables in Wall class</li>
      * </ul>

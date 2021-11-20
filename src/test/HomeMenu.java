@@ -27,7 +27,7 @@ import java.awt.geom.Rectangle2D;
 
 /**
  * This represents the home menu of the game
- * Change:
+ * <br>Change:
  * <ul>
  *     <li>Changed name of MENU_TEXT to EXIT_TEXT to improve clarity</li>
  *     <li>Changed name of menuButton to exitButton to improve clarity</li>
@@ -69,7 +69,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     /**
      * This represents the home menu of the game and initialises it
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Moved code to set the properties of the window to method initialise</li>
      *     <li>Moved code to set the border design to method setBorderDesign</li>
@@ -161,7 +161,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     /**
      * Draws the border of the home menu frame and sets the background colour
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Moved code to draw the border to drawBorder</li>
      * </ul>
@@ -196,7 +196,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     /**
      * Draws the text on the home menu at its correct position
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Moved code to draw the text to setText</li>
      * </ul>
@@ -238,9 +238,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     /**
      * Draws the Start and Exit button on the home menu
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Moved code to draw the button and text to setButton</li>
+     *     <li>Removed code to declare x and y again</li>
      * </ul>
      * @param g2d An object which draws the 2D components
      */
@@ -258,9 +259,6 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         startButton.setLocation(x,y); //position of rectangle
 
         setButton(txtRect, g2d, startClicked, startButton, START_TEXT);
-
-        x = startButton.x; //position of rectangle
-        y = startButton.y;
 
         y *= 1.2;
 

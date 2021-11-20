@@ -167,7 +167,7 @@ public class GameDesign extends JComponent{
 
     /**
      * Draws the pause menu
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Moved code to create the button to drawPauseMenuButton</li>
      *     <li>"this" was replaced with gameBoard</li>
@@ -207,7 +207,7 @@ public class GameDesign extends JComponent{
 
     /**
      * New Method - Moved code to create the buttons in pause menu from drawPauseMenu
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>"this" was changed with gameBoard</li>
      * </ul>

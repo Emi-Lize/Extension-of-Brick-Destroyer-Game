@@ -80,7 +80,7 @@ public class SteelBrick extends Brick {
 
     /**
      * Checks if the brick has broken
-     * If the random number generated is less than 0.4, the brick will break
+     * <br>If the random number generated is less than 0.4, the brick will break
      */
     public void impact(){
         if(rnd.nextDouble() < STEEL_PROBABILITY){

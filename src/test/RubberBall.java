@@ -31,7 +31,7 @@ public class RubberBall extends Ball {
 
     /**
      * This represents the rubber ball and initialises it
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Only one DEF_RADIUS as an argument instead of two</li>
      * </ul>
@@ -43,7 +43,7 @@ public class RubberBall extends Ball {
 
     /**
      * Creates the shape of the ball
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Removed radiusA and radiusB and added radius</li>
      * </ul>

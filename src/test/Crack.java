@@ -8,7 +8,7 @@ import java.util.Random;
 
 /**
  * New Class - This represents the cracks in the brick.
- * Change:
+ * <br>Change:
  * <ul>
  *     <li>Created a sole class for Crack</li>
  *     <li>Deleted MIN_CRACK as it was not used</li>
@@ -34,7 +34,7 @@ public class Crack{
 
     /**
      * This represents the crack in the brick and initialises it
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Removed parameters</li>
      *     <li>Created object rnd of class Random</li>
@@ -64,7 +64,7 @@ public class Crack{
 
     /**
      * Finds the start and end point of the crack
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Changed method name from makeCrack to setCrackPoints as there is another method called makeCrack</li>
      *     <li>Added brickFace parameter</li>
@@ -111,7 +111,7 @@ public class Crack{
 
     /**
      * Creates the crack on the brick
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Removed inMiddle method as it is only true when i=1</li>
      *     <li>Removed jumps method as it just randomises the first step of the crack</li>
@@ -151,7 +151,7 @@ public class Crack{
 
     /**
      * Creates a random point between a range as the end of the crack
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Enhanced the switch statement</li>
      * </ul>

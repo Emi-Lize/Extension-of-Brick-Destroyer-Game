@@ -36,7 +36,7 @@ public class DebugConsole extends JDialog implements WindowListener{
 
     /**
      * This represents the debug console
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Added a GameSystem object parameter</li>
      *     <li>Added gameSystem as an argument to DebugPanel constructor</li>
@@ -110,7 +110,7 @@ public class DebugConsole extends JDialog implements WindowListener{
 
     /**
      * Sets the location of the debug console and position of slider when the debug console is activated
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Changed wall.ball to gameSystem.ball</li>
      * </ul>

@@ -40,7 +40,7 @@ public class DebugPanel extends JPanel {
 
     /**
      * This represents the debug panel and initialises it
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Added a GameSystem object parameter</li>
      *     <li>Edited method calls for methods which have been moved from Wall to GameSystem</li>

@@ -62,8 +62,8 @@ public class Player {
 
     /**
      * Checks if the player's rectangle has hit the ball
-     * It does this by checking if the bottom of the ball has come in contact with the player's rectangle
-     * Change:
+     * <br>It does this by checking if the bottom of the ball has come in contact with the player's rectangle
+     * <br>Change:
      * <ul>
      *     <li>Changed method name from impact to hitBall</li>
      * </ul>
@@ -94,7 +94,7 @@ public class Player {
 
     /**
      * Moves the player's rectangle to the right
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Edited typo in method name from movRight to moveRight</li>
      * </ul>
@@ -120,7 +120,7 @@ public class Player {
 
     /**
      * Resets the position of the player's rectangle to the initial position
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Changed method name from moveTo to reset</li>
      * </ul>

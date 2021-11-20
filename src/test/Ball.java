@@ -28,7 +28,7 @@ abstract public class Ball {
 
     /**
      * This represents the ball. It initialises the location of the ball and creates the ball.
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Removed radiusA and radiusB and added radius</li>
      *     <li>Replaced duplicate code to set ball's location with the existing method setPoints</li>
@@ -53,7 +53,7 @@ abstract public class Ball {
 
     /**
      * Creates the shape of the ball
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Removed radiusA and radiusB and added radius</li>
      * </ul>
@@ -65,7 +65,7 @@ abstract public class Ball {
 
     /**
      * Moves the position of the ball based on the speed
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Removed code to set the coordinates of the ball and instead called method moveBall</li>
      * </ul>
@@ -149,7 +149,7 @@ abstract public class Ball {
 
     /**
      * Resets the position of the ball to the initial position
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Changed method name from moveTo to reset</li>
      *     <li>Removed code to set the coordinates of the ball and instead called method moveBall</li>
@@ -202,7 +202,7 @@ abstract public class Ball {
 
     /**
      * New Method - Changes the coordinates of the ball to move its position
-     * Changes:
+     * <br>Changes:
      * <ul>
      *     <li>Created this method to reduce duplication in code in method move and moveTo</li>
      * </ul>

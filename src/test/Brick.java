@@ -10,7 +10,7 @@ import java.awt.geom.Point2D;
 
 /**
  * This represents the brick
- * Change:
+ * <br>Change:
  * <ul>
  *     <li>Removed Crack class and placed it in its own class</li>
  * </ul>
@@ -33,7 +33,7 @@ abstract public class Brick  {
 
     /**
      * This represents the brick and initialises its name, border colour, inner colour and strength.
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Removed variable rnd as it's not used in Brick class</li>
      * </ul>
@@ -98,7 +98,7 @@ abstract public class Brick  {
 
     /**
      * Finds which part of the brick was hit by the ball
-     * Change:
+     * <br>Change:
      * <ul>
      *     <li>Removed variable out as it was unnecessary</li>
      * </ul>

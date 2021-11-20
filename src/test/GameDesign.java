@@ -192,14 +192,18 @@ public class GameDesign extends JComponent{
 
         g2d.drawString(PAUSE,x,y); //put PAUSE MENU
 
+        x = gameBoard.getWidth() / 8; //margin for 3 options
         y = gameBoard.getHeight() / 4; //bottom of first quarter
-        continueButtonRect=drawPauseMenuButton(g2d, y, continueButtonRect, CONTINUE);
+        continueButtonRect=drawPauseMenuButton(g2d, y, continueButtonRect, x);
+        g2d.drawString(CONTINUE,x,y); //put text
 
         y *= 2; //second quarter
-        restartButtonRect=drawPauseMenuButton(g2d, y, restartButtonRect, RESTART);
+        restartButtonRect=drawPauseMenuButton(g2d, y, restartButtonRect, x);
+        g2d.drawString(RESTART,x,y); //put text
 
         y *= 3.0/2; //third quarter
-        exitButtonRect=drawPauseMenuButton(g2d, y, exitButtonRect, EXIT);
+        exitButtonRect=drawPauseMenuButton(g2d, y, exitButtonRect, x);
+        g2d.drawString(EXIT,x,y); //put text
 
         g2d.setFont(tmpFont);
         g2d.setColor(tmpColor);
@@ -214,17 +218,15 @@ public class GameDesign extends JComponent{
      * @param g2d An object which draws 2D components
      * @param y The y-coordinate of the top left of the text
      * @param rectangle The rectangle of the button
-     * @param text The string in the button
+     * @param x The x-coordinate of the top left of the text
      * @return The rectangle of the button
      */
-    private Rectangle drawPauseMenuButton(Graphics2D g2d, int y, Rectangle rectangle, String text){
-        int x = gameBoard.getWidth() / 8; //margin for 3 options
+    private Rectangle drawPauseMenuButton(Graphics2D g2d, int y, Rectangle rectangle, int x){
         if (rectangle==null){
             FontRenderContext frc = g2d.getFontRenderContext();
             rectangle = menuFont.getStringBounds(CONTINUE,frc).getBounds(); //get width of word CONTINUE
             rectangle.setLocation(x,y-rectangle.height); //put the button - button sits on the line of quarter
         }
-        g2d.drawString(text,x,y); //put text
         return rectangle;
     }
 

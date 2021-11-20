@@ -33,6 +33,7 @@ abstract public class Ball {
      *     <li>Removed radiusA and radiusB and added radius</li>
      *     <li>Replaced duplicate code to set ball's location with the existing method setPoints</li>
      *     <li>Moved code to declare the four coordinates of the ball to method createPoints</li>
+     *     <li>setPoints method has only one argument</li>
      * </ul>
      * @param center The coordinates of the center of the ball
      * @param radius The radius of the ball
@@ -43,7 +44,7 @@ abstract public class Ball {
         this.center = center;
 
         createPoints();
-        setPoints(radius, radius);
+        setPoints(radius);
         ballFace = makeBall(center,radius); //creating ball
         this.border = border;
         this.inner  = inner;
@@ -173,15 +174,20 @@ abstract public class Ball {
 
     /**
      * Sets the coordinates of the four points of the ball
-     * @param width The width of the ball
-     * @param height The height of the ball
+     * <br>Change:
+     * <ul>
+     *     <li>Parameter accepts a radius instead of width and height</li>
+     *     <li>Variable half created since radius/2 is always calculated</li>
+     * </ul>
+     * @param radius The radius of the ball
      */
-    private void setPoints(double width,double height){ //setting 4 coordinates of ball
-        up.setLocation(center.getX(),center.getY()-(height / 2));
-        down.setLocation(center.getX(),center.getY()+(height / 2));
+    private void setPoints(double radius){ //setting 4 coordinates of ball
+        double half = radius/2;
+        up.setLocation(center.getX(),center.getY()-half);
+        down.setLocation(center.getX(),center.getY()+half);
 
-        left.setLocation(center.getX()-(width / 2),center.getY());
-        right.setLocation(center.getX()+(width / 2),center.getY());
+        left.setLocation(center.getX()-half,center.getY());
+        right.setLocation(center.getX()+half,center.getY());
     }
 
     /**
@@ -205,15 +211,15 @@ abstract public class Ball {
      * <br>Changes:
      * <ul>
      *     <li>Created this method to reduce duplication in code in method move and moveTo</li>
+     *     <li>Get only width as height and width of tmp will be the same</li>
      * </ul>
      */
     public void moveBall(){
         RectangularShape tmp = (RectangularShape) ballFace; //same concept as move
-        double w = tmp.getWidth();
-        double h = tmp.getHeight();
+        double l = tmp.getWidth();
 
-        tmp.setFrame((center.getX() -(w / 2)),(center.getY() - (h / 2)),w,h);
-        setPoints(w,h); //change the 4 coordinates of the ball
+        tmp.setFrame((center.getX() -(l / 2)),(center.getY() - (l / 2)),l,l);
+        setPoints(l); //change the 4 coordinates of the ball
         ballFace = tmp;
     }
 

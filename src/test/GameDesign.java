@@ -52,12 +52,16 @@ public class GameDesign extends JComponent{
 
     /**
      * New Method - Calls methods to draw the components of the gameboard
+     * <br>Change:
+     * <ul>
+     *     <li>Method clear changed to colourBackground</li>
+     * </ul>
      * @param g2d An object which draws 2D components
      * @param message The string to be displayed
      * @param showPauseMenu A boolean representing if the pause menu is to be shown
      */
     public void draw(Graphics2D g2d, String message, boolean showPauseMenu){
-        clear(g2d); //set background
+        colourBackground(g2d); //set background
 
         g2d.setColor(Color.BLUE);
         g2d.drawString(message,250,225); //print blue message
@@ -75,9 +79,13 @@ public class GameDesign extends JComponent{
     }
     /**
      * Sets the background of the game to white
+     * <br>Change:
+     * <ul>
+     *     <li>Changed method name to colourBackground</li>
+     * </ul>
      * @param g2d An object which draws 2D components
      */
-    private void clear(Graphics2D g2d){
+    private void colourBackground(Graphics2D g2d){
         Color tmp = g2d.getColor();
         g2d.setColor(BG_COLOR); //set background to white
         g2d.fillRect(0,0,getWidth(),getHeight());

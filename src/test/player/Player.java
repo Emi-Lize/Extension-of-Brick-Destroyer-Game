@@ -15,7 +15,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test;
+package test.player;
+
+import test.ball.Ball;
 
 import java.awt.*;
 
@@ -71,7 +73,7 @@ public class Player {
      * @return A boolean which represents if the player's rectangle has hit the ball
      */
     public boolean hitBall(Ball b){
-        return playerFace.contains(b.getPosition()) && playerFace.contains(b.down) ;
+        return playerFace.contains(b.getPosition()) && playerFace.contains(b.getDown()) ;
     } //check if ball bottom hits the player
 
     /**

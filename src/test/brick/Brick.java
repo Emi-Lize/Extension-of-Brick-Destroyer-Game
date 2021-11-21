@@ -1,4 +1,6 @@
-package test;
+package test.brick;
+
+import test.ball.Ball;
 
 import java.awt.*;
 import java.awt.Point;
@@ -101,6 +103,7 @@ abstract public class Brick  {
      * <br>Change:
      * <ul>
      *     <li>Removed variable out as it was unnecessary</li>
+     *     <li>Called get methods for left, right, up, down of ball</li>
      * </ul>
      * @param b The ball object
      * @return The side of the brick which was hit by the ball
@@ -108,13 +111,13 @@ abstract public class Brick  {
     public final int findImpact(Ball b){
         if(broken)
             return 0;
-        if(brickFace.contains(b.right)) //if brick in contact with the right of the ball
+        if(brickFace.contains(b.getRight())) //if brick in contact with the right of the ball
             return LEFT_IMPACT;
-        else if(brickFace.contains(b.left))
+        else if(brickFace.contains(b.getLeft()))
             return RIGHT_IMPACT;
-        else if(brickFace.contains(b.up))
+        else if(brickFace.contains(b.getUp()))
             return DOWN_IMPACT;
-        else if(brickFace.contains(b.down))
+        else if(brickFace.contains(b.getDown()))
             return UP_IMPACT;
         return 0;
     }

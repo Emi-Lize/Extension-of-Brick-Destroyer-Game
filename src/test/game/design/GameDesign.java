@@ -1,4 +1,11 @@
-package test;
+package test.game.design;
+
+import test.game.system.GameSystem;
+import test.player.Player;
+import test.wall.Wall;
+import test.ball.Ball;
+import test.brick.Brick;
+import test.game.system.GameBoard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,6 +62,7 @@ public class GameDesign extends JComponent{
      * <br>Change:
      * <ul>
      *     <li>Method clear changed to colourBackground</li>
+     *     <li>Used getter to get the layout of the bricks from Wall</li>
      * </ul>
      * @param g2d An object which draws 2D components
      * @param message The string to be displayed
@@ -68,7 +76,7 @@ public class GameDesign extends JComponent{
 
         drawBall(gameSystem.ball,g2d); //draw ball
 
-        for(Brick b : wall.bricks) //create bricks
+        for(Brick b : wall.getBricks()) //create bricks
             if(!b.isBroken())
                 drawBrick(b,g2d);
 
@@ -114,7 +122,7 @@ public class GameDesign extends JComponent{
      * @param ball The ball object
      * @param g2d An object which draws 2D components
      */
-    private void drawBall(Ball ball,Graphics2D g2d){
+    private void drawBall(Ball ball, Graphics2D g2d){
         Color tmp = g2d.getColor();
 
         Shape s = ball.getBallFace(); //shape of ball
@@ -133,7 +141,7 @@ public class GameDesign extends JComponent{
      * @param p The player object
      * @param g2d An object which draws 2D components
      */
-    private void drawPlayer(Player p,Graphics2D g2d){
+    private void drawPlayer(Player p, Graphics2D g2d){
         Color tmp = g2d.getColor();
 
         Shape s = p.getPlayerFace(); //shape of player

@@ -1,4 +1,11 @@
-package test;
+package test.game.system;
+
+import test.player.Player;
+import test.wall.Wall;
+import test.ball.Ball;
+import test.ball.RubberBall;
+import test.brick.Brick;
+import test.brick.Crack;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -16,9 +23,9 @@ public class GameSystem {
     private int ballCount;
     private boolean ballLost;
 
-    Ball ball;
-    Player player;
-    Wall wall;
+    public Ball ball;
+    public Player player;
+    public Wall wall;
 
     /**
      * This represents the game system and initialises the ball and the player
@@ -91,27 +98,28 @@ public class GameSystem {
      * <ul>
      *     <li>Changed all second argument of setImpact to Crack. instead of Brick.Crack.</li>
      *     <li>Changed the array in the for loop to wall.bricks instead of bricks</li>
+     *     <li>Used getter to get the bricks from Wall</li>
      * </ul>
      * @return A boolean which represents if the ball had hit a brick
      */
     private boolean impactWall(){
-        for(Brick b : wall.bricks){
+        for(Brick b : wall.getBricks()){
             switch(b.findImpact(ball)) { //check where brick got hit - change trajectory of ball - if neither means no brick
                 //Vertical Impact
                 case Brick.UP_IMPACT:
                     ball.reverseY();
-                    return b.setImpact(ball.down, Crack.UP);
+                    return b.setImpact(ball.getDown(), Crack.UP);
                 case Brick.DOWN_IMPACT:
                     ball.reverseY();
-                    return b.setImpact(ball.up,Crack.DOWN);
+                    return b.setImpact(ball.getUp(),Crack.DOWN);
 
                 //Horizontal Impact
                 case Brick.LEFT_IMPACT:
                     ball.reverseX();
-                    return b.setImpact(ball.right,Crack.RIGHT);
+                    return b.setImpact(ball.getRight(),Crack.RIGHT);
                 case Brick.RIGHT_IMPACT:
                     ball.reverseX();
-                    return b.setImpact(ball.left,Crack.LEFT);
+                    return b.setImpact(ball.getLeft(),Crack.LEFT);
             }
         }
         return false; //no impact on brick

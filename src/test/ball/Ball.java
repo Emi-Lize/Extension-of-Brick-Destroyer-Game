@@ -1,4 +1,4 @@
-package test;
+package test.ball;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -10,15 +10,19 @@ import java.awt.geom.RectangularShape;
 
 /**
  * This represents the ball
+ * <br>Change:
+ * <ul>
+ *     <li>up, down , left and right declared as a private variable</li>
+ * </ul>
  */
 abstract public class Ball {
     private Shape ballFace;
     private Point2D center;
 
-    Point2D up;
-    Point2D down;
-    Point2D left;
-    Point2D right;
+    private Point2D up;
+    private Point2D down;
+    private Point2D left;
+    private Point2D right;
 
     private Color border;
     private Color inner;
@@ -223,4 +227,35 @@ abstract public class Ball {
         ballFace = tmp;
     }
 
+    /**
+     * New Method - Gets the position of the top of the ball
+     * @return The coordinate of the top of the ball
+     */
+    public Point2D getUp() {
+        return up;
+    }
+
+    /**
+     * New Method - Gets the position of the bottom of the ball
+     * @return The coordinate of the bottom of the ball
+     */
+    public Point2D getDown() {
+        return down;
+    }
+
+    /**
+     * New Method - Gets the position of the left of the ball
+     * @return The coordinate of the left of the ball
+     */
+    public Point2D getLeft() {
+        return left;
+    }
+
+    /**
+     * New Method - Gets the position of the right of the ball
+     * @return The coordinate of the right of the ball
+     */
+    public Point2D getRight() {
+        return right;
+    }
 }

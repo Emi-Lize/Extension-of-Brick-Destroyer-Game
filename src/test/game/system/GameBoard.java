@@ -15,7 +15,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test;
+package test.game.system;
+
+import test.wall.Wall;
+import test.debug.DebugConsole;
+import test.game.design.GameDesign;
 
 import javax.swing.*;
 import java.awt.*;

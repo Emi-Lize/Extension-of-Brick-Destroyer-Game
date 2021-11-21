@@ -1,40 +1,16 @@
-/*
- *  Brick Destroy - A simple Arcade video game
- *   Copyright (C) 2017  Filippo Ranza
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-package test;
+package test.game.design;
+
+import test.game.system.HomeMenu;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
 /**
- * This represents the home menu of the game
- * <br>Change:
- * <ul>
- *     <li>Changed name of MENU_TEXT to EXIT_TEXT to improve clarity</li>
- *     <li>Changed name of menuButton to exitButton to improve clarity</li>
- *     <li>Changed name of menuClicked to exitClicked to improve clarity</li>
- * </ul>
+ * New Class - Moved code from HomeMenu related to the design of the home menu
  */
-public class HomeMenu extends JComponent implements MouseListener, MouseMotionListener {
+public class MenuDesign extends JComponent {
     private static final String GREETINGS = "Welcome to:";
     private static final String GAME_TITLE = "Brick Destroy";
     private static final String CREDITS = "Version 0.1";
@@ -62,45 +38,22 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     private Font creditsFont;
     private Font buttonFont;
 
-    private GameFrame owner;
-
-    private boolean startClicked;
-    private boolean exitClicked;
+    private HomeMenu homeMenu;
 
     /**
-     * This represents the home menu of the game and initialises it
-     * <br>Change:
-     * <ul>
-     *     <li>Moved code to set the properties of the window to method initialise</li>
-     *     <li>Moved code to set the border design to method setBorderDesign</li>
-     *     <li>Moved code to set the font of the string to method setFont</li>
-     * </ul>
-     * @param owner The window the game frame is in
-     * @param area The area of the home menu
+     * This represents the design of the home menu
+     * @param homeMenu The homeMenu object
+     * @param area The dimensions of the homeMenu
      */
-    public HomeMenu(GameFrame owner,Dimension area){
-        initialise();
-        this.owner = owner;
-
+    public MenuDesign(HomeMenu homeMenu, Dimension area){
+        this.homeMenu=homeMenu;
         menuFace = new Rectangle(new Point(0,0),area); //create home menu
-        this.setPreferredSize(area); //set size
-
         Dimension btnDim = new Dimension(area.width / 3, area.height / 12); //size of start and exit
         startButton = new Rectangle(btnDim);
         exitButton = new Rectangle(btnDim);
 
         setBorderDesign();
         setFont();
-    }
-
-    /**
-     * New Method - Sets the property of the home menu window
-     */
-    private void initialise(){
-        this.setFocusable(true); //focus on home menu
-        this.requestFocusInWindow(); //ensure it is focused on
-        this.addMouseListener(this); //WindowListener watches for mouse
-        this.addMouseMotionListener(this);
     }
 
     /**
@@ -122,18 +75,15 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     }
 
     /**
-     * Draws the home menu
-     * @param g An object which draws the components
-     */
-    public void paint(Graphics g){
-        drawMenu((Graphics2D)g);
-    }
-
-    /**
      * Draws the components in the home menu
+     * <br>Change:
+     * <ul>
+     *     <li>Added two parameters to the method</li>
+     *     <li>drawButton takes in two more arguments</li>
+     * </ul>
      * @param g2d An object which draws the 2D components
      */
-    public void drawMenu(Graphics2D g2d){
+    public void drawMenu(Graphics2D g2d, boolean startClicked, boolean exitClicked){
         drawContainer(g2d);
 
         /*
@@ -151,7 +101,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
         //methods calls
         drawText(g2d);
-        drawButton(g2d);
+        drawButton(g2d, startClicked, exitClicked);
         //end of methods calls
 
         g2d.translate(-x,-y);
@@ -242,10 +192,11 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
      * <ul>
      *     <li>Moved code to draw the button and text to setButton</li>
      *     <li>Removed code to declare x and y again</li>
+     *     <li>drawButton takes 2 more parameters</li>
      * </ul>
      * @param g2d An object which draws the 2D components
      */
-    private void drawButton(Graphics2D g2d){
+    private void drawButton(Graphics2D g2d, boolean startClicked, boolean exitClicked){
         FontRenderContext frc = g2d.getFontRenderContext();
 
         Rectangle2D txtRect = buttonFont.getStringBounds(START_TEXT,frc); //get boundary of text
@@ -297,81 +248,18 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     }
 
     /**
-     * Checks if the button was clicked and invokes a method if so
-     * @param mouseEvent An object which checks if there's any action from the mouse
+     * New Method - Gets the Start Button
+     * @return The rectangle of the start button
      */
-    @Override
-    public void mouseClicked(MouseEvent mouseEvent) {
-        Point p = mouseEvent.getPoint();
-        if(startButton.contains(p)){
-           owner.enableGameBoard();
-        }
-        else if(exitButton.contains(p)){
-            System.out.println("Goodbye " + System.getProperty("user.name"));
-            System.exit(0);
-        }
+    public Rectangle getStartButton() {
+        return startButton;
     }
 
     /**
-     * Checks when the mouse is pressed and changes the colour of the button
-     * @param mouseEvent An object which checks if there's any action from the mouse
+     * New Method - Gets the Exit Button
+     * @return The rectangle of the exit button
      */
-    @Override
-    public void mousePressed(MouseEvent mouseEvent) { //change colour when button clicked
-        Point p = mouseEvent.getPoint();
-        if(startButton.contains(p)){
-            startClicked = true;
-            repaint(startButton.x,startButton.y,startButton.width+1,startButton.height+1);
-        }
-        else if(exitButton.contains(p)){
-            exitClicked = true;
-            repaint(exitButton.x,exitButton.y,exitButton.width+1,exitButton.height+1);
-        }
+    public Rectangle getExitButton() {
+        return exitButton;
     }
-
-    /**
-     * Checks when the mouse is released and changes the colour of the button back to its initial colour
-     * @param mouseEvent An object which checks if there's any action from the mouse
-     */
-    @Override
-    public void mouseReleased(MouseEvent mouseEvent) { //change colour back when button unclicked
-        if(startClicked ){
-            startClicked = false;
-            repaint(startButton.x,startButton.y,startButton.width+1,startButton.height+1);
-        }
-        else if(exitClicked){
-            exitClicked = false;
-            repaint(exitButton.x,exitButton.y,exitButton.width+1,exitButton.height+1);
-        }
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-
-    }
-
-
-    @Override
-    public void mouseDragged(MouseEvent mouseEvent) {
-
-    }
-
-    /**
-     * Checks if the mouse has moved and where it is
-     * @param mouseEvent An object which checks if there's any action from the mouse
-     */
-    @Override
-    public void mouseMoved(MouseEvent mouseEvent) { //change cursor shape
-        Point p = mouseEvent.getPoint();
-        if(startButton.contains(p) || exitButton.contains(p))
-            this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        else
-            this.setCursor(Cursor.getDefaultCursor());
-    }
-
 }

@@ -15,7 +15,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test;
+package test.wall;
+
+import test.brick.Brick;
+import test.brick.CementBrick;
+import test.brick.ClayBrick;
+import test.brick.SteelBrick;
 
 import java.awt.*;
 
@@ -24,6 +29,7 @@ import java.awt.*;
  * <br>Change:
  * <ul>
  *     <li>Removed methods on ball and player and placed it to a new class GameSystem</li>
+ *     <li>Set the variable bricks as private</li>
  * </ul>
  */
 public class Wall {
@@ -32,7 +38,7 @@ public class Wall {
     private static final int STEEL = 2;
     private static final int CEMENT = 3;
 
-    Brick[] bricks;
+    private Brick[] bricks;
 
     private Brick[][] levels;
     private int level;
@@ -220,4 +226,11 @@ public class Wall {
         return levels;
     }
 
+    /**
+     * New Method - Gets the brick layout
+     * @return An array containing the layout of the bricks
+     */
+    public Brick[] getBricks() {
+        return bricks;
+    }
 }

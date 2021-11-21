@@ -17,8 +17,6 @@
  */
 package test.brick;
 
-import test.brick.Brick;
-
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Random;
@@ -27,7 +25,6 @@ import java.util.Random;
  * This represents the steel brick which inherits from brick
  */
 public class SteelBrick extends Brick {
-    private static final String NAME = "Steel Brick";
     private static final Color DEF_INNER = new Color(203, 203, 201);
     private static final Color DEF_BORDER = Color.BLACK;
     private static final int STEEL_STRENGTH = 1;
@@ -42,7 +39,7 @@ public class SteelBrick extends Brick {
      * @param size The width and height of the brick
      */
     public SteelBrick(Point point, Dimension size){
-        super(NAME,point,size,DEF_BORDER,DEF_INNER,STEEL_STRENGTH);
+        super(point,size,DEF_BORDER,DEF_INNER,STEEL_STRENGTH);
         rnd = new Random();
         brickFace = super.brickFace;
     }
@@ -71,7 +68,7 @@ public class SteelBrick extends Brick {
      * Checks if the ball has hit a brick which has not been broken
      * @param point The coordinates of the top left corner of the brick
      * @param dir The side of the brick which was hit
-     * @return A boolean representing if the brick has broke
+     * @return A boolean representing if the brick has broken
      */
     public  boolean setImpact(Point2D point , int dir){
         if(super.isBroken())

@@ -15,6 +15,7 @@ import java.awt.geom.Point2D;
  * <br>Change:
  * <ul>
  *     <li>Removed Crack class and placed it in its own class</li>
+ *     <li>Removed string "name" as it wasn't being used</li>
  * </ul>
  */
 abstract public class Brick  {
@@ -23,7 +24,6 @@ abstract public class Brick  {
     public static final int LEFT_IMPACT = 300;
     public static final int RIGHT_IMPACT = 400;
 
-    private String name;
     Shape brickFace;
 
     private Color border;
@@ -38,17 +38,16 @@ abstract public class Brick  {
      * <br>Change:
      * <ul>
      *     <li>Removed variable rnd as it's not used in Brick class</li>
+     *     <li>Removed name from the parameters</li>
      * </ul>
-     * @param name The type of brick
      * @param pos The coordinates of the top left corner of the brick
      * @param size The width and height of the brick
      * @param border The colour of the border of the brick
      * @param inner The colour of the inner part of the brick
      * @param strength The number of times the brick has to be hit to be broken
      */
-    public Brick(String name, Point pos,Dimension size,Color border,Color inner,int strength){
+    public Brick(Point pos,Dimension size,Color border,Color inner,int strength){
         broken = false;
-        this.name = name;
         brickFace = makeBrickFace(pos,size);
         this.border = border;
         this.inner = inner;

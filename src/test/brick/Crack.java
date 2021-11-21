@@ -14,10 +14,11 @@ import java.util.Random;
  *     <li>Deleted MIN_CRACK as it was not used</li>
  *     <li>Renamed all object of class GeneralPath from crack to crackPath</li>
  *     <li>Removed CRACK_SECTIONS and JUMP_PROBABILITY as methods which used it were removed</li>
+ *     <li>Renamed CRACK_DEPTH as BOUND</li>
  * </ul>
  */
 public class Crack{
-    public static final int DEF_CRACK_DEPTH = 1;
+    public static final int BOUND = 1;
     public static final int DEF_STEPS = 35;
 
     public static final int LEFT = 10;
@@ -29,8 +30,7 @@ public class Crack{
 
     private GeneralPath crackPath;
     private static Random rnd;
-    private int crackDepth;
-    private int steps;
+    private final int steps;
 
     /**
      * This represents the crack in the brick and initialises it
@@ -43,7 +43,6 @@ public class Crack{
     public Crack(){
         rnd = new Random();
         crackPath = new GeneralPath();
-        this.crackDepth = DEF_CRACK_DEPTH;
         this.steps = DEF_STEPS;
     }
 
@@ -126,12 +125,11 @@ public class Crack{
         double w = (end.x - start.x) / (double)steps; //width and height of each step
         double h = (end.y - start.y) / (double)steps;
 
-        int bound = crackDepth;
         double x,y;
 
         for(int i = 1; i < steps;i++){
             x = (i * w) + start.x; //setting the x
-            y = (i * h) + start.y + randomInBounds(bound); //setting the y - randomise the height of steps
+            y = (i * h) + start.y + randomInBounds(); //setting the y - randomise the height of steps
             path.lineTo(x,y); //draws the line
         }
 
@@ -141,12 +139,15 @@ public class Crack{
 
     /**
      * Randomises the height of each step in the crack
-     * @param bound An integer
+     * <br>Change:
+     * <ul>
+     *     <li>Does not take in a parameter anymore</li>
+     * </ul>
      * @return A random integer from -1 to 1 inclusive
      */
-    private int randomInBounds(int bound){ //randomise height of steps in crack
-        int n = (bound * 2) + 1;
-        return rnd.nextInt(n) - bound;
+    private int randomInBounds(){ //randomise height of steps in crack
+        int n = (BOUND * 2) + 1;
+        return rnd.nextInt(n) - BOUND;
     }
 
     /**

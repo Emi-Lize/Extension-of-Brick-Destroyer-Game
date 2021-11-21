@@ -38,15 +38,11 @@ public class MenuDesign extends JComponent {
     private Font creditsFont;
     private Font buttonFont;
 
-    private HomeMenu homeMenu;
-
     /**
      * This represents the design of the home menu
-     * @param homeMenu The homeMenu object
      * @param area The dimensions of the homeMenu
      */
-    public MenuDesign(HomeMenu homeMenu, Dimension area){
-        this.homeMenu=homeMenu;
+    public MenuDesign(Dimension area){
         menuFace = new Rectangle(new Point(0,0),area); //create home menu
         Dimension btnDim = new Dimension(area.width / 3, area.height / 12); //size of start and exit
         startButton = new Rectangle(btnDim);
@@ -99,7 +95,7 @@ public class MenuDesign extends JComponent {
 
         g2d.translate(x,y); //reference point is (0,0)
 
-        //methods calls
+        //method calls
         drawText(g2d);
         drawButton(g2d, startClicked, exitClicked);
         //end of methods calls

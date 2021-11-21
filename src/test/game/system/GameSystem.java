@@ -99,27 +99,32 @@ public class GameSystem {
      *     <li>Changed all second argument of setImpact to Crack. instead of Brick.Crack.</li>
      *     <li>Changed the array in the for loop to wall.bricks instead of bricks</li>
      *     <li>Used getter to get the bricks from Wall</li>
+     *     <li>Enhanced the switch statement</li>
      * </ul>
      * @return A boolean which represents if the ball had hit a brick
      */
     private boolean impactWall(){
         for(Brick b : wall.getBricks()){
-            switch(b.findImpact(ball)) { //check where brick got hit - change trajectory of ball - if neither means no brick
+            switch (b.findImpact(ball)) { //check where brick got hit - change trajectory of ball - if neither means no brick
                 //Vertical Impact
-                case Brick.UP_IMPACT:
+                case Brick.UP_IMPACT -> {
                     ball.reverseY();
                     return b.setImpact(ball.getDown(), Crack.UP);
-                case Brick.DOWN_IMPACT:
+                }
+                case Brick.DOWN_IMPACT -> {
                     ball.reverseY();
-                    return b.setImpact(ball.getUp(),Crack.DOWN);
+                    return b.setImpact(ball.getUp(), Crack.DOWN);
+                }
 
                 //Horizontal Impact
-                case Brick.LEFT_IMPACT:
+                case Brick.LEFT_IMPACT -> {
                     ball.reverseX();
-                    return b.setImpact(ball.getRight(),Crack.RIGHT);
-                case Brick.RIGHT_IMPACT:
+                    return b.setImpact(ball.getRight(), Crack.RIGHT);
+                }
+                case Brick.RIGHT_IMPACT -> {
                     ball.reverseX();
-                    return b.setImpact(ball.getLeft(),Crack.LEFT);
+                    return b.setImpact(ball.getLeft(), Crack.LEFT);
+                }
             }
         }
         return false; //no impact on brick

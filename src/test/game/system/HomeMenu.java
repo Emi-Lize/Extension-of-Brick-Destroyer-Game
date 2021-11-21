@@ -62,7 +62,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         this.owner = owner;
 
         this.setPreferredSize(area); //set size
-        menuDesign = new MenuDesign(this, area);
+        menuDesign = new MenuDesign(area);
 
     }
 
@@ -129,7 +129,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
      * @param mouseEvent An object which checks if there's any action from the mouse
      */
     @Override
-    public void mouseReleased(MouseEvent mouseEvent) { //change colour back when button unclicked
+    public void mouseReleased(MouseEvent mouseEvent) { //change colour back when button not clicked
         if(startClicked ){
             startClicked = false;
             repaint(startButton.x,startButton.y,startButton.width+1,startButton.height+1);

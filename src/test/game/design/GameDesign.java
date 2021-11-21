@@ -52,7 +52,7 @@ public class GameDesign extends JComponent{
      * Sets up the properties of the game board
      */
     private void initialize(){
-        gameBoard.setPreferredSize(new Dimension(gameBoard.DEF_WIDTH,gameBoard.DEF_HEIGHT)); //size of gameboard
+        gameBoard.setPreferredSize(new Dimension(GameBoard.DEF_WIDTH,GameBoard.DEF_HEIGHT)); //size of gameboard
         gameBoard.setFocusable(true); //can be focused on
         gameBoard.requestFocusInWindow(); //focus on this window after debug console closed
     }
@@ -175,7 +175,7 @@ public class GameDesign extends JComponent{
         g2d.setComposite(ac);
 
         g2d.setColor(Color.BLACK); //colour of effect
-        g2d.fillRect(0,0,gameBoard.DEF_WIDTH,gameBoard.DEF_HEIGHT);
+        g2d.fillRect(0,0,GameBoard.DEF_WIDTH,GameBoard.DEF_HEIGHT);
 
         g2d.setComposite(tmp);
         g2d.setColor(tmpColor);

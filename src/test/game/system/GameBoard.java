@@ -61,6 +61,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      *     <li>Added gameSystem object as an argument for DebugConsole constructor</li>
      *     <li>Moved gameTimer to runGame</li>
      *     <li>Created an object of class GameDesign</li>
+     *     <li>Type casted "6/2" argument in wall to double</li>
      * </ul>
      * @param owner The window the game board is in
      */
@@ -72,7 +73,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
         message = "";
         initialize();
-        wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,6/2); //create levels
+        wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,(double)6/2); //create levels
         gameSystem = new GameSystem(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT), new Point(300,430), wall);
         gameDesign = new GameDesign(this, gameSystem, wall);
         debugConsole = new DebugConsole(owner,wall,this, gameSystem); //create debug console

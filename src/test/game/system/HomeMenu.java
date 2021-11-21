@@ -62,7 +62,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         this.owner = owner;
 
         this.setPreferredSize(area); //set size
-        menuDesign = new MenuDesign(area);
+        menuDesign = new MenuDesign(area, this);
 
     }
 
@@ -81,14 +81,29 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
      * <br>Change:
      * <ul>
      *     <li>Calls drawMenu method from menuDesign to design HomeMenu</li>
-     *     <li>Added two arguments to drawMenu</li>
      * </ul>
      * @param g An object which draws the components
      */
     public void paint(Graphics g){
-        menuDesign.drawMenu((Graphics2D)g, startClicked, exitClicked);
+        menuDesign.drawMenu((Graphics2D)g);
         startButton=menuDesign.getStartButton();
         exitButton=menuDesign.getExitButton();
+    }
+
+    /**
+     * Gets the boolean of startClicked
+     * @return A boolean representing if the start button is clicked
+     */
+    public boolean isStartClicked() {
+        return startClicked;
+    }
+
+    /**
+     * Gets the boolean of exitClicked
+     * @return A boolean representing if the exit button is clicked
+     */
+    public boolean isExitClicked() {
+        return exitClicked;
     }
 
     /**

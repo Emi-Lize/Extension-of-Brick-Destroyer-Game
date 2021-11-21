@@ -2,142 +2,52 @@ package test.game.design;
 
 import test.game.system.HomeMenu;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
 /**
  * New Class - Moved code from HomeMenu related to the design of the home menu
+ * <br>
+ * <ul>
+ *     <li>MenuDesign is now a child of Design</li>
+ * </ul>
  */
-public class MenuDesign extends JComponent {
+public class MenuDesign extends Design {
     private static final String GREETINGS = "Welcome to:";
     private static final String GAME_TITLE = "Brick Destroy";
     private static final String CREDITS = "Version 0.1";
     private static final String START_TEXT = "Start";
     private static final String EXIT_TEXT = "Exit";
 
-    private static final Color BG_COLOR = Color.GREEN.darker();
-    private static final Color BORDER_COLOR = new Color(200,8,21); //Venetian Red
-    private static final Color DASH_BORDER_COLOR = new  Color(255, 216, 0);//school bus yellow
-    private static final Color TEXT_COLOR = new Color(16, 52, 166);//egyptian blue
-    private static final Color CLICKED_BUTTON_COLOR = BG_COLOR.brighter();
-    private static final Color CLICKED_TEXT = Color.WHITE;
-    private static final int BORDER_SIZE = 5;
-    private static final float[] DASHES = {12,6};
-
-    private Rectangle menuFace;
     private Rectangle startButton;
     private Rectangle exitButton;
 
-    private BasicStroke borderStoke;
-    private BasicStroke borderStoke_noDashes;
-
     private Font greetingsFont;
-    private Font gameTitleFont;
     private Font creditsFont;
-    private Font buttonFont;
+
+    private HomeMenu homeMenu;
 
     /**
      * This represents the design of the home menu
      * @param area The dimensions of the homeMenu
+     * @param homeMenu The home menu object
      */
-    public MenuDesign(Dimension area){
-        menuFace = new Rectangle(new Point(0,0),area); //create home menu
-        Dimension btnDim = new Dimension(area.width / 3, area.height / 12); //size of start and exit
+    public MenuDesign(Dimension area, HomeMenu homeMenu){
+        super(area);
+        this.homeMenu = homeMenu;
         startButton = new Rectangle(btnDim);
         exitButton = new Rectangle(btnDim);
 
-        setBorderDesign();
-        setFont();
+        fontDesign();
     }
 
     /**
      * New Method - Sets the font of each string
      */
-    private void setFont(){
+    private void fontDesign(){
         greetingsFont = new Font("Noto Mono",Font.PLAIN,25);
-        gameTitleFont = new Font("Noto Mono",Font.BOLD,40);
         creditsFont = new Font("Monospaced",Font.PLAIN,10);
-        buttonFont = new Font("Monospaced",Font.PLAIN,startButton.height-2);
-    }
-
-    /**
-     * New Method - Sets the design of the border
-     */
-    private void setBorderDesign(){
-        borderStoke = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND,0,DASHES,0); //red part of menu border
-        borderStoke_noDashes = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND); //yellow part of menu border
-    }
-
-    /**
-     * Draws the components in the home menu
-     * <br>Change:
-     * <ul>
-     *     <li>Added two parameters to the method</li>
-     *     <li>drawButton takes in two more arguments</li>
-     * </ul>
-     * @param g2d An object which draws the 2D components
-     */
-    public void drawMenu(Graphics2D g2d, boolean startClicked, boolean exitClicked){
-        drawContainer(g2d);
-
-        /*
-        all the following method calls need a relative
-        painting directly into the HomeMenu rectangle,
-        so the translation is made here so the other methods do not do that.
-         */
-        Color prevColor = g2d.getColor();
-        Font prevFont = g2d.getFont();
-
-        double x = menuFace.getX();
-        double y = menuFace.getY();
-
-        g2d.translate(x,y); //reference point is (0,0)
-
-        //method calls
-        drawText(g2d);
-        drawButton(g2d, startClicked, exitClicked);
-        //end of methods calls
-
-        g2d.translate(-x,-y);
-        g2d.setFont(prevFont);
-        g2d.setColor(prevColor);
-    }
-
-    /**
-     * Draws the border of the home menu frame and sets the background colour
-     * <br>Change:
-     * <ul>
-     *     <li>Moved code to draw the border to drawBorder</li>
-     * </ul>
-     * @param g2d An object which draws the 2D components
-     */
-    private void drawContainer(Graphics2D g2d){
-        Color prev = g2d.getColor();
-
-        g2d.setColor(BG_COLOR);
-        g2d.fill(menuFace); //fill background colour
-
-        Stroke tmp = g2d.getStroke();
-
-        drawBorder(borderStoke_noDashes, DASH_BORDER_COLOR, g2d); //draw yellow part of border
-        drawBorder(borderStoke, BORDER_COLOR, g2d); //draw red part of border
-
-        g2d.setStroke(tmp);
-        g2d.setColor(prev);
-    }
-
-    /**
-     * New Method - Moved the code to draw the border from drawContainer
-     * @param stroke The border outline
-     * @param colour The colour of the border
-     * @param g2d An object which draws the 2D components
-     */
-    private void drawBorder(BasicStroke stroke, Color colour, Graphics2D g2d){
-        g2d.setStroke(stroke);
-        g2d.setColor(colour);
-        g2d.draw(menuFace);
     }
 
     /**
@@ -148,7 +58,8 @@ public class MenuDesign extends JComponent {
      * </ul>
      * @param g2d An object which draws the 2D components
      */
-    private void drawText(Graphics2D g2d){
+    @Override
+    protected void drawText(Graphics2D g2d){
         g2d.setColor(TEXT_COLOR);
 
         FontRenderContext frc = g2d.getFontRenderContext();
@@ -175,7 +86,8 @@ public class MenuDesign extends JComponent {
      * @param text The text string
      * @param g2d An object which draws the 2D components
      */
-    private void setText(int sY, Rectangle2D rectangle, Font font, String text, Graphics2D g2d){
+    @Override
+    protected void setText(int sY, Rectangle2D rectangle, Font font, String text, Graphics2D g2d){
         int sX = (int)(menuFace.getWidth() - rectangle.getWidth()) / 2;
 
         g2d.setFont(font);
@@ -188,11 +100,11 @@ public class MenuDesign extends JComponent {
      * <ul>
      *     <li>Moved code to draw the button and text to setButton</li>
      *     <li>Removed code to declare x and y again</li>
-     *     <li>drawButton takes 2 more parameters</li>
      * </ul>
      * @param g2d An object which draws the 2D components
      */
-    private void drawButton(Graphics2D g2d, boolean startClicked, boolean exitClicked){
+    @Override
+    protected void drawButton(Graphics2D g2d){
         FontRenderContext frc = g2d.getFontRenderContext();
 
         Rectangle2D txtRect = buttonFont.getStringBounds(START_TEXT,frc); //get boundary of text
@@ -205,13 +117,13 @@ public class MenuDesign extends JComponent {
 
         startButton.setLocation(x,y); //position of rectangle
 
-        setButton(txtRect, g2d, startClicked, startButton, START_TEXT);
+        setButton(txtRect, g2d, homeMenu.isStartClicked(), startButton, START_TEXT);
 
         y *= 1.2;
 
         exitButton.setLocation(x,y); //location of exit button
 
-        setButton(mTxtRect, g2d, exitClicked, exitButton, EXIT_TEXT);
+        setButton(mTxtRect, g2d, homeMenu.isExitClicked(), exitButton, EXIT_TEXT);
     }
 
     /**
@@ -222,7 +134,8 @@ public class MenuDesign extends JComponent {
      * @param button A rectangle representing the button
      * @param text The string in the button
      */
-    private void setButton(Rectangle2D rectangle, Graphics2D g2d, Boolean clicked, Rectangle button, String text){
+    @Override
+    protected void setButton(Rectangle2D rectangle, Graphics2D g2d, Boolean clicked, Rectangle button, String text){
         int x = (int)(button.getWidth() - rectangle.getWidth()) / 2; //center text in rectangle
         int y = (int)(button.getHeight() - rectangle.getHeight()) / 2;
 

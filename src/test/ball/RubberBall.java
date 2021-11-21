@@ -17,8 +17,6 @@
  */
 package test.ball;
 
-import test.ball.Ball;
-
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
@@ -48,6 +46,7 @@ public class RubberBall extends Ball {
      * <br>Changes:
      * <ul>
      *     <li>Removed radiusA and radiusB and added radius</li>
+     *     <li>Type casted the result of radius/2 to double</li>
      * </ul>
      * @param center The coordinates of the center of the ball
      * @param radius The radius of the ball
@@ -55,8 +54,8 @@ public class RubberBall extends Ball {
      */
     @Override
     protected Shape makeBall(Point2D center, int radius) {
-        double x = center.getX() - (radius / 2);
-        double y = center.getY() - (radius / 2);
+        double x = center.getX() - (double)(radius / 2);
+        double y = center.getY() - (double)(radius / 2);
 
         return new Ellipse2D.Double(x,y,radius,radius); //creating ball shape
     }

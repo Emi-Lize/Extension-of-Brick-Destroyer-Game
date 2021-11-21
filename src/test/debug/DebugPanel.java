@@ -38,23 +38,18 @@ public class DebugPanel extends JPanel {
     private JSlider ballXSpeed;
     private JSlider ballYSpeed;
 
-    private Wall wall;
-    private GameSystem gameSystem;
-
     /**
      * This represents the debug panel and initialises it
      * <br>Change:
      * <ul>
      *     <li>Added a GameSystem object parameter</li>
      *     <li>Edited method calls for methods which have been moved from Wall to GameSystem</li>
+     *     <li>Wall and GameSystem converted to a local variable</li>
      * </ul>
      * @param wall The wall object
      * @param gameSystem The gameSystem object
      */
     public DebugPanel(Wall wall, GameSystem gameSystem){
-        this.wall = wall; //gameboard.java
-        this.gameSystem = gameSystem;
-
         initialize(); //set layout of panel
 
         skipLevel = makeButton("Skip Level",e -> wall.nextLevel());
@@ -100,7 +95,7 @@ public class DebugPanel extends JPanel {
     private JSlider makeSlider(int min, int max, ChangeListener e){
         JSlider out = new JSlider(min,max);
         out.setMajorTickSpacing(1); //spacing of options in slider
-        out.setSnapToTicks(true); //moves slider to nearest option
+        out.setSnapToTicks(true); //moves slider to the nearest option
         out.setPaintTicks(true); //when slider move, trail of line spacing follows
         out.addChangeListener(e); //watch for any change in slider
         return out;

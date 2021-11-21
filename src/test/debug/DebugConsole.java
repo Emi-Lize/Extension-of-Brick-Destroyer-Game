@@ -36,7 +36,6 @@ public class DebugConsole extends JDialog implements WindowListener{
     private JFrame owner;
     private DebugPanel debugPanel;
     private GameBoard gameBoard;
-    private Wall wall;
     private GameSystem gameSystem;
 
     /**
@@ -45,6 +44,7 @@ public class DebugConsole extends JDialog implements WindowListener{
      * <ul>
      *     <li>Added a GameSystem object parameter</li>
      *     <li>Added gameSystem as an argument to DebugPanel constructor</li>
+     *     <li>Wall converted to a local variable</li>
      * </ul>
      * @param owner The window the game board is in
      * @param wall The wall object
@@ -52,7 +52,6 @@ public class DebugConsole extends JDialog implements WindowListener{
      * @param gameSystem The gamesystem object
      */
     public DebugConsole(JFrame owner,Wall wall,GameBoard gameBoard, GameSystem gameSystem){
-        this.wall = wall;
         this.gameSystem = gameSystem;
         this.owner = owner; //gameframe based on user computer windows
         this.gameBoard = gameBoard;

@@ -34,17 +34,20 @@ import java.awt.event.MouseMotionListener;
  *     <li>Changed name of menuButton to exitButton to improve clarity</li>
  *     <li>Changed name of menuClicked to exitClicked to improve clarity</li>
  *     <li>Moved code to design the homemenu to MenuDesign</li>
+ *     <li>Added an info button</li>
  * </ul>
  */
 public class HomeMenu extends JComponent implements MouseListener, MouseMotionListener {
     private Rectangle startButton;
     private Rectangle exitButton;
+    private Rectangle infoButton;
 
     private GameFrame owner;
     private MenuDesign menuDesign;
 
     private boolean startClicked;
     private boolean exitClicked;
+    private boolean infoClicked;
 
     /**
      * This represents the home menu of the game and initialises it
@@ -69,7 +72,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     /**
      * New Method - Sets the property of the home menu window
      */
-    private void initialise(){
+    public void initialise(){
         this.setFocusable(true); //focus on home menu
         this.requestFocusInWindow(); //ensure it is focused on
         this.addMouseListener(this); //WindowListener watches for mouse
@@ -88,6 +91,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         menuDesign.drawMenu((Graphics2D)g);
         startButton=menuDesign.getStartButton();
         exitButton=menuDesign.getExitButton();
+        infoButton=menuDesign.getInfoButton();
     }
 
     /**
@@ -107,7 +111,19 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     }
 
     /**
+     * Gets the boolean of infoClicked
+     * @return A boolean representing if the info button is clicked
+     */
+    public boolean isInfoClicked(){
+        return infoClicked;
+    }
+
+    /**
      * Checks if the button was clicked and invokes a method if so
+     * <br>Change:
+     * <ul>
+     *     <li>Added a condition if the info button is clicked</li>
+     * </ul>
      * @param mouseEvent An object which checks if there's any action from the mouse
      */
     @Override
@@ -115,6 +131,9 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         Point p = mouseEvent.getPoint();
         if(startButton.contains(p)){
            owner.enableGameBoard();
+        }
+        else if(infoButton.contains(p)){
+            owner.enableInfo();
         }
         else if(exitButton.contains(p)){
             System.out.println("Goodbye " + System.getProperty("user.name"));
@@ -124,6 +143,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     /**
      * Checks when the mouse is pressed and changes the colour of the button
+     * <br>Change:
+     * <ul>
+     *      <li>Added a condition if the info button is clicked</li>
+     * </ul>
      * @param mouseEvent An object which checks if there's any action from the mouse
      */
     @Override
@@ -133,6 +156,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
             startClicked = true;
             repaint(startButton.x,startButton.y,startButton.width+1,startButton.height+1);
         }
+        else if(infoButton.contains(p)){
+            infoClicked=true;
+            repaint(infoButton.x,infoButton.y,infoButton.width+1,infoButton.height+1);
+        }
         else if(exitButton.contains(p)){
             exitClicked = true;
             repaint(exitButton.x,exitButton.y,exitButton.width+1,exitButton.height+1);
@@ -141,6 +168,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     /**
      * Checks when the mouse is released and changes the colour of the button back to its initial colour
+     * <br>Change:
+     * <ul>
+     *      <li>Added a condition if the info button is clicked</li>
+     * </ul>
      * @param mouseEvent An object which checks if there's any action from the mouse
      */
     @Override
@@ -148,6 +179,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         if(startClicked ){
             startClicked = false;
             repaint(startButton.x,startButton.y,startButton.width+1,startButton.height+1);
+        }
+        else if(infoClicked){
+            infoClicked=false;
+            repaint(infoButton.x,infoButton.y,infoButton.width+1,infoButton.height+1);
         }
         else if(exitClicked){
             exitClicked = false;
@@ -173,12 +208,16 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     /**
      * Checks if the mouse has moved and where it is
+     * <br>Change:
+     * <ul>
+     *      <li>Added a condition if the info button is clicked</li>
+     * </ul>
      * @param mouseEvent An object which checks if there's any action from the mouse
      */
     @Override
     public void mouseMoved(MouseEvent mouseEvent) { //change cursor shape
         Point p = mouseEvent.getPoint();
-        if(startButton.contains(p) || exitButton.contains(p))
+        if(startButton.contains(p) || exitButton.contains(p) || infoButton.contains(p))
             this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         else
             this.setCursor(Cursor.getDefaultCursor());

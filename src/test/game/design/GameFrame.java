@@ -19,6 +19,7 @@ package test.game.design;
 
 import test.game.system.HomeMenu;
 import test.game.system.GameBoard;
+import test.game.system.Info;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,11 +35,16 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
     private GameBoard gameBoard;
     private HomeMenu homeMenu;
+    private Info info;
 
     private boolean gaming;
 
     /**
      * This represents the window the game board is in and calls for the game board and home menu to be created
+     * <br>Change:
+     * <ul>
+     *     <li>Created an object of class info</li>
+     * </ul>
      */
     public GameFrame(){
         super();
@@ -49,6 +55,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
         gameBoard = new GameBoard(this); //create a gameboard
         homeMenu = new HomeMenu(this,new Dimension(450,300)); //create home menu
+        info = new Info(this, new Dimension(450, 300));
 
         this.add(homeMenu,BorderLayout.CENTER); //add home menu to center of frame
         this.setUndecorated(true); //no user Windows game frame with the heading and three top right buttons
@@ -76,6 +83,28 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         initialize();
         /*to avoid problems with graphics focus controller is added here*/
         this.addWindowFocusListener(this); //watch if window is being focused on
+    }
+
+    /**
+     * New Method - Removes the components of home menu and adds info components
+     */
+    public void enableInfo(){
+        this.remove(homeMenu); //remove the home menu components
+        this.add(info,BorderLayout.CENTER); //create the gameboard window in the center
+        this.revalidate();
+        this.repaint();
+        info.initialise();
+    }
+
+    /**
+     * New Method - Removes the components of info and adds home menu components
+     */
+    public void enableHomeMenu(){
+        this.remove(info); //remove the home menu components
+        this.add(homeMenu,BorderLayout.CENTER); //create the gameboard window in the center
+        this.revalidate();
+        this.repaint();
+        homeMenu.initialise();
     }
 
     /**

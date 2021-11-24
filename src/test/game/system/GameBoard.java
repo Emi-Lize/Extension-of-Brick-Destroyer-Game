@@ -17,6 +17,7 @@
  */
 package test.game.system;
 
+import test.game.design.PauseMenu;
 import test.wall.Wall;
 import test.debug.DebugConsole;
 import test.game.design.GameDesign;
@@ -29,11 +30,10 @@ import java.awt.event.*;
  * This represents the design of the game and the mechanics of the game
  * <br>Change:
  * <ul>
- *     <li>Moved design variables and methods to GameDesign</li>
+ *     <li>Moved design variables and methods to GameDesign and PauseMenu</li>
  * </ul>
  */
 public class GameBoard extends JComponent implements KeyListener,MouseListener,MouseMotionListener {
-
     public static final int DEF_WIDTH = 600;
     public static final int DEF_HEIGHT = 450;
 
@@ -46,11 +46,11 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     private Rectangle continueButtonRect;
     private Rectangle exitButtonRect;
     private Rectangle restartButtonRect;
-    private int strLen;
 
     private DebugConsole debugConsole;
     private GameSystem gameSystem;
     private GameDesign gameDesign;
+    private PauseMenu pauseMenu;
 
     /**
      * This represents the layout of the game and how the game operates
@@ -68,7 +68,6 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     public GameBoard(JFrame owner){
         super();
 
-        strLen = 0;
         showPauseMenu = false;
 
         message = "";
@@ -158,29 +157,13 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      */
     public void paint(Graphics g){
         Graphics2D g2d = (Graphics2D) g; //allow it to draw objects
-        gameDesign.draw(g2d, message, showPauseMenu);
+        pauseMenu=gameDesign.draw(g2d, message, showPauseMenu);
 
-        continueButtonRect=gameDesign.getContinueButtonRect();
-        exitButtonRect=gameDesign.getExitButtonRect();
-        restartButtonRect= gameDesign.getRestartButtonRect();
+        continueButtonRect=pauseMenu.getContinueButtonRect();
+        exitButtonRect=pauseMenu.getExitButtonRect();
+        restartButtonRect= pauseMenu.getRestartButtonRect();
 
         Toolkit.getDefaultToolkit().sync();
-    }
-
-    /**
-     * New Method - Gets the length of the string
-     * @return The integer value of the length of the string
-     */
-    public int getStrLen() {
-        return strLen;
-    }
-
-    /**
-     * New Method - Sets the length of the string
-     * @param strLen An integer value
-     */
-    public void setStrLen(int strLen) {
-        this.strLen = strLen;
     }
 
     @Override

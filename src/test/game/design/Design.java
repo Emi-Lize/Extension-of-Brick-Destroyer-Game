@@ -22,7 +22,6 @@ abstract public class Design extends JComponent {
     private BasicStroke borderStoke;
     private BasicStroke borderStoke_noDashes;
 
-    protected Font gameTitleFont;
     protected Font buttonFont;
 
     protected Dimension btnDim;
@@ -43,7 +42,6 @@ abstract public class Design extends JComponent {
      * New Method - Sets the font of each string
      */
     private void setFont(){
-        gameTitleFont = new Font("Noto Mono",Font.BOLD,40);
         buttonFont = new Font("Monospaced",Font.PLAIN,btnDim.height-2);
     }
 
@@ -76,8 +74,8 @@ abstract public class Design extends JComponent {
         g2d.translate(x,y); //reference point is (0,0)
 
         //method calls
-        drawText(g2d);
-        drawButton(g2d);
+        setText(g2d);
+        setButton(g2d);
         //end of methods calls
 
         g2d.translate(-x,-y);
@@ -121,10 +119,10 @@ abstract public class Design extends JComponent {
     }
 
     /**
-     * Draws the text at its correct position
+     * Sets the text at correct position
      * @param g2d An object which draws the 2D components
      */
-    protected abstract void drawText(Graphics2D g2d);
+    protected abstract void setText(Graphics2D g2d);
 
     /**
      * Draws the string of text
@@ -134,13 +132,13 @@ abstract public class Design extends JComponent {
      * @param text The text string
      * @param g2d An object which draws the 2D components
      */
-    protected abstract void setText(int sY, Rectangle2D rectangle, Font font, String text, Graphics2D g2d);
+    protected abstract void drawText(int sY, Rectangle2D rectangle, Font font, String text, Graphics2D g2d);
 
     /**
-     * Draws the buttons at the correct position
+     * Sets the buttons at the correct position
      * @param g2d An object which draws the 2D components
      */
-    protected abstract void drawButton(Graphics2D g2d);
+    protected abstract void setButton(Graphics2D g2d);
 
     /**
      * Draws the shape of the button and text in button
@@ -150,5 +148,5 @@ abstract public class Design extends JComponent {
      * @param button A rectangle representing the button
      * @param text The string in the button
      */
-    protected abstract void setButton(Rectangle2D rectangle, Graphics2D g2d, Boolean clicked, Rectangle button, String text);
+    protected abstract void drawButton(Rectangle2D rectangle, Graphics2D g2d, Boolean clicked, Rectangle button, String text);
 }

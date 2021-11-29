@@ -31,6 +31,9 @@ import java.awt.event.*;
  * <br>Change:
  * <ul>
  *     <li>Moved design variables and methods to GameDesign and PauseMenu</li>
+ *     <li>Added variable time to save the time at that instance</li>
+ *     <li>Added variable score to save the total time taken for the level</li>
+ *     <li>Added variable showScore to determine if the score screen is being shown</li>
  * </ul>
  */
 public class GameBoard extends JComponent implements KeyListener,MouseListener,MouseMotionListener {
@@ -42,6 +45,9 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     private String message;
 
     private boolean showPauseMenu;
+    private long time;
+    private long score;
+    private boolean showScore;
 
     private Rectangle continueButtonRect;
     private Rectangle exitButtonRect;
@@ -50,7 +56,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     private DebugConsole debugConsole;
     private GameSystem gameSystem;
     private GameDesign gameDesign;
-    private PauseMenu pauseMenu;
+    private HighScore highScore;
 
     /**
      * This represents the layout of the game and how the game operates
@@ -62,6 +68,9 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      *     <li>Moved gameTimer to runGame</li>
      *     <li>Created an object of class GameDesign</li>
      *     <li>Type casted "6/2" argument in wall to double</li>
+     *     <li>Initialised score to 0</li>
+     *     <li>Initialised showScore to false</li>
+     *     <li>Created an object of class HighScore</li>
      * </ul>
      * @param owner The window the game board is in
      */
@@ -69,12 +78,15 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         super();
 
         showPauseMenu = false;
+        showScore = false;
+        score=0;
 
         message = "";
         initialize();
+        highScore=new HighScore();
         wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,(double)6/2); //create levels
         gameSystem = new GameSystem(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT), new Point(300,430), wall);
-        gameDesign = new GameDesign(this, gameSystem, wall);
+        gameDesign = new GameDesign(this, gameSystem, wall, highScore);
         debugConsole = new DebugConsole(owner,wall,this, gameSystem); //create debug console
 
         //initialize the first level
@@ -87,29 +99,43 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      * <br>Change:
      * <ul>
      *     <li>Added an else statement to if(gameSystem.ballEnd())</li>
+     *     <li>Added code to calculate the time taken using time and score</li>
+     *     <li>Called method checkScore to see if the score has beat the high score</li>
+     *     <li>Called method writeScore to edit the score file</li>
      * </ul>
      */
     private void runGame(){
         gameTimer = new Timer(10,e ->{ //will keep running with 10ms interval
+            System.out.println(score);
             gameSystem.move(); //moving player and ball
             gameSystem.findImpacts(); //check if ball hits anything
             message = String.format("Bricks: %d Balls %d",wall.getBrickCount(),gameSystem.getBallCount());
+            score+=System.nanoTime()-time;
+            time=System.nanoTime();
             if(gameSystem.isBallLost()){
                 if(gameSystem.ballEnd()){ //if no balls left
+                    score=0;
                     reset();
                     message = "Game over";
                 }
                 else{
+                    score+=System.nanoTime()-time;
                     gameSystem.ballReset(); //bring back ball and player to initial
                 }
                 gameTimer.stop(); //stop running
             }
             else if(gameSystem.isDone()){ //if no more bricks
+                score+=System.nanoTime()-time;
+                highScore.checkScore(score,wall.getLevel());
+                showScore=true;
+                highScore.writeScore();
                 if(gameSystem.hasLevel()){ //if not last level
                     message = "Go to Next Level";
                     gameTimer.stop(); //stop running
                     reset();
+                    repaint();
                     wall.nextLevel(); //setup bricks
+                    score=0;
                 }
                 else{ //last level done
                     message = "ALL WALLS DESTROYED";
@@ -157,7 +183,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      */
     public void paint(Graphics g){
         Graphics2D g2d = (Graphics2D) g; //allow it to draw objects
-        pauseMenu=gameDesign.draw(g2d, message, showPauseMenu);
+        PauseMenu pauseMenu=gameDesign.draw(g2d, message, showPauseMenu, showScore);
 
         continueButtonRect=pauseMenu.getContinueButtonRect();
         exitButtonRect=pauseMenu.getExitButtonRect();
@@ -176,6 +202,9 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      * <ul>
      *     <li>Changed wall.player to gameSystem.player</li>
      *     <li>Edited typo in method name from movRight to moveRight</li>
+     *     <li>Added code to calculate the time taken using time and score</li>
+     *     <li>Added if statement to check if score screen is not displayed</li>
+     *     <li>Added if statement to check if pause menu not shown and game is running</li>
      * </ul>
      * @param keyEvent An object which checks for which key was pressed
      */
@@ -189,16 +218,28 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
                 gameSystem.player.moveRight(); //right
                 break;
             case KeyEvent.VK_ESCAPE: //ESC pressed
+                if (!showPauseMenu && gameTimer.isRunning()){
+                    score+=System.nanoTime()-time;
+                }
                 showPauseMenu = !showPauseMenu; //pause menu
                 repaint();
                 gameTimer.stop(); //stop game
                 break;
             case KeyEvent.VK_SPACE: //space pressed
                 if(!showPauseMenu) //if not pause menu
-                    if(gameTimer.isRunning())
-                        gameTimer.stop();
-                    else
-                        gameTimer.start();
+                    if(!showScore) {
+                        if (gameTimer.isRunning()) {
+                            score += System.nanoTime() - time;
+                            gameTimer.stop();
+                        } else {
+                            time = System.nanoTime();
+                            gameTimer.start();
+                        }
+                    }
+                    else{
+                        showScore=false;
+                        repaint();
+                    }
                 break;
             case KeyEvent.VK_F1: //F1 key
                 if(keyEvent.isAltDown() && keyEvent.isShiftDown()) //call for debug console
@@ -227,6 +268,8 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      * <ul>
      *      <li>Changed wall.ballReset to gameSystem.ballReset</li>
      *      <li>Changed wall.resetBallCount to gameSystem.resetBallCount</li>
+     *      <li>Added code to calculate the time taken using time and score</li>
+     *      <li>Set score to 0 when restart is clicked</li>
      * </ul>
      * @param mouseEvent An object which checks if there was any action from the mouse
      */
@@ -240,6 +283,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
             repaint();
         }
         else if(restartButtonRect.contains(p)){ //if restart pressed
+            score=0;
             message = "Restarting Game...";
             reset();
             showPauseMenu = false;
@@ -295,8 +339,16 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
     /**
      * Checks if the game is not in focus and stops the timer if so
+     * <br>Change:
+     * <ul>
+     *     <li>Added code to calculate the time taken using time and score</li>
+     *     <li>Added an if statement to save the time elapsed</li>
+     * </ul>
      */
     public void onLostFocus(){ //if not focused on game
+        if (gameTimer.isRunning()) {
+            score += System.nanoTime() - time;
+        }
         gameTimer.stop();
         message = "Focus Lost";
         repaint();

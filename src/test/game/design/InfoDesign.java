@@ -9,7 +9,7 @@ import java.awt.geom.Rectangle2D;
 /**
  * New Class - Designs the info screen
  */
-public class InfoDesign extends Design{
+public class InfoDesign extends MenuDesign {
     private static final String INFO_TITLE = "Game Info";
     private static final String LEVELS = "There are 4 levels in this game.";
     private static final String FINISH = "You have to destroy all the bricks to pass the level";

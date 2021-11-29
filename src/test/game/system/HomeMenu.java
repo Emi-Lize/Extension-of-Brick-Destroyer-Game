@@ -17,7 +17,7 @@
  */
 package test.game.system;
 
-import test.game.design.MenuDesign;
+import test.game.design.HomeDesign;
 import test.game.design.GameFrame;
 
 import javax.swing.*;
@@ -33,7 +33,7 @@ import java.awt.event.MouseMotionListener;
  *     <li>Changed name of MENU_TEXT to EXIT_TEXT to improve clarity</li>
  *     <li>Changed name of menuButton to exitButton to improve clarity</li>
  *     <li>Changed name of menuClicked to exitClicked to improve clarity</li>
- *     <li>Moved code to design the homemenu to MenuDesign</li>
+ *     <li>Moved code to design the homemenu to HomeDesign</li>
  *     <li>Added an info button</li>
  * </ul>
  */
@@ -43,7 +43,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     private Rectangle infoButton;
 
     private GameFrame owner;
-    private MenuDesign menuDesign;
+    private HomeDesign homeDesign;
 
     private boolean startClicked;
     private boolean exitClicked;
@@ -65,7 +65,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         this.owner = owner;
 
         this.setPreferredSize(area); //set size
-        menuDesign = new MenuDesign(area, this);
+        homeDesign = new HomeDesign(area, this);
 
     }
 
@@ -83,15 +83,15 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
      * Draws the home menu
      * <br>Change:
      * <ul>
-     *     <li>Calls drawMenu method from menuDesign to design HomeMenu</li>
+     *     <li>Calls drawMenu method from homeDesign to design HomeMenu</li>
      * </ul>
      * @param g An object which draws the components
      */
     public void paint(Graphics g){
-        menuDesign.drawMenu((Graphics2D)g);
-        startButton=menuDesign.getStartButton();
-        exitButton=menuDesign.getExitButton();
-        infoButton=menuDesign.getInfoButton();
+        homeDesign.drawMenu((Graphics2D)g);
+        startButton= homeDesign.getStartButton();
+        exitButton= homeDesign.getExitButton();
+        infoButton= homeDesign.getInfoButton();
     }
 
     /**

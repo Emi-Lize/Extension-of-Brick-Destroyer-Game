@@ -1,6 +1,7 @@
 package test.game.design;
 
 import test.game.system.GameSystem;
+import test.game.system.HighScore;
 import test.player.Player;
 import test.wall.Wall;
 import test.ball.Ball;
@@ -20,19 +21,22 @@ public class GameDesign extends JComponent{
     private GameSystem gameSystem;
     private Wall wall;
     private PauseMenu pauseMenu;
+    private ScoreDesign scoreDesign;
 
     /**
      * This represents the design of the game
      * @param gameBoard The gameboard object
      * @param gameSystem The gamesystem object
      * @param wall The wall object
+     * @param highScore The highscore object
      */
-    public GameDesign(GameBoard gameBoard, GameSystem gameSystem, Wall wall) {
+    public GameDesign(GameBoard gameBoard, GameSystem gameSystem, Wall wall, HighScore highScore) {
         this.gameBoard=gameBoard;
         this.gameSystem=gameSystem;
         this.wall=wall;
         initialize();
         pauseMenu = new PauseMenu(gameBoard);
+        scoreDesign = new ScoreDesign(gameBoard, highScore);
     }
 
     /**
@@ -51,13 +55,15 @@ public class GameDesign extends JComponent{
      *     <li>Method clear changed to colourBackground</li>
      *     <li>Used getter to get the layout of the bricks from Wall</li>
      *     <li>Methods to draw the pause menu moved to PauseMenu class</li>
+     *     <li>Added method call to draw the score screen</li>
      * </ul>
      * @param g2d An object which draws 2D components
      * @param message The string to be displayed
      * @param showPauseMenu A boolean representing if the pause menu is to be shown
+     * @param showScore A boolean representing if the score screen is to be shown
      * @return The pause menu object
      */
-    public PauseMenu draw(Graphics2D g2d, String message, boolean showPauseMenu){
+    public PauseMenu draw(Graphics2D g2d, String message, boolean showPauseMenu, boolean showScore){
         colourBackground(g2d); //set background
 
         g2d.setColor(Color.BLUE);
@@ -72,7 +78,11 @@ public class GameDesign extends JComponent{
         drawPlayer(gameSystem.player,g2d); //draw player
 
         if(showPauseMenu)
-            pauseMenu.drawMenu(g2d); //pause menu
+            pauseMenu.draw(g2d); //pause menu
+
+        if(showScore){
+            scoreDesign.draw(g2d);
+        }
 
         return pauseMenu;
     }

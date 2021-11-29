@@ -8,17 +8,13 @@ import java.awt.font.FontRenderContext;
 /**
  * New Class - Moved code related to drawing the pause menu from GameDesign
  */
-public class PauseMenu {
+public class PauseMenu extends MidGameDesign{
     private static final String CONTINUE = "Continue";
     private static final String RESTART = "Restart";
     private static final String EXIT = "Exit";
     private static final String PAUSE = "Pause Menu";
-    private static final Color MENU_COLOR = new Color(0,255,0);
-    private static final int TEXT_SIZE = 30;
 
     private int strLen;
-
-    private Font menuFont;
 
     private Rectangle continueButtonRect;
     private Rectangle exitButtonRect;
@@ -31,36 +27,9 @@ public class PauseMenu {
      * @param gameBoard The gameboard object
      */
     public PauseMenu(GameBoard gameBoard){
-        menuFont = new Font("Monospaced",Font.PLAIN,TEXT_SIZE);
+        super();
         this.gameBoard=gameBoard;
         strLen=0;
-    }
-
-    /**
-     * Sets up a tint and draws the pause menu
-     * @param g2d An object which draws 2D components
-     */
-    public void drawMenu(Graphics2D g2d){
-        obscureGameBoard(g2d);
-        drawPauseMenu(g2d);
-    }
-
-    /**
-     * Applies a tint over the game board when the pause menu is in effect
-     * @param g2d An object which draws 2D components
-     */
-    private void obscureGameBoard(Graphics2D g2d){
-        Composite tmp = g2d.getComposite();
-        Color tmpColor = g2d.getColor();
-
-        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.55f); //darkened effect during pause menu
-        g2d.setComposite(ac);
-
-        g2d.setColor(Color.BLACK); //colour of effect
-        g2d.fillRect(0,0, GameBoard.DEF_WIDTH,GameBoard.DEF_HEIGHT);
-
-        g2d.setComposite(tmp);
-        g2d.setColor(tmpColor);
     }
 
     /**
@@ -70,10 +39,12 @@ public class PauseMenu {
      *     <li>Moved code to create the button to drawPauseMenuButton</li>
      *     <li>"this" was replaced with gameBoard</li>
      *     <li>Used getters and setters for strLen</li>
+     *     <li>Renamed method from drawPauseMenu to drawMenu</li>
      * </ul>
      * @param g2d An object which draws 2D components
      */
-    private void drawPauseMenu(Graphics2D g2d){
+    @Override
+    protected void drawMenu(Graphics2D g2d){
         Font tmpFont = g2d.getFont();
         Color tmpColor = g2d.getColor();
 
@@ -108,7 +79,7 @@ public class PauseMenu {
     }
 
     /**
-     * New Method - Moved code to create the buttons in pause menu from drawPauseMenu
+     * New Method - Moved code to create the buttons in pause menu from drawMenu
      * <br>Change:
      * <ul>
      *     <li>"this" was changed with gameBoard</li>

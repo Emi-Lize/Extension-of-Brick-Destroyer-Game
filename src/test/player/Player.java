@@ -18,6 +18,7 @@
 package test.player;
 
 import test.ball.Ball;
+import test.wall.Wall;
 
 import java.awt.*;
 
@@ -31,13 +32,22 @@ public class Player {
     private static final int DEF_MOVE_AMOUNT = 5;
 
     private Rectangle playerFace;
+    private Rectangle container;
     private Point ballPoint; //coordinate of ball
     private int moveAmount;
     private int min;
     private int max;
+    private int width;
+
+    private Wall wall;
 
     /**
      * This represents the rectangle the player controls and initialises it
+     * <br>Change:
+     * <ul>
+     *     <li>Calls method setBoundary to find the min and max x values that the player can be</li>
+     *     <li>Stores the value of width and container in the class</li>
+     * </ul>
      * @param ballPoint The coordinates of the center of the ball
      * @param width The width of the rectangle
      * @param height The height of the rectangle
@@ -46,9 +56,10 @@ public class Player {
     public Player(Point ballPoint,int width,int height,Rectangle container) {
         this.ballPoint = ballPoint; //ball coordinate
         moveAmount = 0;
+        this.width=width;
         playerFace = makeRectangle(width, height);
-        min = container.x + (width / 2); //game boundary
-        max = min + container.width - width;
+        this.container=container;
+        setBoundary(width);
     }
 
     /**
@@ -114,7 +125,7 @@ public class Player {
 
     /**
      * Gets the shape of the player's rectangle
-     * @return Returns the shape of the player's rectangle
+     * @return The shape of the player's rectangle
      */
     public Shape getPlayerFace(){
         return  playerFace;
@@ -131,6 +142,23 @@ public class Player {
     public void reset(Point p){ //resetting position
         ballPoint.setLocation(p);
         playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y); //player reset so that ball is centered on it
+    }
+
+    /**
+     * Reduce the width of the player during the last level
+     */
+    public void reduceSize(){
+        playerFace=makeRectangle(width/3*2,playerFace.height);
+        setBoundary(width/3*2);
+    }
+
+    /**
+     * Finds the minimum and maximum x value that player can be
+     * @param width The width of the player bar
+     */
+    private void setBoundary(int width){
+        min = container.x + (width / 2); //game boundary
+        max = min + container.width - width;
     }
 
 }

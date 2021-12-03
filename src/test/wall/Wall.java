@@ -17,10 +17,7 @@
  */
 package test.wall;
 
-import test.brick.Brick;
-import test.brick.CementBrick;
-import test.brick.ClayBrick;
-import test.brick.SteelBrick;
+import test.brick.*;
 
 import java.awt.*;
 
@@ -30,19 +27,23 @@ import java.awt.*;
  * <ul>
  *     <li>Removed methods on ball and player and placed it to a new class GameSystem</li>
  *     <li>Set the variable bricks as private</li>
+ *     <li>Increased the level count to 5</li>
  * </ul>
  */
 public class Wall {
-    private static final int LEVELS_COUNT = 4;
+    private static final int LEVELS_COUNT = 5;
     private static final int CLAY = 1;
     private static final int STEEL = 2;
     private static final int CEMENT = 3;
+    private static final int MAGIC = 4;
 
     private Brick[] bricks;
 
     private Brick[][] levels;
     private int level;
     private int brickCount;
+    private double wallEnd;
+    private int powerCount;
 
     /**
      * This represents the set of bricks
@@ -50,6 +51,7 @@ public class Wall {
      * <ul>
      *     <li>Moved code to initialise ball and player to GameSystem class</li>
      *     <li>Removed ballPos parameter</li>
+     *     <li>Created a variable powerCount to store the number of PowerUp hit</li>
      * </ul>
      * @param drawArea The rectangle shape of the game board
      * @param brickCount The number of bricks per level
@@ -57,6 +59,8 @@ public class Wall {
      * @param brickDimensionRatio The height to width ratio of the brick
      */
     public Wall(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio){
+        powerCount =0;
+        wallEnd=0;
         levels = setUpLevels(drawArea,brickCount,lineCount,brickDimensionRatio);
         level = 0;
     }
@@ -94,6 +98,10 @@ public class Wall {
         Brick[] tmp  = new Brick[brickCnt]; //list of brick objects
         Dimension brickSize = new Dimension((int) brickLen,(int) brickHgt);
         Point p = new Point();
+
+        if (wallEnd==0){
+            wallEnd=lineCnt*brickHgt;
+        }
 
         int i;
         for(i = 0; i < tmp.length; i++) {
@@ -140,6 +148,7 @@ public class Wall {
      * <br>Changes:
      * <ul>
      *     <li>Changed method name from makeLevels to setUpLevels for better naming</li>
+     *     <li>Created a new level with Magic bricks</li>
      * </ul>
      * @param drawArea The rectangle shape of the game board
      * @param brickCount The number of bricks in the level
@@ -153,6 +162,7 @@ public class Wall {
         tmp[1] = createLevels(drawArea,brickCount,lineCount,brickDimensionRatio,CLAY,CEMENT);
         tmp[2] = createLevels(drawArea,brickCount,lineCount,brickDimensionRatio,CLAY,STEEL);
         tmp[3] = createLevels(drawArea,brickCount,lineCount,brickDimensionRatio,STEEL,CEMENT);
+        tmp[4] = createLevels(drawArea,brickCount,lineCount,brickDimensionRatio,MAGIC,MAGIC);
         return tmp;
     }
 
@@ -174,11 +184,16 @@ public class Wall {
 
     /**
      * Resets the bricks in a level to its initial position and property
+     * <br>Change:
+     * <li>
+     *     <ul>Set powerCount to 0</ul>
+     * </li>
      */
     public void wallReset(){
         for(Brick b : bricks) //bring back all the bricks
             b.repair();
         brickCount = bricks.length;
+        powerCount =0;
     }
 
     /**
@@ -195,6 +210,7 @@ public class Wall {
      * <ul>
      *     <li>Enhanced the switch statement</li>
      *     <li>Removed variable out</li>
+     *     <li>Added creating an object of MagicBrick class</li>
      * </ul>
      * @param point The coordinates of the top left corner of the brick
      * @param size The width and height of the brick
@@ -206,6 +222,7 @@ public class Wall {
             case CLAY -> new ClayBrick(point, size);
             case STEEL -> new SteelBrick(point, size);
             case CEMENT -> new CementBrick(point, size);
+            case MAGIC -> new MagicBrick(point, size, this);
             default -> throw new IllegalArgumentException(String.format("Unknown Type:%d\n", type));
         };
     }
@@ -232,5 +249,28 @@ public class Wall {
      */
     public Brick[] getBricks() {
         return bricks;
+    }
+
+    /**
+     * Gets the y coordinate of the bottom of the last row of bricks
+     * @return The y-coordinate of the bottom of the last row of bricks
+     */
+    public double getWallEnd() {
+        return wallEnd;
+    }
+
+    /**
+     * Increases the powerCount every time a powerUp is hit
+     */
+    public void setPowerCount() {
+        powerCount +=1;
+    }
+
+    /**
+     * Gets the number of powerUp hit
+     * @return The number of powerUp hit
+     */
+    public int getPowerCount() {
+        return powerCount;
     }
 }

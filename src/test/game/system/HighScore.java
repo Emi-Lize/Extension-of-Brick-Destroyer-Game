@@ -48,7 +48,7 @@ public class HighScore {
      * Reads the high score text file and saves it to an array
      */
     private void readScore(){
-        score_list = new int[4][5];
+        score_list = new int[5][5];
         int x=0;
         int y=0;
         try {
@@ -65,8 +65,8 @@ public class HighScore {
                 }
             }
             read.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+        } catch (Exception e) {
+            System.out.println("There was an error");
         }
     }
 
@@ -77,14 +77,14 @@ public class HighScore {
         if(newScore) {
             try {
                 PrintWriter write = new PrintWriter(new FileWriter("score.txt"));
-                for (int x = 0; x < 4; x++) {
+                for (int x = 0; x < 5; x++) {
                     for (int y = 0; y < 5; y++) {
                         write.println(score_list[x][y]);
                     }
                 }
                 write.close();
             } catch (Exception e) {
-                System.out.println("An error occurred.");
+                System.out.println("There was an error");
             }
         }
     }

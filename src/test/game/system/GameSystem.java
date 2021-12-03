@@ -1,5 +1,6 @@
 package test.game.system;
 
+import test.powerup.PowerUp;
 import test.player.Player;
 import test.wall.Wall;
 import test.ball.Ball;
@@ -9,14 +10,12 @@ import test.brick.Crack;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.util.Random;
 
 /**
  * New class - This class controls how the game operates
  * <br>Added methods pertaining to ball and player from Wall class
  */
 public class GameSystem {
-    private Random rnd;
     private Rectangle area;
 
     private Point startPoint;
@@ -26,12 +25,14 @@ public class GameSystem {
     public Ball ball;
     public Player player;
     public Wall wall;
+    public PowerUp powerUp;
 
     /**
      * This represents the game system and initialises the ball and the player
      * <br>Change:
      * <ul>
-     *     <li>Moved code to set initial speed of ball to method newBallSpeed</li>
+     *     <li>Removed random speed and set speed to 3</li>
+     *     <li>Created an object of class PowerUp</li>
      * </ul>
      * @param drawArea The rectangle shape of the game board
      * @param ballPos The coordinates of the center of the ball
@@ -42,12 +43,12 @@ public class GameSystem {
         this.startPoint = new Point(ballPos);
         ballCount = 3;
         ballLost = false;
-        rnd = new Random();
         makeBall(ballPos);
-        newBallSpeed();
+        ball.setSpeed(3,-3);
 
         player = new Player((Point) ballPos.clone(),150,10, drawArea);
 
+        powerUp = new PowerUp(drawArea, ball, wall);
         area = drawArea;
     }
 
@@ -69,10 +70,17 @@ public class GameSystem {
 
     /**
      * Checks if ball has hit either the player, brick and the boundary of the game frame
+     * <br>Change:
+     * <ul>
+     *     <li>Calls method in wall if ball touches PowerUp</li>
+     * </ul>
      */
     public void findImpacts(){
         if(player.hitBall(ball)){ //if ball hits player
             ball.reverseY();
+        }
+        else if(powerUp.findImpact(ball)){
+            wall.setPowerCount();
         }
         else if(impactWall()){ //check if brick broke
             /*for efficiency reverse is done into method impactWall
@@ -157,27 +165,16 @@ public class GameSystem {
 
     /**
      * Resets the position of the ball and player and the speed of the ball
+     * <br>Change:
+     * <ul>
+     *     <li>Speed of ball is constant at 3</li>
+     * </ul>
      */
     public void ballReset(){
         player.reset(startPoint);
         ball.reset(startPoint);
-        newBallSpeed();
+        ball.setSpeed(3,-3);
         ballLost = false;
-    }
-
-    /**
-     * New Method - Sets a new random speed for the ball
-     */
-    public void newBallSpeed(){
-        int speedX,speedY;
-        do{
-            speedX = rnd.nextInt(5) - 2;
-        }while(speedX == 0);
-        do{
-            speedY = -rnd.nextInt(3);
-        }while(speedY == 0);
-
-        ball.setSpeed(speedX,speedY);
     }
 
     /**

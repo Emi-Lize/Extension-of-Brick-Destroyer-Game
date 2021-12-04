@@ -88,14 +88,15 @@ abstract public class MenuDesign extends JComponent {
      * <br>Change:
      * <ul>
      *     <li>Moved code to draw the border to drawBorder</li>
+     *     <li>Puts an image as the background</li>
      * </ul>
      * @param g2d An object which draws the 2D components
      */
     private void drawContainer(Graphics2D g2d){
         Color prev = g2d.getColor();
 
-        g2d.setColor(BG_COLOR);
-        g2d.fill(menuFace); //fill background colour
+        Image img = Toolkit.getDefaultToolkit().getImage("brick.jpg");
+        g2d.drawImage(img, 0, 0, null);
 
         Stroke tmp = g2d.getStroke();
 

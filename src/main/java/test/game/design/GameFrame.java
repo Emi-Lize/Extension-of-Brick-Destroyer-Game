@@ -44,6 +44,8 @@ public class GameFrame extends JFrame implements WindowFocusListener {
      * <br>Change:
      * <ul>
      *     <li>Created an object of class info</li>
+     *     <li>Calls the constructor of the class backgroundImage to place the image at the background</li>
+     *     <li>Calls the home menu through the method enableHomeMenu method</li>
      * </ul>
      */
     public GameFrame(){
@@ -56,9 +58,10 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         gameBoard = new GameBoard(this); //create a gameboard
         homeMenu = new HomeMenu(this,new Dimension(450,300)); //create home menu
         info = new Info(this, new Dimension(450, 300));
+        new BackgroundImage(new Dimension(450,300));
 
-        this.add(homeMenu,BorderLayout.CENTER); //add home menu to center of frame
         this.setUndecorated(true); //no user Windows game frame with the heading and three top right buttons
+        enableHomeMenu();
     }
 
     /**

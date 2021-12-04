@@ -7,6 +7,7 @@ import test.wall.Wall;
 import test.ball.Ball;
 import test.brick.Brick;
 import test.game.system.GameBoard;
+import test.powerup.PowerUp;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,6 +57,8 @@ public class GameDesign extends JComponent{
      *     <li>Used getter to get the layout of the bricks from Wall</li>
      *     <li>Methods to draw the pause menu moved to PauseMenu class</li>
      *     <li>Added method call to draw the score screen</li>
+     *     <li>Called method to reduce the size of the player if it is the last level</li>
+     *     <li>Called method to draw the powerup if it is the last level and there is no powerup on the screen</li>
      * </ul>
      * @param g2d An object which draws 2D components
      * @param message The string to be displayed
@@ -75,7 +78,14 @@ public class GameDesign extends JComponent{
             if(!b.isBroken())
                 drawBrick(b,g2d);
 
+        if (wall.getLevel()==5){
+            gameSystem.player.reduceSize();
+        }
         drawPlayer(gameSystem.player,g2d); //draw player
+
+        if(wall.getLevel()==5 && !gameSystem.powerUp.isBroken()){
+            drawPowerUp(gameSystem.powerUp,g2d);
+        }
 
         if(showPauseMenu)
             pauseMenu.draw(g2d); //pause menu
@@ -151,6 +161,24 @@ public class GameDesign extends JComponent{
 
         g2d.setColor(Player.BORDER_COLOR);
         g2d.draw(s); //draw player outline
+
+        g2d.setColor(tmp);
+    }
+
+    /**
+     * Draws the PowerUp square
+     * @param p The powerUp object
+     * @param g2d An object which draws 2D components
+     */
+    private void drawPowerUp(PowerUp p, Graphics2D g2d){
+        Color tmp = g2d.getColor();
+
+        Shape s = p.getPowerUpFace();
+        g2d.setColor(PowerUp.INNER_COLOUR);
+        g2d.fill(s);
+
+        g2d.setColor(PowerUp.BORDER_COLOUR);
+        g2d.draw(s);
 
         g2d.setColor(tmp);
     }

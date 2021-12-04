@@ -34,6 +34,7 @@ import java.awt.event.*;
  *     <li>Added variable time to save the time at that instance</li>
  *     <li>Added variable score to save the total time taken for the level</li>
  *     <li>Added variable showScore to determine if the score screen is being shown</li>
+ *     <li>Added variable gameOver to determine if the game has been completed</li>
  * </ul>
  */
 public class GameBoard extends JComponent implements KeyListener,MouseListener,MouseMotionListener {
@@ -48,6 +49,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     private long time;
     private long score;
     private boolean showScore;
+    private boolean gameOver;
 
     private Rectangle continueButtonRect;
     private Rectangle exitButtonRect;
@@ -71,6 +73,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      *     <li>Initialised score to 0</li>
      *     <li>Initialised showScore to false</li>
      *     <li>Created an object of class HighScore</li>
+     *     <li>Initialised gameOver to false</li>
      * </ul>
      * @param owner The window the game board is in
      */
@@ -79,6 +82,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
 
         showPauseMenu = false;
         showScore = false;
+        gameOver = false;
         score=0;
 
         message = "";
@@ -102,11 +106,11 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      *     <li>Added code to calculate the time taken using time and score</li>
      *     <li>Called method checkScore to see if the score has beat the high score</li>
      *     <li>Called method writeScore to edit the score file</li>
+     *     <li>Set gameOver to true when there are no more levels</li>
      * </ul>
      */
     private void runGame(){
         gameTimer = new Timer(10,e ->{ //will keep running with 10ms interval
-            System.out.println(score);
             gameSystem.move(); //moving player and ball
             gameSystem.findImpacts(); //check if ball hits anything
             message = String.format("Bricks: %d Balls %d",wall.getBrickCount(),gameSystem.getBallCount());
@@ -140,6 +144,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
                 else{ //last level done
                     message = "ALL WALLS DESTROYED";
                     gameTimer.stop();
+                    gameOver=true;
                 }
             }
 
@@ -203,7 +208,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      *     <li>Changed wall.player to gameSystem.player</li>
      *     <li>Edited typo in method name from movRight to moveRight</li>
      *     <li>Added code to calculate the time taken using time and score</li>
-     *     <li>Added if statement to check if score screen is not displayed</li>
+     *     <li>Added if statement to check if score screen is not displayed and not last level</li>
      *     <li>Added if statement to check if pause menu not shown and game is running</li>
      * </ul>
      * @param keyEvent An object which checks for which key was pressed
@@ -227,7 +232,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
                 break;
             case KeyEvent.VK_SPACE: //space pressed
                 if(!showPauseMenu) //if not pause menu
-                    if(!showScore) {
+                    if(!showScore && !gameOver) {
                         if (gameTimer.isRunning()) {
                             score += System.nanoTime() - time;
                             gameTimer.stop();

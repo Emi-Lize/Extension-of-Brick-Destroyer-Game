@@ -1,6 +1,7 @@
-package test.game.design;
+package test.homescreen;
 
-import test.game.system.Info;
+import test.homescreen.Info;
+import test.homescreen.MenuDesign;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;
@@ -11,7 +12,7 @@ import java.awt.geom.Rectangle2D;
  */
 public class InfoDesign extends MenuDesign {
     private static final String INFO_TITLE = "Game Info";
-    private static final String LEVELS = "There are 4 levels in this game.";
+    private static final String LEVELS = "There are 5 levels in this game.";
     private static final String FINISH = "You have to destroy all the bricks to pass the level";
     private static final String CONTROLS = "Controls";
     private static final String PRESS_A = "A - Move Left";

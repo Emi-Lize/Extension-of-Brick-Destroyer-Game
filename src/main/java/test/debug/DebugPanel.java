@@ -17,7 +17,7 @@
  */
 package test.debug;
 
-import test.game.system.GameSystem;
+import test.game.GameSystem;
 import test.wall.Wall;
 
 import javax.swing.*;

@@ -1,6 +1,6 @@
-package test.game.design;
+package test.midgamescreen;
 
-import test.game.system.GameBoard;
+import test.game.GameBoard;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;
@@ -8,7 +8,7 @@ import java.awt.font.FontRenderContext;
 /**
  * New Class - Moved code related to drawing the pause menu from GameDesign
  */
-public class PauseMenu extends MidGameDesign{
+public class PauseMenu extends MidGameDesign {
     private static final String CONTINUE = "Continue";
     private static final String RESTART = "Restart";
     private static final String EXIT = "Exit";

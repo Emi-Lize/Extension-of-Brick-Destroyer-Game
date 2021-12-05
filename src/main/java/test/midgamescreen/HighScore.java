@@ -1,4 +1,4 @@
-package test.game.system;
+package test.midgamescreen;
 
 import java.io.*;
 import java.util.Scanner;

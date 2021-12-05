@@ -15,12 +15,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test.game.system;
+package test.game;
 
-import test.game.design.PauseMenu;
+import test.midgamescreen.HighScore;
+import test.midgamescreen.PauseMenu;
 import test.wall.Wall;
 import test.debug.DebugConsole;
-import test.game.design.GameDesign;
 
 import javax.swing.*;
 import java.awt.*;
@@ -226,9 +226,11 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
                 if (!showPauseMenu && gameTimer.isRunning()){
                     score+=System.nanoTime()-time;
                 }
-                showPauseMenu = !showPauseMenu; //pause menu
-                repaint();
-                gameTimer.stop(); //stop game
+                if (!showScore) {
+                    showPauseMenu = !showPauseMenu; //pause menu
+                    repaint();
+                    gameTimer.stop(); //stop game
+                }
                 break;
             case KeyEvent.VK_SPACE: //space pressed
                 if(!showPauseMenu) //if not pause menu

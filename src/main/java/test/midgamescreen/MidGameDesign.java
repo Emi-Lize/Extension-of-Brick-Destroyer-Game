@@ -1,6 +1,6 @@
-package test.game.design;
+package test.midgamescreen;
 
-import test.game.system.GameBoard;
+import test.game.GameBoard;
 
 import java.awt.*;
 

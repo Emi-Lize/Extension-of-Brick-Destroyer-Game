@@ -15,10 +15,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package test.game.system;
+package test.homescreen;
 
-import test.game.design.HomeDesign;
-import test.game.design.GameFrame;
+import test.game.GameFrame;
 
 import javax.swing.*;
 import java.awt.*;

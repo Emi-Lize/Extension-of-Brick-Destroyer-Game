@@ -1,4 +1,4 @@
-package test.game.design;
+package test.homescreen;
 
 import javax.swing.*;
 import java.awt.*;

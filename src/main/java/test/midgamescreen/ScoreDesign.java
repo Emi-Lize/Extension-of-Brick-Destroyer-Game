@@ -1,7 +1,6 @@
-package test.game.design;
+package test.midgamescreen;
 
-import test.game.system.GameBoard;
-import test.game.system.HighScore;
+import test.game.GameBoard;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;
@@ -10,7 +9,7 @@ import java.awt.geom.Rectangle2D;
 /**
  * New Class - This represents the design of the score screen
  */
-public class ScoreDesign extends MidGameDesign{
+public class ScoreDesign extends MidGameDesign {
     private static final String HIGHSCORE = "High Score";
     private static final String SCORE = "00:00:000";
     private static final String CONTINUE = "Press SPACE to continue";

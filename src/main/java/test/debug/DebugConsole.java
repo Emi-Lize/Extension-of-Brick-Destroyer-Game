@@ -17,8 +17,8 @@
  */
 package test.debug;
 
-import test.game.system.GameBoard;
-import test.game.system.GameSystem;
+import test.game.GameBoard;
+import test.game.GameSystem;
 import test.wall.Wall;
 import test.ball.Ball;
 

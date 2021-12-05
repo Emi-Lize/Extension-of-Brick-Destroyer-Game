@@ -1,6 +1,4 @@
-package test.game.design;
-
-import test.game.system.HomeMenu;
+package test.homescreen;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;

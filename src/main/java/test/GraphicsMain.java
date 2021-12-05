@@ -17,7 +17,7 @@
  */
 package test;
 
-import test.game.design.GameFrame;
+import test.game.GameFrame;
 
 import java.awt.*;
 

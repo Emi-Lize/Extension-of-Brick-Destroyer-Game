@@ -1,12 +1,12 @@
-package test.game.design;
+package test.game;
 
-import test.game.system.GameSystem;
-import test.game.system.HighScore;
+import test.midgamescreen.HighScore;
+import test.midgamescreen.PauseMenu;
+import test.midgamescreen.ScoreDesign;
 import test.player.Player;
 import test.wall.Wall;
 import test.ball.Ball;
 import test.brick.Brick;
-import test.game.system.GameBoard;
 import test.powerup.PowerUp;
 
 import javax.swing.*;

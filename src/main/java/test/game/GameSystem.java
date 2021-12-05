@@ -1,4 +1,4 @@
-package test.game.system;
+package test.game;
 
 import test.powerup.PowerUp;
 import test.player.Player;

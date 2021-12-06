@@ -96,7 +96,6 @@ public class HighScore {
      */
     public String displayScore(int index){
         int score = score_list[level][index];
-        System.out.println(score);
         String score_string=formatScore(score);
 
         if (newScore && position==index){

@@ -173,6 +173,7 @@ public class GameSystem {
     public void ballReset(){
         player.reset(startPoint);
         ball.reset(startPoint);
+        powerUp.createPowerUp();
         ball.setSpeed(3,-3);
         ballLost = false;
     }

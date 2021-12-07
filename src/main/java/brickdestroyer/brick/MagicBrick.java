@@ -129,7 +129,7 @@ public class MagicBrick extends Brick{
      * Increases the probability of the brick being hit by 0.05 for every PowerUp taken
      */
     private void increaseProbability(){
-        probability+=0.05*wall.getPowerCount();
+        probability=MAGIC_PROBABILITY+(0.05*wall.getPowerCount());
     }
 
 }

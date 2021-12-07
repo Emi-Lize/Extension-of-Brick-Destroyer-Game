@@ -71,22 +71,27 @@ public class PowerUp {
      * @return A boolean representing is the ball has hit powerUp
      */
     public boolean findImpact(Ball b){
-        if(broken) {
-            return createPowerUp();
-        }
         if(powerUpFace.contains(b.getRight())) { //if brick in contact with the right of the ball
             broken = true;
+            createPowerUp();
+            return true;
         }
         else if(powerUpFace.contains(b.getLeft())) {
             broken = true;
+            createPowerUp();
+            return true;
         }
         else if(powerUpFace.contains(b.getUp())) {
             broken = true;
+            createPowerUp();
+            return true;
         }
         else if(powerUpFace.contains(b.getDown())) {
             broken = true;
+            createPowerUp();
+            return true;
         }
-        return broken;
+        return false;
     }
 
     /**
@@ -108,14 +113,12 @@ public class PowerUp {
     /**
      * Recreates the powerUp when broken
      * <br>Only ten powerUps are available for the level
-     * @return A boolean representing if the ball has hit powerUp
      */
-    private boolean createPowerUp(){
+    public void createPowerUp(){
         if(wall.getPowerCount()!=10){
             setLocation();
             powerUpFace=makePowerUpFace();
             broken=false;
         }
-        return false;
     }
 }

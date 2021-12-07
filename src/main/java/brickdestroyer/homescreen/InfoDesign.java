@@ -14,8 +14,8 @@ public class InfoDesign extends MenuDesign {
     private static final String CONTROLS = "Controls";
     private static final String PRESS_A = "A - Move Left";
     private static final String PRESS_D = "D - Move Right";
-    private static final String PRESS_SPACE = "SPACE - Launch the ball";
-    private static final String PRESS_ESC = "ESC - Pause Menu";
+    private static final String PRESS_SPACE = "SPACE - Start/Pause the Game";
+    private static final String PRESS_ESC = "ESC - Enter/Exit the Pause Menu";
     private static final String BACK_TEXT = "Back";
 
     private Rectangle backButton;

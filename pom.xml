@@ -37,7 +37,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>test.GraphicsMain</mainClass>
+                            <mainClass>brickdestroyer.GraphicsMain</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

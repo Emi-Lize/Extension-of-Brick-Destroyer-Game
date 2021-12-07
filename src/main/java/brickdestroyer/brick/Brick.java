@@ -6,10 +6,6 @@ import java.awt.*;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 
-/*
-  Created by filippo on 04/09/16.
- */
-
 /**
  * This represents the brick
  * <br>Change:
@@ -34,7 +30,7 @@ abstract public class Brick  {
     private boolean broken;
 
     /**
-     * This represents the brick and initialises its name, border colour, inner colour and strength.
+     * Creates the brick shape and initialises the variables
      * <br>Change:
      * <ul>
      *     <li>Removed variable rnd as it's not used in Brick class</li>
@@ -64,6 +60,7 @@ abstract public class Brick  {
 
     /**
      * Checks if the ball has hit a brick which has not been broken
+     * <br>If the brick is not broken, calls method impact
      * @param point The coordinates of the point of the ball which hits a brick
      * @param dir The side of the brick which was hit
      * @return A boolean representing if a brick has been broken
@@ -71,7 +68,7 @@ abstract public class Brick  {
     public  boolean setImpact(Point2D point , int dir){
         if(broken)
             return false;
-        impact(); //reduces strength
+        impact();
         return  broken;
     }
 
@@ -98,7 +95,7 @@ abstract public class Brick  {
     }
 
     /**
-     * Finds which part of the brick was hit by the ball
+     * Finds which side of the brick was hit by the ball
      * <br>Change:
      * <ul>
      *     <li>Removed variable out as it was unnecessary</li>
@@ -110,7 +107,7 @@ abstract public class Brick  {
     public final int findImpact(Ball b){
         if(broken)
             return 0;
-        if(brickFace.contains(b.getRight())) //if brick in contact with the right of the ball
+        if(brickFace.contains(b.getRight()))
             return LEFT_IMPACT;
         else if(brickFace.contains(b.getLeft()))
             return RIGHT_IMPACT;
@@ -138,7 +135,7 @@ abstract public class Brick  {
     }
 
     /**
-     * Reduces the strength of the brick and decides if it's broken when hit
+     * Reduces the strength of the brick and decides if it's broken
      */
     public void impact(){
         strength--;

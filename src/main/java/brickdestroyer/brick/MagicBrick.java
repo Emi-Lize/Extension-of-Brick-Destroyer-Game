@@ -10,7 +10,7 @@ import java.util.Random;
 /**
  * New Class - Brick of new level created which is the last level
  * <br>Brick requires two hits to be fully broken
- * <br>There is a probability of a brick being hit when ball touches
+ * <br>There is a probability of the brick losing strength when ball touches
  * <br>Probability goes up if PowerUp is taken
  */
 public class MagicBrick extends Brick{
@@ -19,18 +19,18 @@ public class MagicBrick extends Brick{
     private static final int MAGIC_STRENGTH = 2;
     private static final double MAGIC_PROBABILITY = 0.4;
 
-    private double probability;
     private Crack crack;
     private Random rnd;
     private Shape brickFace;
     private Wall wall;
 
+    private double probability;
     private boolean brickCracked;
 
     /**
-     * This represents the brick of the newly created last level
+     * Calls the constructor of Brick and initialises the variables
      * @param point The coordinate of the top left corner of the brick
-     * @param size The size of the brick
+     * @param size The width and height of the brick
      * @param wall The wall object
      */
     public MagicBrick(Point point, Dimension size, Wall wall){
@@ -73,6 +73,7 @@ public class MagicBrick extends Brick{
     public boolean setImpact(Point2D point, int dir){
         if(super.isBroken())
             return false;
+
         if (wall.getPowerCount()==0){
             probability=MAGIC_PROBABILITY;
         }
@@ -80,19 +81,20 @@ public class MagicBrick extends Brick{
             increaseProbability();
         }
         impact();
+
         if(!super.isBroken()){
             if (brickCracked){
-                crack.setCrackPoints(super.brickFace, point,dir); //create crack
-                drawCrack(); //apply crack
+                crack.setCrackPoints(super.brickFace, point,dir);
+                drawCrack();
             }
             return false;
         }
-        return true; //brick broke
+
+        return true;
     }
 
     /**
-     * Checks if the brick has broken
-     * <br>If the random number generated is less than the given probability, the brick will be considered hit
+     * Checks if the brick has lost strength based on probability
      */
     @Override
     public void impact(){

@@ -7,7 +7,7 @@ import java.awt.geom.Point2D;
 import java.util.Random;
 
 /**
- * New Class - This represents the cracks in the brick.
+ * New Class - This represents the cracks in the brick
  * <br>Change:
  * <ul>
  *     <li>Created a sole class for Crack</li>
@@ -33,7 +33,7 @@ public class Crack{
     private final int steps;
 
     /**
-     * This represents the crack in the brick and initialises it
+     * Creates objects of class Random and GeneralPath
      * <br>Changes:
      * <ul>
      *     <li>Removed parameters</li>
@@ -47,15 +47,15 @@ public class Crack{
     }
 
     /**
-     * Draws the crack in the brick
-     * @return The path of the crack
+     * Returns the object of GeneralPath
+     * @return The object of GeneralPath
      */
     public GeneralPath draw(){
         return crackPath;
     }
 
     /**
-     * Removes all the crack paths in the game
+     * Removes all the crack paths in the brick
      */
     public void reset(){
         crackPath.reset();
@@ -78,19 +78,19 @@ public class Crack{
         int side=0;
         Rectangle bounds = brickFace.getBounds();
 
-        Point impact = new Point((int)point.getX(),(int)point.getY()); //(x,y) of the part of the ball which hit the brick
+        Point impact = new Point((int)point.getX(),(int)point.getY());
         Point start = new Point();
         Point end = new Point();
 
         switch (direction) {
-            case LEFT -> { //look to right of brick
+            case LEFT -> {
                 start.setLocation(bounds.x + bounds.width, bounds.y);
                 end.setLocation(bounds.x + bounds.width, bounds.y + bounds.height);
                 side = VERTICAL;
             }
-            case RIGHT -> { //look to the left of the brick as that is starting point of crack
-                start.setLocation(bounds.getLocation()); //top left
-                end.setLocation(bounds.x, bounds.y + bounds.height); //top left - height
+            case RIGHT -> {
+                start.setLocation(bounds.getLocation());
+                end.setLocation(bounds.x, bounds.y + bounds.height);
                 side = VERTICAL;
             }
             case UP -> {
@@ -104,12 +104,13 @@ public class Crack{
                 side = HORIZONTAL;
             }
         }
+
         Point tmp = makeRandomPoint(start,end,side);
-        makeCrack(impact,tmp); //set crack start from point of impact to random point
+        makeCrack(impact,tmp);
     }
 
     /**
-     * Creates the crack on the brick
+     * Draws the crack path of the brick
      * <br>Changes:
      * <ul>
      *     <li>Removed inMiddle method as it is only true when i=1</li>
@@ -120,21 +121,21 @@ public class Crack{
      */
     protected void makeCrack(Point start, Point end){
         GeneralPath path = new GeneralPath();
-        path.moveTo(start.x,start.y); //start of crack
+        path.moveTo(start.x,start.y);
 
-        double w = (end.x - start.x) / (double)steps; //width and height of each step
+        double w = (end.x - start.x) / (double)steps;
         double h = (end.y - start.y) / (double)steps;
 
         double x,y;
 
         for(int i = 1; i < steps;i++){
-            x = (i * w) + start.x; //setting the x
-            y = (i * h) + start.y + randomInBounds(); //setting the y - randomise the height of steps
-            path.lineTo(x,y); //draws the line
+            x = (i * w) + start.x;
+            y = (i * h) + start.y + randomInBounds();
+            path.lineTo(x,y);
         }
 
-        path.lineTo(end.x,end.y); //connect to last point
-        crackPath.append(path,true); //crack holds the crack now
+        path.lineTo(end.x,end.y);
+        crackPath.append(path,true);
     }
 
     /**
@@ -145,13 +146,13 @@ public class Crack{
      * </ul>
      * @return A random integer from -1 to 1 inclusive
      */
-    private int randomInBounds(){ //randomise height of steps in crack
+    private int randomInBounds(){
         int n = (BOUND * 2) + 1;
         return rnd.nextInt(n) - BOUND;
     }
 
     /**
-     * Creates a random point between a range as the end of the crack
+     * Creates a random point as the end of the crack
      * <br>Changes:
      * <ul>
      *     <li>Enhanced the switch statement</li>
@@ -167,7 +168,7 @@ public class Crack{
 
         switch (direction) {
             case HORIZONTAL -> {
-                pos = rnd.nextInt(to.x - from.x) + from.x; //get a random point
+                pos = rnd.nextInt(to.x - from.x) + from.x;
                 out.setLocation(pos, to.y);
             }
             case VERTICAL -> {
@@ -175,6 +176,7 @@ public class Crack{
                 out.setLocation(to.x, pos);
             }
         }
+
         return out;
     }
 

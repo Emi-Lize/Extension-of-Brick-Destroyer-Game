@@ -30,7 +30,7 @@ public class RubberBall extends Ball {
     private static final Color DEF_BORDER_COLOR = DEF_INNER_COLOR.darker().darker();
 
     /**
-     * This represents the rubber ball and initialises it
+     * Calls for the constructor in Ball
      * <br>Changes:
      * <ul>
      *     <li>Only one DEF_RADIUS as an argument instead of two</li>
@@ -38,7 +38,7 @@ public class RubberBall extends Ball {
      * @param center The coordinates of the center of the ball
      */
     public RubberBall(Point2D center){
-        super(center,DEF_RADIUS,DEF_INNER_COLOR,DEF_BORDER_COLOR); //center value is in GameBoard.java - wall
+        super(center,DEF_RADIUS,DEF_INNER_COLOR,DEF_BORDER_COLOR);
     }
 
     /**
@@ -57,7 +57,7 @@ public class RubberBall extends Ball {
         double x = center.getX() - (double)(radius / 2);
         double y = center.getY() - (double)(radius / 2);
 
-        return new Ellipse2D.Double(x,y,radius,radius); //creating ball shape
+        return new Ellipse2D.Double(x,y,radius,radius);
     }
 
 }

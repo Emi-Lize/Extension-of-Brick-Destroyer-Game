@@ -27,7 +27,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * This represents the design of the game and the mechanics of the game
+ * This represents the mechanics of the game
  * <br>Change:
  * <ul>
  *     <li>Moved design variables and methods to GameDesign and PauseMenu</li>
@@ -61,13 +61,13 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     private HighScore highScore;
 
     /**
-     * This represents the layout of the game and how the game operates
+     * Initialises the variables and creates objects of various classes
      * <br>Change:
      * <ul>
      *     <li>Created an object of class GameSystem</li>
      *     <li>Edited method calls for methods which have been moved from Wall to GameSystem</li>
      *     <li>Added gameSystem object as an argument for DebugConsole constructor</li>
-     *     <li>Moved gameTimer to runGame</li>
+     *     <li>Moved gameTimer to method runGame</li>
      *     <li>Created an object of class GameDesign</li>
      *     <li>Type casted "6/2" argument in wall to double</li>
      *     <li>Initialised score to 0</li>
@@ -84,16 +84,16 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         showScore = false;
         gameOver = false;
         score=0;
-
         message = "";
+
         initialize();
+
         highScore=new HighScore();
-        wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,(double)6/2); //create levels
+        wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,(double)6/2);
         gameSystem = new GameSystem(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT), new Point(300,430), wall);
         gameDesign = new GameDesign(this, gameSystem, wall, highScore);
-        debugConsole = new DebugConsole(owner,wall,this, gameSystem); //create debug console
+        debugConsole = new DebugConsole(owner,wall,this, gameSystem);
 
-        //initialize the first level
         wall.nextLevel();
         runGame();
     }
@@ -110,45 +110,44 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      * </ul>
      */
     private void runGame(){
-        gameTimer = new Timer(10,e ->{ //will keep running with 10ms interval
-            gameSystem.move(); //moving player and ball
-            gameSystem.findImpacts(); //check if ball hits anything
+        gameTimer = new Timer(10,e ->{
+            gameSystem.move();
+            gameSystem.findImpacts();
             message = String.format("Bricks: %d Balls %d",wall.getBrickCount(),gameSystem.getBallCount());
             score+=System.nanoTime()-time;
             time=System.nanoTime();
             if(gameSystem.isBallLost()){
-                if(gameSystem.ballEnd()){ //if no balls left
+                if(gameSystem.ballEnd()){
                     score=0;
                     reset();
                     message = "Game over";
                 }
                 else{
                     score+=System.nanoTime()-time;
-                    gameSystem.ballReset(); //bring back ball and player to initial
+                    gameSystem.ballReset();
                 }
-                gameTimer.stop(); //stop running
+                gameTimer.stop();
             }
-            else if(gameSystem.isDone()){ //if no more bricks
+            else if(gameSystem.isDone()){
                 score+=System.nanoTime()-time;
                 highScore.checkScore(score,wall.getLevel());
                 showScore=true;
                 highScore.writeScore();
-                if(gameSystem.hasLevel()){ //if not last level
+                if(gameSystem.hasLevel()){
                     message = "Go to Next Level";
-                    gameTimer.stop(); //stop running
+                    gameTimer.stop();
                     reset();
                     repaint();
-                    wall.nextLevel(); //setup bricks
+                    wall.nextLevel();
                     score=0;
                 }
-                else{ //last level done
+                else{
                     message = "ALL WALLS DESTROYED";
                     gameTimer.stop();
                     gameOver=true;
                 }
             }
-
-            repaint(); //removes any designs left on gameboard
+            repaint();
         });
     }
 
@@ -156,26 +155,26 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      * New Method - resets the bricks, position of ball and player and the ball count
      */
     private void reset(){
-        gameSystem.ballReset(); //reset ball and player
-        wall.wallReset(); //reset bricks
+        gameSystem.ballReset();
+        wall.wallReset();
         gameSystem.resetBallCount();
     }
 
     /**
-     * Sets up the properties of the game board
+     * Sets up the window properties of the game board
      * <br>Change:
      * <ul>
      *     <li>Moved design code to GameDesign</li>
      * </ul>
      */
     private void initialize(){
-        this.addKeyListener(this); //WindowListener in GameBoard will watch for keyboard and mouse
+        this.addKeyListener(this);
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
     }
 
     /**
-     * Draws the background, text, ball, bricks, player and pause menu
+     * Draws the background, text, ball, bricks, player, pause menu and score screen
      * <br>Change:
      * <ul>
      *     <li>Changed wall.ball to gameSystem.ball</li>
@@ -187,7 +186,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      * @param g An object which draws the components
      */
     public void paint(Graphics g){
-        Graphics2D g2d = (Graphics2D) g; //allow it to draw objects
+        Graphics2D g2d = (Graphics2D) g;
         PauseMenu pauseMenu=gameDesign.draw(g2d, message, showPauseMenu, showScore);
 
         continueButtonRect=pauseMenu.getContinueButtonRect();
@@ -202,7 +201,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     }
 
     /**
-     * Check if a specific key is pressed and perform a method if a specific key is pressed
+     * Check if a specific key is pressed and performs the specified code if a specific key is pressed
      * <br>Change:
      * <ul>
      *     <li>Changed wall.player to gameSystem.player</li>
@@ -215,25 +214,25 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      */
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        switch(keyEvent.getKeyCode()){ //find key pressed
-            case KeyEvent.VK_A: //A pressed
-                gameSystem.player.moveLeft(); //left
+        switch(keyEvent.getKeyCode()){
+            case KeyEvent.VK_A:
+                gameSystem.player.moveLeft();
                 break;
-            case KeyEvent.VK_D: //D pressed
-                gameSystem.player.moveRight(); //right
+            case KeyEvent.VK_D:
+                gameSystem.player.moveRight();
                 break;
-            case KeyEvent.VK_ESCAPE: //ESC pressed
+            case KeyEvent.VK_ESCAPE:
                 if (!showPauseMenu && gameTimer.isRunning()){
                     score+=System.nanoTime()-time;
                 }
                 if (!showScore) {
-                    showPauseMenu = !showPauseMenu; //pause menu
+                    showPauseMenu = !showPauseMenu;
                     repaint();
-                    gameTimer.stop(); //stop game
+                    gameTimer.stop();
                 }
                 break;
-            case KeyEvent.VK_SPACE: //space pressed
-                if(!showPauseMenu) //if not pause menu
+            case KeyEvent.VK_SPACE:
+                if(!showPauseMenu)
                     if(!showScore && !gameOver) {
                         if (gameTimer.isRunning()) {
                             score += System.nanoTime() - time;
@@ -248,16 +247,16 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
                         repaint();
                     }
                 break;
-            case KeyEvent.VK_F1: //F1 key
-                if(keyEvent.isAltDown() && keyEvent.isShiftDown()) //call for debug console
-                    debugConsole.setVisible(true); //show debug console
+            case KeyEvent.VK_F1:
+                if(keyEvent.isAltDown() && keyEvent.isShiftDown())
+                    debugConsole.setVisible(true);
             default:
-                gameSystem.player.stop(); //nothing happens
+                gameSystem.player.stop();
         }
     }
 
     /**
-     * Stops the player from moving when no key is pressed
+     * Stops the player from moving when the key is released
      * <br>Change:
      * <ul>
      *      <li>Changed wall.player to gameSystem.player</li>
@@ -267,7 +266,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     @Override
     public void keyReleased(KeyEvent keyEvent) {
         gameSystem.player.stop();
-    } //stop moving
+    }
 
     /**
      * Checks which button in the pause menu was clicked
@@ -283,51 +282,46 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
-        if(!showPauseMenu) //if not pause menu nothing happens
+        if(!showPauseMenu)
             return;
-        if(continueButtonRect.contains(p)){ //if continue pressed
+        if(continueButtonRect.contains(p)){
             showPauseMenu = false;
             repaint();
         }
-        else if(restartButtonRect.contains(p)){ //if restart pressed
+        else if(restartButtonRect.contains(p)){
             score=0;
             message = "Restarting Game...";
             reset();
             showPauseMenu = false;
             repaint();
         }
-        else if(exitButtonRect.contains(p)){ //if exit pressed
+        else if(exitButtonRect.contains(p)){
             System.exit(0);
         }
     }
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-
     }
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
-
     }
 
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
-
     }
 
     @Override
     public void mouseExited(MouseEvent mouseEvent) {
-
     }
 
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
-
     }
 
     /**
-     * Checks if the cursor is hovering over a button and changes the cursor to a hand if so
+     * Checks if the cursor is hovering over a button and changes the cursor to a hand icon if so
      * @param mouseEvent An object which checks if there was any action from the mouse
      */
     @Override
@@ -335,9 +329,9 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
         Point p = mouseEvent.getPoint();
         if(exitButtonRect != null && showPauseMenu) {
             if (exitButtonRect.contains(p) || continueButtonRect.contains(p) || restartButtonRect.contains(p))
-                this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); //change cursor to hand if hovering over
+                this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             else
-                this.setCursor(Cursor.getDefaultCursor()); //if not normal cursor
+                this.setCursor(Cursor.getDefaultCursor());
         }
         else{
             this.setCursor(Cursor.getDefaultCursor());
@@ -352,7 +346,7 @@ public class GameBoard extends JComponent implements KeyListener,MouseListener,M
      *     <li>Added an if statement to save the time elapsed</li>
      * </ul>
      */
-    public void onLostFocus(){ //if not focused on game
+    public void onLostFocus(){
         if (gameTimer.isRunning()) {
             score += System.nanoTime() - time;
         }

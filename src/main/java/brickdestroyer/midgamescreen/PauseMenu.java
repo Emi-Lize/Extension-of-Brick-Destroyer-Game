@@ -49,30 +49,30 @@ public class PauseMenu extends MidGameDesign {
         Color tmpColor = g2d.getColor();
 
         g2d.setFont(menuFont);
-        g2d.setColor(MENU_COLOR); //set font colour
+        g2d.setColor(MENU_COLOR);
 
         if(strLen == 0){
             FontRenderContext frc = g2d.getFontRenderContext();
-            strLen=menuFont.getStringBounds(PAUSE,frc).getBounds().width; //gets width of word PAUSE with that font
+            strLen=menuFont.getStringBounds(PAUSE,frc).getBounds().width;
         }
 
-        int x = (gameBoard.getWidth() - strLen) / 2; //center title
+        int x = (gameBoard.getWidth() - strLen) / 2;
         int y = gameBoard.getHeight() / 10;
 
-        g2d.drawString(PAUSE,x,y); //put PAUSE MENU
+        g2d.drawString(PAUSE,x,y);
 
-        x = gameBoard.getWidth() / 8; //margin for 3 options
-        y = gameBoard.getHeight() / 4; //bottom of first quarter
+        x = gameBoard.getWidth() / 8;
+        y = gameBoard.getHeight() / 4;
         continueButtonRect=drawPauseMenuButton(g2d, y, continueButtonRect, x);
-        g2d.drawString(CONTINUE,x,y); //put text
+        g2d.drawString(CONTINUE,x,y);
 
-        y *= 2; //second quarter
+        y *= 2;
         restartButtonRect=drawPauseMenuButton(g2d, y, restartButtonRect, x);
-        g2d.drawString(RESTART,x,y); //put text
+        g2d.drawString(RESTART,x,y);
 
-        y *= 3.0/2; //third quarter
+        y *= 3.0/2;
         exitButtonRect=drawPauseMenuButton(g2d, y, exitButtonRect, x);
-        g2d.drawString(EXIT,x,y); //put text
+        g2d.drawString(EXIT,x,y);
 
         g2d.setFont(tmpFont);
         g2d.setColor(tmpColor);
@@ -93,8 +93,8 @@ public class PauseMenu extends MidGameDesign {
     private Rectangle drawPauseMenuButton(Graphics2D g2d, int y, Rectangle rectangle, int x){
         if (rectangle==null){
             FontRenderContext frc = g2d.getFontRenderContext();
-            rectangle = menuFont.getStringBounds(CONTINUE,frc).getBounds(); //get width of word CONTINUE
-            rectangle.setLocation(x,y-rectangle.height); //put the button - button sits on the line of quarter
+            rectangle = menuFont.getStringBounds(CONTINUE,frc).getBounds();
+            rectangle.setLocation(x,y-rectangle.height);
         }
         return rectangle;
     }
@@ -122,4 +122,5 @@ public class PauseMenu extends MidGameDesign {
     public Rectangle getRestartButtonRect() {
         return restartButtonRect;
     }
+
 }

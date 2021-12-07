@@ -27,11 +27,10 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
 /**
- * The window the game board is in
+ * This represents the window of the whole game
  */
 public class GameFrame extends JFrame implements WindowFocusListener {
-
-    private static final String DEF_TITLE = "Brick Destroy"; //title of gameframe heading
+    private static final String DEF_TITLE = "Brick Destroy";
 
     private GameBoard gameBoard;
     private HomeMenu homeMenu;
@@ -40,7 +39,7 @@ public class GameFrame extends JFrame implements WindowFocusListener {
     private boolean gaming;
 
     /**
-     * This represents the window the game board is in and calls for the game board and home menu to be created
+     * Creates objects of various classes and calls method enableHomeMenu
      * <br>Change:
      * <ul>
      *     <li>Created an object of class info</li>
@@ -53,14 +52,14 @@ public class GameFrame extends JFrame implements WindowFocusListener {
 
         gaming = false;
 
-        this.setLayout(new BorderLayout()); //create a layout without gaps
+        this.setLayout(new BorderLayout());
 
-        gameBoard = new GameBoard(this); //create a gameboard
-        homeMenu = new HomeMenu(this,new Dimension(450,300)); //create home menu
+        gameBoard = new GameBoard(this);
+        homeMenu = new HomeMenu(this,new Dimension(450,300));
         info = new Info(this, new Dimension(450, 300));
         new BackgroundImage(new Dimension(450,300));
 
-        this.setUndecorated(true); //no user Windows game frame with the heading and three top right buttons
+        this.setUndecorated(true);
         enableHomeMenu();
     }
 
@@ -68,32 +67,32 @@ public class GameFrame extends JFrame implements WindowFocusListener {
      * Initialises the window property
      */
     public void initialize(){
-        this.setTitle(DEF_TITLE); //set game frame heading title
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE); //close game when closes
-        this.pack(); //allow window to be resized - components get automatically adjusted
-        this.centerBoard(); //center the game
-        this.setVisible(true); //show window
+        this.setTitle(DEF_TITLE);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.pack();
+        this.centerBoard();
+        this.setVisible(true);
     }
 
     /**
-     * Removes the home menu window and starts the game board
+     * Removes the home menu components and sets the game board components
      */
     public void enableGameBoard(){
-        this.dispose(); //remove the window
-        this.remove(homeMenu); //remove the home menu components
-        this.add(gameBoard,BorderLayout.CENTER); //create the gameboard window in the center
-        this.setUndecorated(false); //have windows frame
+        this.dispose();
+        this.remove(homeMenu);
+        this.add(gameBoard,BorderLayout.CENTER);
+        this.setUndecorated(false);
         initialize();
         /*to avoid problems with graphics focus controller is added here*/
-        this.addWindowFocusListener(this); //watch if window is being focused on
+        this.addWindowFocusListener(this);
     }
 
     /**
      * New Method - Removes the components of home menu and adds info components
      */
     public void enableInfo(){
-        this.remove(homeMenu); //remove the home menu components
-        this.add(info,BorderLayout.CENTER); //create the gameboard window in the center
+        this.remove(homeMenu);
+        this.add(info,BorderLayout.CENTER);
         this.revalidate();
         this.repaint();
         info.initialise();
@@ -103,27 +102,26 @@ public class GameFrame extends JFrame implements WindowFocusListener {
      * New Method - Removes the components of info and adds home menu components
      */
     public void enableHomeMenu(){
-        this.remove(info); //remove the home menu components
-        this.add(homeMenu,BorderLayout.CENTER); //create the gameboard window in the center
+        this.remove(info);
+        this.add(homeMenu,BorderLayout.CENTER);
         this.revalidate();
         this.repaint();
         homeMenu.initialise();
     }
 
     /**
-     * Sets the home menu to the center of the screen
+     * Sets the home menu and info screen to the center of the screen
      * <br>Change:
      * <ul>
      *     <li>Changed method name from autoLocate to centerBoard</li>
      * </ul>
      */
     private void centerBoard(){
-        Dimension size = Toolkit.getDefaultToolkit().getScreenSize(); //get size of screen
-        int x = (size.width - this.getWidth()) / 2; //center the window
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (size.width - this.getWidth()) / 2;
         int y = (size.height - this.getHeight()) / 2;
         this.setLocation(x,y);
     }
-
 
     /**
      * Checks if the window is focused
@@ -139,17 +137,17 @@ public class GameFrame extends JFrame implements WindowFocusListener {
             is useful only if the GameBoard as been displayed
             at least once
          */
-        gaming = true; //if in focus then user is playing
+        gaming = true;
     }
 
     /**
-     * Checks if the window isn't focused then calls a method
+     * Checks if the window has lost focus then calls a method
      * @param windowEvent An object which checks if there's any change to the window status
      */
     @Override
-    public void windowLostFocus(WindowEvent windowEvent) { //if window not in focus
+    public void windowLostFocus(WindowEvent windowEvent) {
         if(gaming)
             gameBoard.onLostFocus();
-
     }
+
 }

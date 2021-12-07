@@ -3,11 +3,6 @@ package brickdestroyer.brick;
 import java.awt.*;
 import java.awt.Point;
 
-/*
-  Created by filippo on 04/09/16.
-
- */
-
 /**
  * This represents the clay brick which inherits from brick
  */
@@ -17,7 +12,7 @@ public class ClayBrick extends Brick {
     private static final int CLAY_STRENGTH = 1;
 
     /**
-     * This represents clay brick and initialises it
+     * Calls the constructor in Brick
      * @param point The coordinates of the top left corner of the brick
      * @param size The width and height of the brick
      */

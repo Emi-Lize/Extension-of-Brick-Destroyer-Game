@@ -4,10 +4,6 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.RectangularShape;
 
-/*
-  Created by filippo on 04/09/16.
- */
-
 /**
  * This represents the ball
  * <br>Change:
@@ -31,12 +27,11 @@ abstract public class Ball {
     private int speedY;
 
     /**
-     * This represents the ball. It initialises the location of the ball and creates the ball.
+     * Set the four points of the ball and creates the ball.
      * <br>Changes:
      * <ul>
      *     <li>Removed radiusA and radiusB and added radius</li>
      *     <li>Replaced duplicate code to set ball's location with the existing method setPoints</li>
-     *     <li>Moved code to declare the four coordinates of the ball to method createPoints</li>
      *     <li>setPoints method has only one argument</li>
      * </ul>
      * @param center The coordinates of the center of the ball
@@ -47,9 +42,14 @@ abstract public class Ball {
     public Ball(Point2D center,int radius, Color inner,Color border){
         this.center = center;
 
-        createPoints();
+        up = new Point2D.Double();
+        down = new Point2D.Double();
+        left = new Point2D.Double();
+        right = new Point2D.Double();
+
         setPoints(radius);
-        ballFace = makeBall(center,radius); //creating ball
+        ballFace = makeBall(center,radius);
+
         this.border = border;
         this.inner  = inner;
         speedX = 0;
@@ -66,7 +66,7 @@ abstract public class Ball {
      * @param radius The radius of the ball
      * @return The shape of the ball
      */
-    protected abstract Shape makeBall(Point2D center,int radius); //implemented in rubberball.java
+    protected abstract Shape makeBall(Point2D center,int radius);
 
     /**
      * Moves the position of the ball based on the speed
@@ -76,7 +76,7 @@ abstract public class Ball {
      * </ul>
      */
     public void move(){
-        center.setLocation((center.getX() + speedX),(center.getY() + speedY)); //change the center of the ball
+        center.setLocation((center.getX() + speedX),(center.getY() + speedY));
         moveBall();
     }
 
@@ -161,19 +161,9 @@ abstract public class Ball {
      * </ul>
      * @param p The coordinates of the center of the ball at the initial position
      */
-    public void reset(Point p){ //used in wall.java - ballreset
+    public void reset(Point p){
         center.setLocation(p);
         moveBall();
-    }
-
-    /**
-     * New Method - Creating the four coordinates of the ball
-     */
-    private void createPoints(){
-        up = new Point2D.Double(); //creating coordinates
-        down = new Point2D.Double();
-        left = new Point2D.Double();
-        right = new Point2D.Double();
     }
 
     /**
@@ -185,7 +175,7 @@ abstract public class Ball {
      * </ul>
      * @param radius The radius of the ball
      */
-    private void setPoints(double radius){ //setting 4 coordinates of ball
+    private void setPoints(double radius){
         double half = radius/2;
         up.setLocation(center.getX(),center.getY()-half);
         down.setLocation(center.getX(),center.getY()+half);
@@ -219,11 +209,11 @@ abstract public class Ball {
      * </ul>
      */
     public void moveBall(){
-        RectangularShape tmp = (RectangularShape) ballFace; //same concept as move
+        RectangularShape tmp = (RectangularShape) ballFace;
         double l = tmp.getWidth();
 
         tmp.setFrame((center.getX() -(l / 2)),(center.getY() - (l / 2)),l,l);
-        setPoints(l); //change the 4 coordinates of the ball
+        setPoints(l);
         ballFace = tmp;
     }
 
@@ -258,4 +248,5 @@ abstract public class Ball {
     public Point2D getRight() {
         return right;
     }
+
 }

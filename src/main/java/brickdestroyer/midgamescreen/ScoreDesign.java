@@ -81,7 +81,6 @@ public class ScoreDesign extends MidGameDesign {
 
         g2d.setFont(tmpFont);
         g2d.setColor(tmpColor);
-
     }
 
     /**
@@ -95,4 +94,5 @@ public class ScoreDesign extends MidGameDesign {
         int strLen=font.getStringBounds(text,frc).getBounds().width;
         return (gameBoard.getWidth() - strLen) / 2;
     }
+
 }

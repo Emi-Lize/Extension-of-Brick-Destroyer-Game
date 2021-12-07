@@ -34,7 +34,7 @@ public class SteelBrick extends Brick {
     private Shape brickFace;
 
     /**
-     * This represents the steel brick and initialises it
+     * Calls the constructor from Brick
      * @param point The coordinates of the top left corner of the brick
      * @param size The width and height of the brick
      */
@@ -73,12 +73,12 @@ public class SteelBrick extends Brick {
     public  boolean setImpact(Point2D point , int dir){
         if(super.isBroken())
             return false;
-        impact(); //probability of brick breaking
+        impact();
         return super.isBroken();
     }
 
     /**
-     * Checks if the brick has broken
+     * Checks if the brick has broken based on a probability
      * <br>If the random number generated is less than 0.4, the brick will break
      */
     public void impact(){

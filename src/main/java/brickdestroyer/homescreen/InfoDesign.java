@@ -26,7 +26,7 @@ public class InfoDesign extends MenuDesign {
     private Info info;
 
     /**
-     * Initialises the InfoDesign class
+     * Initialises the components of the info screen
      * @param area The dimensions of the window
      * @param info The info object
      */
@@ -47,7 +47,7 @@ public class InfoDesign extends MenuDesign {
     }
 
     /**
-     * Sets the text at correct position
+     * Sets the text at the correct position
      * @param g2d An object which draws the 2D components
      */
     @Override
@@ -88,7 +88,6 @@ public class InfoDesign extends MenuDesign {
 
         sY += pressSpaceRect.getHeight();
         drawText(sY, pressEscRect, infoFont, PRESS_ESC, g2d);
-
     }
 
     /**
@@ -115,20 +114,20 @@ public class InfoDesign extends MenuDesign {
     protected void setButton(Graphics2D g2d) {
         FontRenderContext frc = g2d.getFontRenderContext();
 
-        Rectangle2D txtRect = buttonFont.getStringBounds(BACK_TEXT,frc); //get boundary of text
+        Rectangle2D txtRect = buttonFont.getStringBounds(BACK_TEXT,frc);
 
         g2d.setFont(buttonFont);
 
-        int x = (menuFace.width - backButton.width) / 2; //center button
+        int x = (menuFace.width - backButton.width) / 2;
         int y =(int) ((menuFace.height - backButton.height) * 0.9);
 
-        backButton.setLocation(x,y); //position of rectangle
+        backButton.setLocation(x,y);
 
         drawButton(txtRect, g2d, info.isBackClicked(), backButton, BACK_TEXT);
     }
 
     /**
-     * Draws the shape of the button and text in button
+     * Draws the shape of the button and the text in the button
      * @param rectangle The rectangle around the text
      * @param g2d An object which draws the 2D components
      * @param clicked A boolean which represents if the button has been clicked
@@ -137,7 +136,7 @@ public class InfoDesign extends MenuDesign {
      */
     @Override
     protected void drawButton(Rectangle2D rectangle, Graphics2D g2d, Boolean clicked, Rectangle button, String text) {
-        int x = (int)(button.getWidth() - rectangle.getWidth()) / 2; //center text in rectangle
+        int x = (int)(button.getWidth() - rectangle.getWidth()) / 2;
         int y = (int)(button.getHeight() - rectangle.getHeight()) / 2;
 
         x += button.x; //position of text
@@ -146,14 +145,14 @@ public class InfoDesign extends MenuDesign {
         if(clicked){
             Color tmp = g2d.getColor();
             g2d.setColor(CLICKED_BUTTON_COLOR);
-            g2d.draw(button); //draw button in different colour
+            g2d.draw(button);
             g2d.setColor(CLICKED_TEXT);
-            g2d.drawString(text,x,y); //draw text in different colour
+            g2d.drawString(text,x,y);
             g2d.setColor(tmp);
         }
         else{
-            g2d.draw(button); //draw button
-            g2d.drawString(text,x,y); //draw text following position of text
+            g2d.draw(button);
+            g2d.drawString(text,x,y);
         }
     }
 
@@ -164,4 +163,5 @@ public class InfoDesign extends MenuDesign {
     public Rectangle getBackButton() {
         return backButton;
     }
+
 }

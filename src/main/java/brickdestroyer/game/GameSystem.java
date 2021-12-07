@@ -17,8 +17,8 @@ import java.awt.geom.Point2D;
  */
 public class GameSystem {
     private Rectangle area;
-
     private Point startPoint;
+
     private int ballCount;
     private boolean ballLost;
 
@@ -28,7 +28,7 @@ public class GameSystem {
     public PowerUp powerUp;
 
     /**
-     * This represents the game system and initialises the ball and the player
+     * Initialises the ball, player and powerUp
      * <br>Change:
      * <ul>
      *     <li>Removed random speed and set speed to 3</li>
@@ -41,14 +41,16 @@ public class GameSystem {
     public GameSystem(Rectangle drawArea, Point ballPos, Wall wall){
         this.wall=wall;
         this.startPoint = new Point(ballPos);
+
         ballCount = 3;
         ballLost = false;
+
         makeBall(ballPos);
         ball.setSpeed(3,-3);
 
         player = new Player((Point) ballPos.clone(),150,10, drawArea);
-
         powerUp = new PowerUp(drawArea, ball, wall);
+
         area = drawArea;
     }
 
@@ -69,32 +71,32 @@ public class GameSystem {
     }
 
     /**
-     * Checks if ball has hit either the player, brick and the boundary of the game frame
+     * Checks if ball has hit either the player, powerup, brick or the boundary of the game frame
      * <br>Change:
      * <ul>
      *     <li>Calls method in wall if ball touches PowerUp</li>
      * </ul>
      */
     public void findImpacts(){
-        if(player.hitBall(ball)){ //if ball hits player
+        if(player.hitBall(ball)){
             ball.reverseY();
         }
         else if(powerUp.findImpact(ball)){
             wall.setPowerCount();
         }
-        else if(impactWall()){ //check if brick broke
+        else if(impactWall()){
             /*for efficiency reverse is done into method impactWall
              * because for every brick program checks for horizontal and vertical impacts
              */
             wall.setBrickCount(1);
         }
-        else if(impactBorder()) { //if hit left and right of game boundary
+        else if(impactBorder()) {
             ball.reverseX();
         }
-        else if(ball.getPosition().getY() < area.getY()){ //if hit top of game boundary
+        else if(ball.getPosition().getY() < area.getY()){
             ball.reverseY();
         }
-        else if(ball.getPosition().getY() > area.getY() + area.getHeight()){ //if hit bottom of game boundary
+        else if(ball.getPosition().getY() > area.getY() + area.getHeight()){
             ballCount--;
             ballLost = true;
         }
@@ -113,8 +115,7 @@ public class GameSystem {
      */
     private boolean impactWall(){
         for(Brick b : wall.getBricks()){
-            switch (b.findImpact(ball)) { //check where brick got hit - change trajectory of ball - if neither means no brick
-                //Vertical Impact
+            switch (b.findImpact(ball)) {
                 case Brick.UP_IMPACT -> {
                     ball.reverseY();
                     return b.setImpact(ball.getDown(), Crack.UP);
@@ -123,8 +124,6 @@ public class GameSystem {
                     ball.reverseY();
                     return b.setImpact(ball.getUp(), Crack.DOWN);
                 }
-
-                //Horizontal Impact
                 case Brick.LEFT_IMPACT -> {
                     ball.reverseX();
                     return b.setImpact(ball.getRight(), Crack.RIGHT);
@@ -135,14 +134,15 @@ public class GameSystem {
                 }
             }
         }
-        return false; //no impact on brick
+
+        return false;
     }
 
     /**
-     * Checks if the ball hit the left or right of the game board
-     * @return A boolean which represents if the ball hit the left or right of the game board
+     * Checks if the ball hit the left or right edge of the game board
+     * @return A boolean which represents if the ball hit the left or right edge of the game board
      */
-    private boolean impactBorder(){ //if ball hit left and right of game boundary
+    private boolean impactBorder(){
         Point2D p = ball.getPosition();
         return ((p.getX() < area.getX()) ||(p.getX() > (area.getX() + area.getWidth())));
     }
@@ -164,7 +164,7 @@ public class GameSystem {
     }
 
     /**
-     * Resets the position of the ball and player and the speed of the ball
+     * Resets the position of the ball, powerup and player and the speed of the ball
      * <br>Change:
      * <ul>
      *     <li>Speed of ball is constant at 3</li>

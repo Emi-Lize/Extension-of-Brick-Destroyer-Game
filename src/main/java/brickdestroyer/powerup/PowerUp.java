@@ -9,18 +9,19 @@ import java.util.Random;
 
 /**
  * New Class - Creates the powerUp object
- * <br>When powerUp is hit, it increases the probability of the magic brick to be considered hit when touched by a ball
+ * <br>When powerUp is hit, it increases the probability of decreasing magic brick's strenght when the ball hits
  */
 public class PowerUp {
     public static final Color BORDER_COLOUR = Color.RED;
     public static final Color INNER_COLOUR = Color.YELLOW;
     private static final int LENGTH = 8;
     private static final int BOUND = 10;
+    private static Random rnd;
 
     private Shape powerUpFace;
-    private static Random rnd;
     private Dimension size;
     private Point position;
+
     private Wall wall;
 
     private int topY;
@@ -38,12 +39,16 @@ public class PowerUp {
         rnd = new Random();
         this.wall=wall;
         position = new Point();
+
         bottomY=(int)ball.getUp().getY()-LENGTH-BOUND;
         topY=(int)wall.getWallEnd()+BOUND;
         rightX=(int)drawArea.getWidth()-LENGTH;
+
         size = new Dimension(LENGTH,LENGTH);
+
         setLocation();
         powerUpFace=makePowerUpFace();
+
         broken=false;
     }
 
@@ -59,9 +64,8 @@ public class PowerUp {
      * Calculates a random coordinate for the top left corner of powerUp
      */
     private void setLocation(){
-        double posX, posY;
-        posX=rnd.nextInt(rightX);
-        posY=rnd.nextInt(bottomY-topY)+topY;
+        double posX=rnd.nextInt(rightX);
+        double posY=rnd.nextInt(bottomY-topY)+topY;
         position.setLocation(posX, posY);
     }
 
@@ -71,7 +75,7 @@ public class PowerUp {
      * @return A boolean representing is the ball has hit powerUp
      */
     public boolean findImpact(Ball b){
-        if(powerUpFace.contains(b.getRight())) { //if brick in contact with the right of the ball
+        if(powerUpFace.contains(b.getRight())) {
             broken = true;
             createPowerUp();
             return true;
@@ -121,4 +125,5 @@ public class PowerUp {
             broken=false;
         }
     }
+
 }

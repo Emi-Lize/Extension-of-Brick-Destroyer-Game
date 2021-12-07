@@ -16,7 +16,7 @@ public class CementBrick extends Brick {
     private Shape brickFace;
 
     /**
-     * This represents cement brick and initialises it
+     * Calls for constructor in Brick
      * <br>Changes:
      * <ul>
      *     <li>Creating object crack of class Crack does not require any arguments</li>
@@ -42,10 +42,12 @@ public class CementBrick extends Brick {
     }
 
     /**
-     * Checks if the ball has hit a brick which has not been broken and draws a crack if the brick is not broken
+     * Checks if the ball has hit a brick which has not been broken
+     * <br>Calls super class method impact if brick not broken
+     * <br>Draws a crack if the brick doesn't have a crack
      * <br>Changes:
      * <ul>
-     *     <li>Added super.brickFace as an argument to the method makeCrack</li>
+     *     <li>Added super.brickFace as an argument to the method setCrackPoints</li>
      * </ul>
      * @param point The coordinates of the point of the ball which hits the brick
      * @param dir The side of the brick which was hit
@@ -57,11 +59,11 @@ public class CementBrick extends Brick {
             return false;
         super.impact();
         if(!super.isBroken()){
-            crack.setCrackPoints(super.brickFace, point,dir); //create crack
-            drawCrack(); //apply crack
-            return false; //brick did not break
+            crack.setCrackPoints(super.brickFace, point,dir);
+            drawCrack();
+            return false;
         }
-        return true; //brick broke
+        return true;
     }
 
     /**

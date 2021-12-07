@@ -33,16 +33,15 @@ public class Player {
 
     private Rectangle playerFace;
     private Rectangle container;
-    private Point ballPoint; //coordinate of ball
+    private Point ballPoint;
+
     private int moveAmount;
     private int min;
     private int max;
     private int width;
 
-    private Wall wall;
-
     /**
-     * This represents the rectangle the player controls and initialises it
+     * Creates the player's rectangle and initialises the variables
      * <br>Change:
      * <ul>
      *     <li>Calls method setBoundary to find the min and max x values that the player can be</li>
@@ -54,7 +53,7 @@ public class Player {
      * @param container The rectangle shape of the game board
      */
     public Player(Point ballPoint,int width,int height,Rectangle container) {
-        this.ballPoint = ballPoint; //ball coordinate
+        this.ballPoint = ballPoint;
         moveAmount = 0;
         this.width=width;
         playerFace = makeRectangle(width, height);
@@ -75,7 +74,6 @@ public class Player {
 
     /**
      * Checks if the player's rectangle has hit the ball
-     * <br>It does this by checking if the bottom of the ball has come in contact with the player's rectangle
      * <br>Change:
      * <ul>
      *     <li>Changed method name from impact to hitBall</li>
@@ -85,17 +83,17 @@ public class Player {
      */
     public boolean hitBall(Ball b){
         return playerFace.contains(b.getPosition()) && playerFace.contains(b.getDown()) ;
-    } //check if ball bottom hits the player
+    }
 
     /**
-     * Moves the position of the player's rectangle
+     * Moves the position of the player's rectangle following the moveAmount
      */
     public void move(){
-        double x = ballPoint.getX() + moveAmount; //add to x the amount moved
-        if(x < min || x > max) //if player hits game boundary
+        double x = ballPoint.getX() + moveAmount;
+        if(x < min || x > max)
             return;
-        ballPoint.setLocation(x,ballPoint.getY()); //save position of top center of player
-        playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y); //change coordinate of top left corner of player
+        ballPoint.setLocation(x,ballPoint.getY());
+        playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y);
     }
 
     /**
@@ -139,9 +137,9 @@ public class Player {
      * </ul>
      * @param p The center of the ball at its initial position
      */
-    public void reset(Point p){ //resetting position
+    public void reset(Point p){
         ballPoint.setLocation(p);
-        playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y); //player reset so that ball is centered on it
+        playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y);
     }
 
     /**
@@ -153,11 +151,11 @@ public class Player {
     }
 
     /**
-     * Finds the minimum and maximum x value that player can be
+     * Finds the minimum and maximum x value that the player can be
      * @param width The width of the player bar
      */
     private void setBoundary(int width){
-        min = container.x + (width / 2); //game boundary
+        min = container.x + (width / 2);
         max = min + container.width - width;
     }
 

@@ -5,13 +5,13 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 /**
- * New Class - The design of the home menu and components
+ * New Class - The design of the components in the starting screen
  */
 abstract public class MenuDesign extends JComponent {
     private static final Color BG_COLOR = Color.GREEN.darker();
-    private static final Color BORDER_COLOR = new Color(200,8,21); //Venetian Red
-    private static final Color DASH_BORDER_COLOR = new  Color(255, 216, 0);//school bus yellow
-    protected static final Color TEXT_COLOR = new Color(16, 52, 166);//egyptian blue
+    private static final Color BORDER_COLOR = new Color(200,8,21);
+    private static final Color DASH_BORDER_COLOR = new  Color(255, 216, 0);
+    protected static final Color TEXT_COLOR = new Color(16, 52, 166);
     protected static final Color CLICKED_BUTTON_COLOR = BG_COLOR.brighter();
     protected static final Color CLICKED_TEXT = Color.WHITE;
     private static final int BORDER_SIZE = 5;
@@ -31,8 +31,8 @@ abstract public class MenuDesign extends JComponent {
      * @param area The dimension of the menu
      */
     public MenuDesign(Dimension area){
-        menuFace = new Rectangle(new Point(0,0),area); //create home menu
-        btnDim = new Dimension(area.width / 3, area.height / 12); //size of start and exit
+        menuFace = new Rectangle(new Point(0,0),area);
+        btnDim = new Dimension(area.width / 3, area.height / 12);
 
         setBorderDesign();
         setFont();
@@ -49,12 +49,12 @@ abstract public class MenuDesign extends JComponent {
      * New Method - Sets the design of the border
      */
     private void setBorderDesign(){
-        borderStoke = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND,0,DASHES,0); //red part of menu border
-        borderStoke_noDashes = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND); //yellow part of menu border
+        borderStoke = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND,0,DASHES,0);
+        borderStoke_noDashes = new BasicStroke(BORDER_SIZE,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
     }
 
     /**
-     * Draws the components in the home menu
+     * Draws the components in the starting screen
      * @param g2d An object which draws the 2D components
      */
     public void drawMenu(Graphics2D g2d){
@@ -71,12 +71,10 @@ abstract public class MenuDesign extends JComponent {
         double x = menuFace.getX();
         double y = menuFace.getY();
 
-        g2d.translate(x,y); //reference point is (0,0)
+        g2d.translate(x,y);
 
-        //method calls
         setText(g2d);
         setButton(g2d);
-        //end of methods calls
 
         g2d.translate(-x,-y);
         g2d.setFont(prevFont);
@@ -84,7 +82,7 @@ abstract public class MenuDesign extends JComponent {
     }
 
     /**
-     * Draws the border of the home menu frame and sets the background colour
+     * Draws the border of the home menu frame and sets the background image
      * <br>Change:
      * <ul>
      *     <li>Moved code to draw the border to drawBorder</li>
@@ -100,8 +98,8 @@ abstract public class MenuDesign extends JComponent {
 
         Stroke tmp = g2d.getStroke();
 
-        drawBorder(borderStoke_noDashes, DASH_BORDER_COLOR, g2d); //draw yellow part of border
-        drawBorder(borderStoke, BORDER_COLOR, g2d); //draw red part of border
+        drawBorder(borderStoke_noDashes, DASH_BORDER_COLOR, g2d);
+        drawBorder(borderStoke, BORDER_COLOR, g2d);
 
         g2d.setStroke(tmp);
         g2d.setColor(prev);
@@ -142,7 +140,7 @@ abstract public class MenuDesign extends JComponent {
     protected abstract void setButton(Graphics2D g2d);
 
     /**
-     * Draws the shape of the button and text in button
+     * Draws the shape of the button and the text in the button
      * @param rectangle The rectangle around the text
      * @param g2d An object which draws the 2D components
      * @param clicked A boolean which represents if the button has been clicked
@@ -150,4 +148,5 @@ abstract public class MenuDesign extends JComponent {
      * @param text The string in the button
      */
     protected abstract void drawButton(Rectangle2D rectangle, Graphics2D g2d, Boolean clicked, Rectangle button, String text);
+
 }

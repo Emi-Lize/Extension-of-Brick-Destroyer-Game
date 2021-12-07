@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.Scanner;
 
 /**
- * New Class - This represents the score of the user and the high scores saved
+ * New Class - This represents the score of the player and the high scores saved
  */
 public class HighScore {
     private int[][] score_list;
@@ -22,8 +22,8 @@ public class HighScore {
     }
 
     /**
-     * Checks if the score has beat any high score
-     * @param value The score
+     * Checks if the player has beat any high score
+     * @param value The player's score
      * @param wallLevel The level of the game
      */
     public void checkScore(long value, int wallLevel){
@@ -31,6 +31,7 @@ public class HighScore {
         this.level=wallLevel-1;
         int score=(int)(value/1000000);
         currentScore=score;
+
         for (int x=0; x<5; x++){
             if (score<score_list[level][x]){
                 position=x;
@@ -71,7 +72,7 @@ public class HighScore {
     }
 
     /**
-     * Writes the new high score in the text file
+     * Saves the new high score in the text file
      */
     public void writeScore(){
         if(newScore) {
@@ -90,7 +91,7 @@ public class HighScore {
     }
 
     /**
-     * Gets the score at the index
+     * Gets the score at the specified index
      * @param index The position of the score in that level
      * @return The string of the score to be displayed
      */

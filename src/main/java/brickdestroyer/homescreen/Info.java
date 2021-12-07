@@ -37,7 +37,7 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
     private boolean backClicked;
 
     /**
-     * This represents the info screen of the game and initialises it
+     * Initialises the info screen
      * @param owner The window the game frame is in
      * @param area The area of the home menu
      */
@@ -45,32 +45,32 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
         initialise();
         this.owner=owner;
 
-        this.setPreferredSize(area); //set size
+        this.setPreferredSize(area);
         infoDesign = new InfoDesign(area, this);
-
     }
 
     /**
      * Sets the property of the info window
      */
     public void initialise(){
-        this.setFocusable(true); //focus on home menu
-        this.requestFocusInWindow(); //ensure it is focused on
-        this.addMouseListener(this); //WindowListener watches for mouse
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+        this.addMouseListener(this);
         this.addMouseMotionListener(this);
     }
 
     /**
-     * Draws the info screen
+     * Draws the components of the info screen
      * @param g An object which draws the components
      */
     public void paint(Graphics g){
         infoDesign.drawMenu((Graphics2D)g);
+
         backButton=infoDesign.getBackButton();
     }
 
     /**
-     * Gets the boolean of backClicked
+     * Gets the boolean representing if the back button is clicked
      * @return A boolean representing if the back button is clicked
      */
     public boolean isBackClicked() {
@@ -94,7 +94,7 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
      * @param mouseEvent An object which checks if there's any action from the mouse
      */
     @Override
-    public void mousePressed(MouseEvent mouseEvent) { //change colour when button clicked
+    public void mousePressed(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
         if(backButton.contains(p)){
             backClicked = true;
@@ -107,7 +107,7 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
      * @param mouseEvent An object which checks if there's any action from the mouse
      */
     @Override
-    public void mouseReleased(MouseEvent mouseEvent) { //change colour back when button not clicked
+    public void mouseReleased(MouseEvent mouseEvent) {
         if(backClicked ){
             backClicked = false;
             repaint(backButton.x,backButton.y,backButton.width+1,backButton.height+1);
@@ -116,26 +116,22 @@ public class Info extends JComponent implements MouseListener, MouseMotionListen
 
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
-
     }
 
     @Override
     public void mouseExited(MouseEvent mouseEvent) {
-
     }
-
 
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
-
     }
 
     /**
-     * Checks if the mouse has moved and where it is
+     * Checks if the mouse has moved and changes it to a hand icon if it is hovering over a button
      * @param mouseEvent An object which checks if there's any action from the mouse
      */
     @Override
-    public void mouseMoved(MouseEvent mouseEvent) { //change cursor shape
+    public void mouseMoved(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
         if(backButton.contains(p))
             this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

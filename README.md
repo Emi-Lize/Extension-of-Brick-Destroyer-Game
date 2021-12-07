@@ -1,7 +1,15 @@
 # COMP2042_CW_hcyla2
-A brick destroyer game with 5 levels. To complete a level, all bricks on the screen must be broken. Each level consists of different types of bricks which have different properties. The last level has small yellow squares known as power-ups which increase the chances of breaking the bricks in the level. 
 
-**Controls:**
+### Table of Contents
+1. [Game Information](https://github.com/Emi-Lize/COMP2042_CW_hcyla2#game_information)
+2. [Controls](https://github.com/Emi-Lize/COMP2042_CW_hcyla2#controls)
+3. [Maintenance](https://github.com/Emi-Lize/COMP2042_CW_hcyla2#maintenance)
+4. [Extension](https://github.com/Emi-Lize/COMP2042_CW_hcyla2#extension)
+
+## Game Information
+A brick destroyer game with 5 levels. To complete a level, all bricks on the screen must be broken. Each level consists of different types of bricks which have different properties. The last level has small yellow squares known as power-ups which increase the chances of breaking the bricks in the level. *Original source code from https://github.com/FilippoRanza/Brick_Destroy.*
+
+## Controls:
 - A - Move Left
 - D - Move Right
 - SPACE – Start/Pause the Game

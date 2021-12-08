@@ -18,7 +18,6 @@
 package brickdestroyer.player;
 
 import brickdestroyer.ball.Ball;
-import brickdestroyer.wall.Wall;
 
 import java.awt.*;
 

@@ -186,9 +186,9 @@ public class Wall {
     /**
      * Resets the bricks in a level to its initial position and property
      * <br>Change:
-     * <li>
-     *     <ul>Set powerCount to 0</ul>
-     * </li>
+     * <ul>
+     *     <li>Set powerCount to 0</li>
+     * </ul>
      */
     public void wallReset(){
         for(Brick b : bricks)

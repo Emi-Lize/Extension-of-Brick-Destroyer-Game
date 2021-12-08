@@ -9,13 +9,13 @@
 ## Game Information
 A brick destroyer game with 5 levels. To complete a level, all bricks on the screen must be broken. Each level consists of different types of bricks which have different properties. The last level has small yellow squares known as power-ups which increase the chances of breaking the bricks in the level. *Original source code from https://github.com/FilippoRanza/Brick_Destroy.*
 
-## Controls:
+## Controls
 - A - Move Left
 - D - Move Right
 - SPACE – Start/Pause the Game
 - ESC – Enter/Exit the Pause Menu
 
-## Maintenance:
+## Maintenance
 - Moved Crack class from Brick class to its own class as there were two classes in an abstract class
 - Created a super class called MenuDesign for starting screen related designs to promote encapsulation
 - Created a super class called MidGameDesign for mid-game screen related designs to promote encapsulation
@@ -25,7 +25,7 @@ A brick destroyer game with 5 levels. To complete a level, all bricks on the scr
 - Moved code related to the pause menu from GameDesign to a new class called PauseMenu to promote single responsibility
 - Separated the classes into different packages
 
-## Extension:
+## Extension
 - Added scores to the game which records how long the player takes to complete the game by using HighScore and ScoreDesign class
 - The time taken by the player and the top 5 high scores of the level is displayed after each level is completed
 - If the player beats one of the top 5 scores, their score will replace that score and be saved to the score text file

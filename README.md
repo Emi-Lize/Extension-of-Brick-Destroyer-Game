@@ -1,7 +1,7 @@
 # COMP2042_CW_hcyla2
 
 ### Table of Contents
-1. [Game Information](https://github.com/Emi-Lize/COMP2042_CW_hcyla2#game_information)
+1. [Game Information](https://github.com/Emi-Lize/COMP2042_CW_hcyla2#game-information)
 2. [Controls](https://github.com/Emi-Lize/COMP2042_CW_hcyla2#controls)
 3. [Maintenance](https://github.com/Emi-Lize/COMP2042_CW_hcyla2#maintenance)
 4. [Extension](https://github.com/Emi-Lize/COMP2042_CW_hcyla2#extension)

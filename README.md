@@ -17,10 +17,27 @@ A brick destroyer game with 5 levels. To complete a level, all bricks on the scr
 
 ## Maintenance
 - Separated the classes into different packages
-- Moved methods from existing classes to new classes such as Crack, GameSystem, HomeDesign, GameDesign and PauseMenu to promote single responsibility
+- Moved methods from existing classes to new classes to promote single responsibility
+  - Brick to Crack
+  - Wall to GameSystem
+  - HomeMenu to HomeDesign
+  - GameBoard to GameDesign
+  - GameDesign to PauseMenu
 - Split up large methods into smaller methods to promote single responsibility
+  - runGame in GameBoard
+  - initialise in HomeMenu
+  - fontDesign in HomeDesign
 - Moved repeated lines of codes to a new method to reduce code duplication
+  - moveBall in Ball
+  - reset in GameBoard
+  - createLevels in Wall
 - Methods were renamed to improve clarity on the purpose of the method
+  - moveTo to reset in Ball and Player
+  - updateBrick to drawCrack in CementBrick
+  - makeCrack to setCrackPoints in Crack
+  - autoLocate to centerBoard in GameFrame
+  - impact to hitBall in Player
+  - makeLevels to setUpLevels in Wall
 - JavaDocs were created to provide information on the methods and classes
 - Super classes were created such as MenuDesign and MidGameDesign to promote encapsulation
 - Removed redundant variables and methods

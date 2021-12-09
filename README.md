@@ -16,14 +16,14 @@ A brick destroyer game with 5 levels. To complete a level, all bricks on the scr
 - ESC – Enter/Exit the Pause Menu
 
 ## Maintenance
-- Moved Crack class from Brick class to its own class as there were two classes in an abstract class
-- Created a super class called MenuDesign for starting screen related designs to promote encapsulation
-- Created a super class called MidGameDesign for mid-game screen related designs to promote encapsulation
-- Moved code related to the operation of the game from Wall to a new class called GameSystem to promote single responsibility
-- Moved code related to the design of the home menu from HomeMenu to a new class called HomeDesign to promote single responsibility
-- Moved code related to the design of the game from GameBoard to a new class called GameDesign to promote single responsibility
-- Moved code related to the pause menu from GameDesign to a new class called PauseMenu to promote single responsibility
 - Separated the classes into different packages
+- Moved methods from existing classes to new classes such as Crack, GameSystem, HomeDesign, GameDesign and PauseMenu to promote single responsibility
+- Split up large methods into smaller methods to promote single responsibility
+- Moved repeated lines of codes to a new method to reduce code duplication
+- Methods were renamed to improve clarity on the purpose of the method
+- JavaDocs were created to provide information on the methods and classes
+- Super classes were created such as MenuDesign and MidGameDesign to promote encapsulation
+- Removed redundant variables and methods
 
 ## Extension
 - Added scores to the game which records how long the player takes to complete the game by using HighScore and ScoreDesign class

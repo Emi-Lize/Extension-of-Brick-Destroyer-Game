@@ -83,7 +83,6 @@ public class GameFrame extends JFrame implements WindowFocusListener {
         this.add(gameBoard,BorderLayout.CENTER);
         this.setUndecorated(false);
         initialize();
-        /*to avoid problems with graphics focus controller is added here*/
         this.addWindowFocusListener(this);
     }
 
@@ -129,14 +128,6 @@ public class GameFrame extends JFrame implements WindowFocusListener {
      */
     @Override
     public void windowGainedFocus(WindowEvent windowEvent) {
-        /*
-            the first time the frame loses focus is because
-            it has been disposed to install the GameBoard,
-            so went it regains the focus it's ready to play.
-            of course calling a method such as 'onLostFocus'
-            is useful only if the GameBoard as been displayed
-            at least once
-         */
         gaming = true;
     }
 

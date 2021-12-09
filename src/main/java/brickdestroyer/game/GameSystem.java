@@ -85,9 +85,6 @@ public class GameSystem {
             wall.setPowerCount();
         }
         else if(impactWall()){
-            /*for efficiency reverse is done into method impactWall
-             * because for every brick program checks for horizontal and vertical impacts
-             */
             wall.setBrickCount(1);
         }
         else if(impactBorder()) {

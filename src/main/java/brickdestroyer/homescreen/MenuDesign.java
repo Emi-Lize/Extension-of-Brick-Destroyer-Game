@@ -60,11 +60,6 @@ abstract public class MenuDesign extends JComponent {
     public void drawMenu(Graphics2D g2d){
         drawContainer(g2d);
 
-        /*
-        all the following method calls need a relative
-        painting directly into the HomeMenu rectangle,
-        so the translation is made here so the other methods do not do that.
-         */
         Color prevColor = g2d.getColor();
         Font prevFont = g2d.getFont();
 

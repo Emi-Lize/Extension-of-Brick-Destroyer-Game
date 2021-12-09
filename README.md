@@ -39,7 +39,9 @@ A brick destroyer game with 5 levels. To complete a level, all bricks on the scr
   - impact to hitBall in Player
   - makeLevels to setUpLevels in Wall
 - JavaDocs were created to provide information on the methods and classes
-- Super classes were created such as MenuDesign and MidGameDesign to promote encapsulation
+- Super classes were created to promote encapsulation
+  - MenuDesign
+  - MidGameDesign
 - Removed redundant variables and methods
 
 ## Extension

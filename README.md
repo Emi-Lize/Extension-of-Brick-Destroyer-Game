@@ -1,4 +1,4 @@
-# COMP2042_CW_hcyla2
+# Extension of Brick Destroyer Game
 
 ### Table of Contents
 1. [Game Information](https://github.com/Emi-Lize/COMP2042_CW_hcyla2#game-information)
